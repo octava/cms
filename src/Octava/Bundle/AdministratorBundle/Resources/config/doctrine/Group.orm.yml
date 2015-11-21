@@ -1,7 +1,7 @@
-Octava\AdministratorBundle\Entity\Group:
+Octava\Bundle\AdministratorBundle\Entity\Group:
     type: entity
     table: acl_group
-    repositoryClass: Octava\AdministratorBundle\Entity\GroupRepository
+    repositoryClass: Octava\Bundle\AdministratorBundle\Entity\GroupRepository
 
     fields:
 

@@ -1,7 +1,7 @@
-Octava\AdministratorBundle\Entity\Resource:
+Octava\Bundle\AdministratorBundle\Entity\Resource:
     type: entity
     table: acl_resource
-    repositoryClass: Octava\AdministratorBundle\Entity\ResourceRepository
+    repositoryClass: Octava\Bundle\AdministratorBundle\Entity\ResourceRepository
 
     fields:
 
