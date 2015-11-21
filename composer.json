@@ -15,7 +15,10 @@
     ],
     "type": "project",
     "autoload": {
-        "psr-4": {"Octava\\Bundle": "src/Octava/Bundle"}
+        "psr-4": {
+            "Octava\\Bundle\\": "src/Octava/Bundle/",
+            "Octava\\Component\\": "src/Octava/Component/"
+        }
     },
     "minimum-stability": "dev",
     "require": {
