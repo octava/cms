@@ -1,0 +1,4 @@
+services:
+#    octava_office.example:
+#        class: Octava\Bundle\OfficeBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

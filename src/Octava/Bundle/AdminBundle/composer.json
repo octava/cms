@@ -1,0 +1,20 @@
+{
+    "name": "octava/admin-bundle",
+    "description": "Admin interface based on sonata admin",
+    "type": "bundle",
+    "require": {
+        "helthe/turbolinks-bundle": "^1.1",
+        "sonata-project/admin-bundle": "^2.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Pak",
+            "email": "TheRatW@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Octava\\Bundle\\AdminBundle\\": "" }
+    },
+    "minimum-stability": "stable"
+}

@@ -1,0 +1,4 @@
+services:
+#    octava_seo.example:
+#        class: Octava\Bundle\SeoBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,39 @@
+{
+    "name": "octava/cms",
+    "description": "One more cms",
+    "authors": [
+        {
+            "name": "Vladimir Pak",
+            "email": "TheRatW@gmail.com"
+        },
+        {
+            "name": "dmkuznetsov"
+        },
+        {
+            "name": "bojik"
+        }
+    ],
+    "type": "project",
+    "autoload": {
+        "psr-4": {"Octava\\Bundle": "src/Octava/Bundle"}
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/symfony": "2.7.*",
+        "doctrine/doctrine-bundle": "^1.5",
+        "stof/doctrine-extensions-bundle": "^1.1",
+        "sonata-project/admin-bundle": "^2.3",
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3",
+        "sonata-project/intl-bundle": "^2.2",
+        "sonata-project/user-bundle": "^2.2",
+        "knplabs/knp-paginator-bundle": "^2.4",
+        "simplethings/entity-audit-bundle": "^0.7"
+    },
+    "require-dev": {
+        "phpro/grumphp": "^0.5.2",
+        "leaphub/phpcs-symfony2-standard": "^2.0",
+        "sensio/generator-bundle": "~2.3",
+        "phpunit/phpunit": "^5.0",
+        "therat/symdep": "dev-master"
+    }
+}

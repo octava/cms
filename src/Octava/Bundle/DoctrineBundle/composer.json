@@ -1,0 +1,23 @@
+{
+    "name": "octava/admin-bundle",
+    "description": "Admin users and group",
+    "type": "bundle",
+    "require": {
+        "sonata-project/admin-bundle": "^2.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Pak",
+            "email": "TheRatW@gmail.com"
+        },
+        {
+            "name": "Alexander Rodionov",
+            "email": "web@devgu.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Octava\\Bundle\\DoctrineBundle\\": "" }
+    },
+    "minimum-stability": "stable"
+}

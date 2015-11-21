@@ -1,0 +1,4 @@
+services:
+#    octava_structure.example:
+#        class: Octava\Bundle\StructureBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
