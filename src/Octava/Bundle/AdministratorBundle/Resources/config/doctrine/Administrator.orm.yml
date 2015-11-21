@@ -14,6 +14,7 @@ Octava\Bundle\AdministratorBundle\Entity\Administrator:
         username:
             type: string
             length: 255
+            unique: true
 
         email:
             type: string

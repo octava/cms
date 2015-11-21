@@ -1,5 +1,5 @@
 {
-    "name": "octava/admin-bundle",
+    "name": "octava/doctrine-bundle",
     "description": "Admin users and group",
     "type": "bundle",
     "require": {

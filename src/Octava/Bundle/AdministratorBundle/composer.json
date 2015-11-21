@@ -3,7 +3,8 @@
     "description": "Admin users and group",
     "type": "bundle",
     "require": {
-        "sonata-project/admin-bundle": "^2.3"
+        "sonata-project/admin-bundle": "^2.3",
+        "sonata-project/user-bundle": "^2.2"
     },
     "license": "MIT",
     "authors": [

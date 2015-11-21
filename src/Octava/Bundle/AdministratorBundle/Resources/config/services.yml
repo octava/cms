@@ -1,4 +1,21 @@
+parameters:
+    octava_administrator.security_handler.administrator.class: Octava\Bundle\AdministratorBundle\Security\Handler\AdministratorHandler
+    octava_administrator.admin.administrator.class: Octava\Bundle\AdministratorBundle\Admin\AdministratorAdmin
+    octava_administrator.admin.group: Octava\Bundle\AdministratorBundle\Admin\GroupAdmin
+
 services:
-#    octava_admininstrator.example:
-#        class: Octava\Bundle\AdmininstratorBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    octava_administrator.security_handler.administrator:
+        class: %octava_administrator.security_handler.administrator.class%
+        arguments: [ @sonata.admin.entity_manager, @security.token_storage ]
+
+#    octava_administrator.admin.administrator:
+#        class: %octava_administrator.admin.administrator.class%
+#        arguments: [~, Octava\Bundle\AdministratorBundle\Entity\Administrator, OctavaAdministratorBundle:AdministratorAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: Administrator}
+#
+#    octava_administrator.admin.group:
+#        class: %octava_administrator.admin.group%
+#        arguments: [~, Octava\Bundle\AdministratorBundle\Entity\Group, OctavaAdministratorBundle:GroupAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: Group}
