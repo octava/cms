@@ -1,0 +1,44 @@
+Octava\AdministratorBundle\Entity\Resource:
+    type: entity
+    table: acl_resource
+    repositoryClass: Octava\AdministratorBundle\Entity\ResourceRepository
+
+    fields:
+
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+        resource:
+            type: string
+
+        action:
+            type: string
+
+        label:
+            type: string
+
+        sort:
+            type: integer
+            nullable: true
+
+        groupLabel:
+            type: string
+            nullable: true
+
+        groupLabelDomain:
+            type: string
+            nullable: true
+
+        hidden:
+            type: boolean
+            nullable: true
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]
+
+
+

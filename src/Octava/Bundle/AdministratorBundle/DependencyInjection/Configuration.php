@@ -1,6 +1,6 @@
 <?php
 
-namespace Octava\Bundle\DoctrineBundle\DependencyInjection;
+namespace Octava\Bundle\AdministratorBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('octava_doctrine');
+        $rootNode = $treeBuilder->root('octava_admininstrator');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

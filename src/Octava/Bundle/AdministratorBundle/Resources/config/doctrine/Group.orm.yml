@@ -1,0 +1,42 @@
+Octava\AdministratorBundle\Entity\Group:
+    type: entity
+    table: acl_group
+    repositoryClass: Octava\AdministratorBundle\Entity\GroupRepository
+
+    fields:
+
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+        name:
+            type: string
+            length: 255
+
+        createdAt:
+            type: datetime
+
+        updatedAt:
+            type: datetime
+
+    manyToMany:
+
+        resources:
+            targetEntity: Resource
+            joinTable:
+                name: acl_group_resource
+                joinColumns:
+                    groupId:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    resourceId:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]

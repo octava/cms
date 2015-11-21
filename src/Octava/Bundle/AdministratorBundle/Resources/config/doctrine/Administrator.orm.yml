@@ -1,0 +1,79 @@
+Octava\AdministratorBundle\Entity\Administrator:
+    type: entity
+    table: acl_administrator
+    repositoryClass: Octava\AdministratorBundle\Entity\AdministratorRepository
+
+    fields:
+
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+        username:
+            type: string
+            length: 255
+
+        email:
+            type: string
+            length: 255
+
+        enabled:
+            type: boolean
+            nullable: true
+
+        salt:
+            type: string
+            length: 255
+            nullable: true
+
+        password:
+            type: string
+            length: 255
+
+        lastLogin:
+            type: datetime
+            nullable: true
+
+        createdAt:
+            type: datetime
+
+        updatedAt:
+            type: datetime
+
+        showHidden:
+            type: boolean
+            nullable: true
+
+    manyToMany:
+        groups:
+            targetEntity: Group
+            joinTable:
+                name: acl_administrator_group
+                joinColumns:
+                    administratorId:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    groupId:
+                        referencedColumnName: id
+
+        resources:
+            targetEntity: Resource
+            joinTable:
+                name: acl_administrator_resource
+                joinColumns:
+                    administratorId:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    resourceId:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]
+
+
+
