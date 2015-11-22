@@ -1,0 +1,73 @@
+Octava\Bundle\TranslationBundle\Entity\Office:
+    type: entity
+    table: office
+    repositoryClass: Octava\Bundle\TranslationBundle\Entity\OfficeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        name:
+            type: string
+            length: 255
+            options:
+                comment: 'Название'
+        alias:
+            type: string
+            length: 2
+            unique: true
+        email:
+            type: string
+            length: 255
+        protocol:
+            type: string
+            length: 10
+            options:
+                default: 'http'
+        host:
+            type: string
+            length: 255
+        relatedUrl:
+            type: string
+            length: 255
+            nullable: true
+        defaultLanguage:
+            type: string
+            length: 2
+            options:
+                comment: "Язык по-умолчанию - данный язык подставляется если офис определён по хосту"
+        recognizeLanguage:
+            type: string
+            length: 2
+            nullable: true
+            options:
+                comment: "Офис распознаётся по языку - селектбокс языков"
+        availableLanguages:
+            type: array
+            options:
+                comment: "Доступные языки - список чекбоксов языков которые будут выводиться под данным офисом на фронтенде для смены текущего языка"
+        currencies:
+            type: array
+            options:
+                comment: "Доступные валюты"
+        includeLangInUrl:
+            type: boolean
+            options:
+                comment: 'Включать в урл язык. Если false, то определяется по домену'
+                default: true
+        position:
+            type: smallint
+            nullable: true
+            comment: 'Сортировка'
+            gedmo:
+                - sortablePosition
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]

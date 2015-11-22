@@ -1,4 +1,33 @@
+parameters:
+    octava_admin_menu.admin_menu_manager.class: Octava\Bundle\AdminMenuBundle\AdminMenuManager
+    octava_admin_menu.dict.types.class: Octava\Bundle\AdminMenuBundle\Dict\Types
+    octava_admin_menu.admin.admin_menu.class: Octava\Bundle\AdminMenuBundle\Admin\AdminMenuAdmin
+    octava_admin_menu.twig.admin_menu_extension.class: Octava\Bundle\AdminMenuBundle\Twig\AdminMenuExtension
+
 services:
-#    octava_admin_menu.example:
-#        class: Octava\Bundle\AdminMenuBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    octava_admin_menu.admin_menu_manager:
+        class: %octava_admin_menu.admin_menu_manager.class%
+        arguments: [ @sonata.admin.pool, @translator, @doctrine.orm.entity_manager ]
+
+    octava_admin_menu.dict.types:
+        class: %octava_admin_menu.dict.types.class%
+        arguments: [ @translator ]
+
+    octava_admin_menu.admin.admin_menu:
+        class: %octava_admin_menu.admin.admin_menu.class%
+        arguments: [~, Octava\Bundle\AdminMenuBundle\Entity\AdminMenu, OctavaAdminMenuBundle:AdminMenuAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Admin, label: admin.menu_item.title}
+        calls:
+            - [ setTranslationDomain, [OctavaAdminMenuBundle] ]
+            - [ setDictTypes, [@octava_admin_menu.dict.types] ]
+            - [ setAdminMenuManager, [@octava_admin_menu.admin_menu_manager] ]
+            - [ setTranslationMapper, [@robo_translation.form_mapper] ]
+            - [ setTree, [@octava_tree.tree_manager]]
+
+    octava_admin_menu.twig.admin_menu_extension:
+        class: %octava_admin_menu.twig.admin_menu_extension.class%
+        public: false
+        arguments: [@octava_admin_menu.admin_menu_manager]
+        tags:
+            - { name: twig.extension }

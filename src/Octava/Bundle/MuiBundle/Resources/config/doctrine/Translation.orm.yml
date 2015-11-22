@@ -1,0 +1,29 @@
+Octava\Bundle\TranslationBundle\Entity\Translation:
+    type: entity
+    table: translation
+    repositoryClass: Octava\Bundle\TranslationBundle\Entity\TranslationRepository
+    indexes:
+        domain_idx:
+            columns: [ domain ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        domain:
+            type: string
+            length: 255
+        source:
+            type: text
+        translations:
+            type: array
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]

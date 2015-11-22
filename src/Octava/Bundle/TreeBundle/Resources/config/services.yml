@@ -1,0 +1,7 @@
+parameters:
+    octava_tree.tree_manager.class: 'Octava\Bundle\TreeBundle\TreeManager'
+
+services:
+    octava_tree.tree_manager:
+        class: %octava_tree.tree_manager.class%
+        arguments: [ @templating ]

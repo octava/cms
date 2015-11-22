@@ -1,0 +1,59 @@
+Octava\Bundle\AdminMenuBundle\Entity\AdminMenu:
+    type: entity
+    table: admin_menu
+    repositoryClass: Octava\Bundle\AdminMenuBundle\Entity\AdminMenuRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        title:
+            type: string
+            length: 255
+        type:
+            type: string
+            length: 255
+            options:
+                comment: "folder|module"
+        adminClass:
+            type: string
+            length: 255
+            nullable: true
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]
+
+    oneToMany:
+        children:
+            targetEntity: AdminMenu
+            mappedBy: parent
+            cascade: ['remove']
+            orderBy:
+                sort: ASC
+
+    manyToOne:
+        parent:
+            targetEntity: AdminMenu
+            inversedBy: children
+            joinColumn:
+                onDelete: CASCADE
+            gedmo:
+                - sortableGroup
+            cascade: ["persist", "merge"]

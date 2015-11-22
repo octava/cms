@@ -1,0 +1,35 @@
+Octava\Bundle\TranslationBundle\Entity\Locale:
+    type: entity
+    table: locale
+    repositoryClass: Octava\Bundle\TranslationBundle\Entity\LocaleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        name:
+            type: string
+            length: 255
+        alias:
+            type: string
+            length: 2
+            unique: true
+        state:
+            type: boolean
+            options:
+                default: false
+        position:
+            type: smallint
+            nullable: true
+            comment: 'Сортировка'
+            gedmo:
+                - sortablePosition
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]

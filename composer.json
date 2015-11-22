@@ -30,7 +30,8 @@
         "sonata-project/intl-bundle": "^2.2",
         "sonata-project/user-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^2.4",
-        "simplethings/entity-audit-bundle": "^0.7"
+        "simplethings/entity-audit-bundle": "^0.7",
+        "jms/i18n-routing-bundle": "^1.1"
     },
     "require-dev": {
         "phpro/grumphp": "^0.5.2",

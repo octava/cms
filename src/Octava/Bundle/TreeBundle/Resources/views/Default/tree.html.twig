@@ -1,0 +1,47 @@
+{% block tree_css %}
+<!--link rel="stylesheet" href="{{ asset('bundles/robotree/css/style.css') }}" type="text/css" media="all" /-->
+{% endblock %}
+
+{% block tree_js %}
+<script src="{{ asset('bundles/robotree/js/jquery.jstree.js') }}" type="text/javascript"></script>
+
+<script type="text/javascript" >
+    var selected_id = 'node-{{ tree_selected }}';
+
+    $(document).ready(function() {
+        $("#tree_{{ tree_token }}")
+            .bind("loaded.jstree", function (event, data) {
+                $.jstree._focused().select_node("#"+selected_id);
+            })
+            .jstree({
+                "core" : { "initially_open" : [selected_id], animation: 0 }
+            })
+            .bind("select_node.jstree", function (event, data) {
+                if (data.rslt.obj.attr("id") != selected_id){
+                    window.location.assign(data.rslt.obj.find('a').attr('href'));
+                }
+            });
+    });
+</script>
+{% endblock %}
+
+{% block tree_html %}
+<div id="tree_{{ tree_token }}">
+    <ul style="padding:0px;" class="tree tree-default {% if tree_block_class %}{{ tree_block_class }}{% endif %}" >
+        <li id="node-0" class="open"><!--close-->
+            <a href="{% if tree_root_path %}{{ tree_root_path }}{% else %}{{ tree_link_path }}?{{ tree_url_param }}=0{{ tree_add_url }}{% endif %}" >
+                <i class="icon-folder-close-alt" ></i>
+                {{ tree_root_name }}
+            </a>
+            {% include tree_recursive_path with {
+                'tree_data': tree_data,
+                'tree_recursive_path': tree_recursive_path,
+                'tree_primary': tree_primary,
+                'tree_name': tree_name,
+                'ul_class': '',
+                'ul_id': 'tree'
+            } %}
+        </li>
+    <ul>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+admin.id: ID
+admin.admin: Admin
+admin.name: Name
+admin.alias: Alias
+admin.base: Default
+admin.state: State
+admin.locale: Locales
+admin.locale_list: Locales
+admin.common: Common
+admin.position: Position

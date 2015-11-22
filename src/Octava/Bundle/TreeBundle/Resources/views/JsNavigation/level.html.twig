@@ -1,0 +1,22 @@
+<ul>
+    {% for node in tree_data %}
+        <li id="node-{{ attribute(node, tree_primary) }}" >
+            <a href="#row_{{ node.id }}" class="js-tree-link" >
+                <i class="icon-folder-close-alt" ></i>
+                {{ attribute(node, tree_name) }}
+                {% if node.sum is defined %}({{ node.sum }}){% endif %}
+            </a>
+
+            {% if node.children is defined and node.children|length > 0 %}
+                {% include tree_recursive_path with {
+                    'tree_data': node.children,
+                    'tree_recursive_path': tree_recursive_path,
+                    'tree_primary': tree_primary,
+                    'tree_name': tree_name,
+                    'ul_class': '',
+                    'ul_id': ''
+                } %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

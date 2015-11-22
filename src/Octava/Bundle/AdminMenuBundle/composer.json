@@ -3,7 +3,8 @@
     "description": "Provide admin menu",
     "type": "bundle",
     "require": {
-        "sonata-project/admin-bundle": "^2.3"
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "octava/administrator-bundle": "dev-master"
     },
     "license": "MIT",
     "authors": [

@@ -1,0 +1,48 @@
+services:
+    octava_mui.locale_manager:
+    	class: Octava\Bundle\MuiBundle\LocaleManager
+    	arguments: [ @sonata.admin.entity_manager, %locale% ]
+
+    octava_mui.admin.locale:
+        class: Octava\Bundle\MuiBundle\Admin\LocaleAdmin
+        arguments: [~, Octava\Bundle\TranslationBundle\Entity\Locale, OctavaMuiBundle:LocaleAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Locale}
+    octava_mui.twig.locale_extension:
+        class: Octava\Bundle\MuiBundle\Twig\LocaleExtension
+        public: false
+        arguments: [ @octava_mui.locale_manager, @octava_mui.office_manager ]
+        tags:
+            - { name: twig.extension }
+
+    octava_mui.router.default_pattern_generation_strategy:
+        class: Octava\Bundle\MuiBundle\Router\DefaultPatternGenerationStrategy
+        arguments:
+            - %jms_i18n_routing.strategy%
+            - @translator
+            - %jms_i18n_routing.locales%
+            - %kernel.cache_dir%
+            - %jms_i18n_routing.catalogue%
+            - %jms_i18n_routing.default_locale%
+        calls:
+            - [ setContainer, [@service_container] ]
+
+    octava_mui.admin.office:
+        class: Octava\Bundle\MuiBundle\Admin\OfficeAdmin
+        arguments: [~, Octava\Bundle\TranslationBundle\Entity\Office, OctavaMuiBundle:OfficeAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Office}
+    octava_mui.office_manager:
+        class: Octava\Bundle\MuiBundle\OfficeManager
+        arguments: [ @doctrine.orm.entity_manager, %kernel.default_locale% ]
+    octava_mui.twig.office_extension:
+        class: Octava\Bundle\MuiBundle\Twig\OfficeExtension
+        public: false
+        arguments: [ @octava_mui.office_manager ]
+        tags:
+            - { name: twig.extension }
+    octava_mui.admin.translation:
+        class: Octava\Bundle\MuiBundle\Admin\TranslationAdmin
+        arguments: [~, Octava\Bundle\TranslationBundle\Entity\Translation, OctavaMuiBundle:TranslationAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Translation}

@@ -1,0 +1,10 @@
+admin.id: ID
+admin.admin: Админ
+admin.name: Название
+admin.alias: Алиас
+admin.base: По-умолчанию
+admin.state: Статус
+admin.locale: Локали
+admin.locale_list: Локали
+admin.common: Общее
+admin.position: Позиция

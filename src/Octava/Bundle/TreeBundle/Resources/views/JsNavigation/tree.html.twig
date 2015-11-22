@@ -1,0 +1,60 @@
+{% extends 'RoboTreeBundle:Default:tree.html.twig' %}
+
+{% block tree_js %}
+<script type="text/javascript">
+    $(function(){
+        //alert($.jstree.defaults.plugins);
+
+        $("#tree_{{ tree_token }}").jstree({
+            "plugins": ['ui', 'themes', 'html_data', 'state', 'cookies'],
+            "state" : { key : "admin_menu" },
+            'cookies': { cookie_options: { path: '/' } },
+            "core": { animation: 0 }
+        }).bind('select_node.jstree', function(e, data){
+            var id = $(data.args[0]).attr('href');
+            $(id).effect("highlight", "slow");
+            if ($(id).offset()){
+                $('html, body').animate({
+                    scrollTop: $(id).offset().top
+                }, 100);
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        //console.log('tree_{{ tree_token }}');
+        var obj;
+        if (obj = document.getElementById('tree_{{ tree_token }}')) {
+            floatingMenu.add(
+                obj,
+                {
+                    targetLeft: 0,
+                    targetTop: 0,
+                    snap: true
+                }
+            );
+        }
+        floatingMenu.init();
+    });
+</script>
+{% endblock %}
+
+
+{% block tree_html %}
+    <div id="tree_{{ tree_token }}" style="position:absolute; top:10px; left:0px;">
+        <ul style="padding:0px;" class="tree tree-default {% if tree_block_class %}{{ tree_block_class }}{% endif %}" >
+            <li id="node-0" class="open"><!--close-->
+                <a href="#"><i class="icon-folder-close-alt" ></i> {{ tree_root_name }}</a>
+                {% include tree_recursive_path with {
+                'tree_data': tree_data,
+                'tree_recursive_path': tree_recursive_path,
+                'tree_primary': tree_primary,
+                'tree_name': tree_name,
+                'ul_class': '',
+                'ul_id': 'tree'
+                } %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
