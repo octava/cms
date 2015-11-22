@@ -1,0 +1,52 @@
+{% block acl_resources_widget %}
+{% set ids = [] %}
+{% for raw in data %}
+    {% set ids = ids|merge([raw.id]) %}
+{% endfor %}
+<table class="table table-bordered table-striped table-hover">
+{% for group, data in form.vars.acl_data %}
+    <tr>
+        <th>{{ group }}</th>
+        {% for action in form.vars.acl_actions %}
+        <th>{{ action }}</th>
+        {% endfor %}
+    </tr>
+    {% for label, a in data %}
+    <tr>
+        <td style="padding-left: 40px;"><a href="" class="js-resource">{{ label }}</a></td>
+        {% for action in form.vars.acl_actions %}
+            {% if a[action] is defined %}
+                <td title="{{ action }}" {{ a[action].id in selectedCell ? 'style="background-color:#DFF0D8"' : '' }}>
+                        <input type="checkbox" title="{{ action }}" name="{{ full_name }}" value="{{ a[action].id }}" {{ a[action].id in ids ? 'checked' : '' }}>
+                </td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+{% endfor %}
+</table>
+<p><span class="label label-default" style="background-color:#DFF0D8">&nbsp;&nbsp;&nbsp;</span> - {{ 'admin.acl_rule_defined_in_groups'|trans({}, 'RoboAdministratorBundle') }}</p>
+
+<script type="text/javascript">
+$(function(){
+    $('.js-resource').click(function(){
+        var $boxes = $(this).closest('tr').find('input[type=checkbox]'),
+            checked = $boxes.filter(':checked').length == 0;
+
+        if (checked) {
+            $boxes.prop('checked', true);
+        } else {
+            $boxes.prop('checked', false);
+        }
+
+        return false;
+    });
+});
+</script>
+{% endblock %}
+
+{% block acl_resources_row %}
+{{ form_widget(form) }}
+{% endblock %}

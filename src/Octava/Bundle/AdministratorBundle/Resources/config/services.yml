@@ -2,6 +2,7 @@ parameters:
     octava_administrator.security_handler.administrator.class: Octava\Bundle\AdministratorBundle\Security\Handler\AdministratorHandler
     octava_administrator.admin.administrator.class: Octava\Bundle\AdministratorBundle\Admin\AdministratorAdmin
     octava_administrator.admin.group: Octava\Bundle\AdministratorBundle\Admin\GroupAdmin
+    octava_administrator.config.administrator.class: Octava\Bundle\AdministratorBundle\Config\AdministratorConfig
 
 services:
     octava_administrator.security_handler.administrator:

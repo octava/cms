@@ -19,8 +19,7 @@ class GroupAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('createdAt')
-            ->add('updatedAt')
-        ;
+            ->add('updatedAt');
     }
 
     /**
@@ -33,14 +32,13 @@ class GroupAdmin extends Admin
             ->add('name')
             ->add('createdAt')
             ->add('updatedAt')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                )
-            ))
-        ;
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ]
+            ]);
     }
 
     /**
@@ -49,11 +47,12 @@ class GroupAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
+            ->with($this->trans('form.label_groups'))
             ->add('name')
-            ->add('createdAt')
-            ->add('updatedAt')
-        ;
+            ->end()
+            ->with('ACL')
+            ->add('resources', 'acl_resources', ['required' => false])
+            ->end();
     }
 
     /**
@@ -65,7 +64,6 @@ class GroupAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('createdAt')
-            ->add('updatedAt')
-        ;
+            ->add('updatedAt');
     }
 }

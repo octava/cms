@@ -40,6 +40,9 @@ class AdministratorHandler implements SecurityHandlerInterface
     {
         /** @var Administrator $administrator */
         $administrator = $this->tokenStorage->getToken()->getUser();
+        if (!$administrator instanceof Administrator) {
+            return false;
+        }
 
         $availableResources = $administrator->getAvailableResources();
         $list = $this->entityManager->getRepository('OctavaAdministratorBundle:Resource')->getList();
