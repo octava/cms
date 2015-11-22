@@ -5,6 +5,7 @@ namespace Octava\Bundle\AdministratorBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -13,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class OctavaAdministratorExtension extends Extension
+class OctavaAdministratorExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -46,19 +47,27 @@ class OctavaAdministratorExtension extends Extension
 
     public function prepend(ContainerBuilder $container)
     {
-//        $configName = 'sonata_admin';
-//        $configs = $container->getExtensionConfig($configName);
-//        $configs['security']['handler'] = 'octava_administrator.security_handler.administrator';
-//        $container->prependExtensionConfig($configName, $configs);
+        $configName = 'sonata_admin';
+        $configs = [];
+        $configs['security']['handler'] = 'octava_administrator.security_handler.administrator';
+        $container->prependExtensionConfig($configName, $configs);
+
+        $configName = 'fos_user';
+        $configs = [];
+        $configs['user_class'] = 'Octava\\Bundle\\AdministratorBundle\\Entity\\Administrator';
+        $configs['group']['group_class'] = 'Octava\\Bundle\\AdministratorBundle\\Entity\\Group';
+        $container->prependExtensionConfig($configName, $configs);
 
         $configName = 'sonata_user';
-        $configs = $container->getExtensionConfig($configName);
+        $configs = [];
+        $configs['class']['user'] = 'Octava\\Bundle\\AdministratorBundle\\Entity\\Administrator';
+        $configs['class']['group'] = 'Octava\\Bundle\\AdministratorBundle\\Entity\\Group';
         $configs['admin']['user']['class'] = 'Octava\\Bundle\\AdministratorBundle\\Admin\\AdministratorAdmin';
         $configs['admin']['user']['controller'] = 'OctavaAdministratorBundle:AdministratorAdmin';
-//        $configs['admin']['user']['translation'] = 'OctavaAdministratorBundle';
-        $configs['admin']['group']['class'] = 'Octava\\AdministratorBundle\\Entity\\Group';
+        $configs['admin']['user']['translation'] = 'OctavaAdministratorBundle';
+        $configs['admin']['group']['class'] = 'Octava\\Bundle\\AdministratorBundle\\Admin\\GroupAdmin';
         $configs['admin']['group']['controller'] = 'OctavaAdministratorBundle:GroupAdmin';
-//        $configs['admin']['group']['translation'] = 'OctavaAdministratorBundle';
+        $configs['admin']['group']['translation'] = 'OctavaAdministratorBundle';
         $container->prependExtensionConfig($configName, $configs);
     }
 }
