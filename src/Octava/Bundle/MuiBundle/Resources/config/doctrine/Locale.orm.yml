@@ -1,7 +1,7 @@
-Octava\Bundle\TranslationBundle\Entity\Locale:
+Octava\Bundle\MuiBundle\Entity\Locale:
     type: entity
     table: locale
-    repositoryClass: Octava\Bundle\TranslationBundle\Entity\LocaleRepository
+    repositoryClass: Octava\Bundle\MuiBundle\Entity\LocaleRepository
     id:
         id:
             type: integer

@@ -1,0 +1,22 @@
+parameters:
+    octava_mui.locale_manager.class: Octava\Bundle\MuiBundle\LocaleManager
+    octava_mui.admin.locale.class: Octava\Bundle\MuiBundle\Admin\LocaleAdmin
+    octava_mui.twig.locale_extension.class: Octava\Bundle\MuiBundle\Twig\LocaleExtension
+
+services:
+    octava_mui.locale_manager:
+        class: %octava_mui.locale_manager.class%
+        arguments: [ @sonata.admin.entity_manager, %locale% ]
+
+    octava_mui.admin.locale:
+        class: %octava_mui.admin.locale.class%
+        arguments: [~, Octava\Bundle\MuiBundle\Entity\Locale, OctavaMuiBundle:LocaleAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Admin, label: Locale}
+
+    octava_mui.twig.locale_extension:
+        class: %octava_mui.twig.locale_extension.class%
+        public: false
+        arguments: [ @octava_mui.locale_manager, @octava_mui.office_manager ]
+        tags:
+            - { name: twig.extension }

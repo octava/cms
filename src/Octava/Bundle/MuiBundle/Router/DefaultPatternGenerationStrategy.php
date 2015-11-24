@@ -25,6 +25,14 @@ class DefaultPatternGenerationStrategy extends DefaultPatternGenerationStrategyB
         $translationDomain = 'routes',
         $defaultLocale = 'en'
     ) {
+        parent::__construct(
+            $strategy,
+            $translator,
+            $locales,
+            $cacheDir,
+            $translationDomain,
+            $defaultLocale
+        );
         $this->strategy = $strategy;
         $this->translator = $translator;
         $this->translationDomain = $translationDomain;

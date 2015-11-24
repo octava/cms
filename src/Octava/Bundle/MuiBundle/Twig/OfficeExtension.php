@@ -10,6 +10,8 @@ use Octava\Bundle\MuiBundle\OfficeManager;
  */
 class OfficeExtension extends \Twig_Extension
 {
+    const NAME = 'octava_offices';
+
     /**
      * @var OfficeManager
      */
@@ -27,7 +29,7 @@ class OfficeExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'octava_offices';
+        return self::NAME;
     }
 
     public function getFunctions()

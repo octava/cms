@@ -1,0 +1,46 @@
+parameters:
+    octava_mui.translation_manager.class: Octava\Bundle\MuiBundle\TranslationManager
+    octava_mui.twig.translation_extension.class: Octava\Bundle\MuiBundle\Twig\TranslationExtension
+    octava_mui.form_type.translation_list_type.class: Octava\Bundle\MuiBundle\Form\Type\TranslationListType
+    octava_mui.form.translation_mapper.class: Octava\Bundle\MuiBundle\Form\TranslationMapper
+    octava_mui.translation.history.class: Octava\Bundle\MuiBundle\Translation\History
+
+services:
+    octava_mui.translation_manager:
+        class: %octava_mui.translation_manager.class%
+        arguments:
+            - %kernel.cache_dir%
+            - @doctrine.orm.entity_manager
+            - @octava_mui.translation.logger
+
+    octava_mui.twig.translation_extension:
+        class: %octava_mui.twig.translation_extension.class%
+        arguments: [ @translator ]
+        tags:
+            - { name: twig.extension }
+
+    octava_mui.translation.logger.logger_handler:
+        class: Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/OctavaMuiBundle/translation/translation.log, 200]
+
+    octava_mui.translation.logger:
+        class:  Symfony\Bridge\Monolog\Logger
+        arguments: ['octava_mui.translation', [@octava_mui.translation.logger.logger_handler]]
+
+    octava_mui.form_type.translation_list_type:
+        class: %octava_mui.form_type.translation_list_type.class%
+        tags:
+            - { name: form.type, alias: octava_translation_list_type }
+
+    octava_mui.form.translation_mapper:
+        class: %octava_mui.form.translation_mapper.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @octava_mui.locale_manager
+            - @iphp.filestore.mapping.factory
+            - @iphp.filestore.filestorage.file_system
+            - @security.token_storage
+
+    octava_mui.translation.entity_audit:
+        class: %octava_mui.translation.history.class%
+        arguments: [ @doctrine.orm.entity_manager, @sonata.admin.audit.manager ]

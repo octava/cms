@@ -1,7 +1,7 @@
-Octava\Bundle\TranslationBundle\Entity\Office:
+Octava\Bundle\MuiBundle\Entity\Office:
     type: entity
     table: office
-    repositoryClass: Octava\Bundle\TranslationBundle\Entity\OfficeRepository
+    repositoryClass: Octava\Bundle\MuiBundle\Entity\OfficeRepository
     id:
         id:
             type: integer

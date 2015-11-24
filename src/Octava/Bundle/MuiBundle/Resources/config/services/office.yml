@@ -1,0 +1,37 @@
+parameters:
+    octava_mui.admin.office.class: Octava\Bundle\MuiBundle\Admin\OfficeAdmin
+    octava_mui.office_manager.class: Octava\Bundle\MuiBundle\OfficeManager
+    octava_mui.twig.office_extension.class: Octava\Bundle\MuiBundle\Twig\OfficeExtension
+    octava_mui.event_listener.office_by_locale_listener.class: Octava\Bundle\MuiBundle\EventListener\OfficeByLocaleListener
+    octava_mui.dict.currencies.class: Octava\Bundle\MuiBundle\Dict\Currencies
+    octava_mui.form_type.available_currencies.class: Octava\Bundle\MuiBundle\Form\Type\AvailableCurrencies
+
+services:
+    octava_mui.admin.office:
+        class: %octava_mui.admin.office.class%
+        arguments: [~, Octava\Bundle\MuiBundle\Entity\Office, OctavaMuiBundle:OfficeAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Admin, label: Office}
+
+    octava_mui.office_manager:
+        class: %octava_mui.office_manager.class%
+        arguments: [ @doctrine.orm.entity_manager, %kernel.default_locale% ]
+
+    octava_mui.twig.office_extension:
+        class: %octava_mui.twig.office_extension.class%
+        public: false
+        arguments: [ @octava_mui.office_manager ]
+        tags:
+            - { name: twig.extension }
+
+    octava_mui.event_listener.office_by_locale_listener:
+        class: %octava_mui.event_listener.office_by_locale_listener.class%
+        arguments: [ @octava_mui.office_manager ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    octava_mui.form_type.available_currencies:
+        class: %octava_mui.form_type.available_currencies.class%
+        arguments: [ @octava_mui.dict.currencies ]
+        tags:
+            - { name: form.type, alias: octava_available_currencies }

@@ -1,7 +1,7 @@
-Octava\Bundle\TranslationBundle\Entity\Translation:
+Octava\Bundle\MuiBundle\Entity\Translation:
     type: entity
     table: translation
-    repositoryClass: Octava\Bundle\TranslationBundle\Entity\TranslationRepository
+    repositoryClass: Octava\Bundle\MuiBundle\Entity\TranslationRepository
     indexes:
         domain_idx:
             columns: [ domain ]

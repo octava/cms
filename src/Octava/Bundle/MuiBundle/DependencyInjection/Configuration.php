@@ -2,6 +2,7 @@
 
 namespace Octava\Bundle\MuiBundle\DependencyInjection;
 
+use Octava\Bundle\MuiBundle\Dict\Currencies;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -19,11 +20,33 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('octava_translation');
+        $rootNode = $treeBuilder->root('octava_mui');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $searchTypes = ['host', 'locale'];
+
+        $rootNode
+            ->children()
+            ->booleanNode('set_locale_by_office')->defaultFalse()->end()
+            ->arrayNode('search_types')
+            ->prototype('scalar')
+            ->validate()
+            ->ifNotInArray($searchTypes)
+            ->thenInvalid(
+                'The office search type %s is not supported. Allowed types: ' . json_encode($searchTypes)
+            )
+            ->end()
+            ->end()
+            ->defaultValue(['host'])
+            ->end()
+            ->arrayNode('currencies')
+            ->prototype('scalar')->end()
+            ->defaultValue([Currencies::USD, Currencies::EUR, Currencies::RUB])
+            ->end()
+            ->arrayNode('url_ignore_prefixes')
+            ->prototype('scalar')->end()
+            ->defaultValue(['/admin', '/_'])
+            ->end()
+            ->end();
 
         return $treeBuilder;
     }

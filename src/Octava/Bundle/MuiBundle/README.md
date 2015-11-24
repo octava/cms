@@ -5,10 +5,10 @@
 Выполняется коммандой
 
 ```bash
-   app/console translation:update ru RoboTranslationBundle --force --output-format=zdb
+   app/console translation:update ru OctavaMuiBundle --force --output-format=zdb
 ```
 
-Где `ru` - локаль, `RoboTranslationBundle` - бандл откуда загружать переводы
+Где `ru` - локаль, `OctavaMuiBundle` - бандл откуда загружать переводы
 
 После выполнения комманды будут собраны переводы из всех файлов для соответсвующей локали и бандла объединены в единый словарь
 и сохранены в БД. Если в БД не было записи с соответсвующем переводом (н-р метка лежала в xlf файле), то будет создана новая, если была
@@ -66,7 +66,7 @@ your_bundle.admin.items:
 namespace YourBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Robo\TranslationBundle\Form\TranslationMapper;
+use Robo\MuiBundle\Form\TranslationMapper;
 
 class MyAdmin extends Admin
 {

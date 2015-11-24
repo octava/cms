@@ -1,6 +1,14 @@
 <?php
 namespace Octava\Bundle\MuiBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Octava\Bundle\MuiBundle\Entity\Office;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class LoadOffices extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
@@ -21,19 +29,31 @@ class LoadOffices extends AbstractFixture implements FixtureInterface, OrderedFi
      */
     public function load(ObjectManager $manager)
     {
-        $data = [
-            ['English EN', 'en', true],
-        ];
+        $entity = new Office();
+        $entity->setName('En Office');
+        $entity->setAlias('en');
+        $entity->setEmail('test@test.com');
+        $entity->setProtocol('http');
+        $entity->setHost($this->container->getParameter('hosts.root'));
+        $entity->setRelatedUrl(null);
+        $entity->setDefaultLanguage('en');
+        $entity->setRecognizeLanguage('en');
+        $entity->setAvailableLanguages(['en', 'ru']);
+        $entity->setCurrencies(['EUR', 'USD']);
+        $manager->persist($entity);
 
-        foreach ($data as $position => $item) {
-            list($name, $alias, $state) = $item;
-            $locale = new Locale();
-            $locale->setName($name);
-            $locale->setAlias($alias);
-            $locale->setState($state);
-
-            $manager->persist($locale);
-        }
+        $entity = new Office();
+        $entity->setName('Ru Office');
+        $entity->setAlias('ru');
+        $entity->setEmail('test@test.com');
+        $entity->setProtocol('http');
+        $entity->setHost($this->container->getParameter('hosts.root'));
+        $entity->setRelatedUrl(null);
+        $entity->setDefaultLanguage('ru');
+        $entity->setRecognizeLanguage('ru');
+        $entity->setAvailableLanguages(['en', 'ru']);
+        $entity->setCurrencies(['EUR', 'USD', 'RUB']);
+        $manager->persist($entity);
 
         $manager->flush();
     }
@@ -45,6 +65,6 @@ class LoadOffices extends AbstractFixture implements FixtureInterface, OrderedFi
      */
     public function getOrder()
     {
-        return 20;
+        return 30;
     }
 }

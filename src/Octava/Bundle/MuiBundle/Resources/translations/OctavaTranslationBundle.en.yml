@@ -8,3 +8,29 @@ admin.locale: Locales
 admin.locale_list: Locales
 admin.common: Common
 admin.position: Position
+
+admin.office: Office
+admin.office_list: Office List
+admin.protocol: Protocol
+admin.host: Office host
+admin.related_url: Related Url
+admin.default_language: Default Language
+admin.recognize_language: Recognize Language
+admin.available_languages: Available Languages
+admin.recognize_language_disabled: -- Disabled --
+admin.office_data: Office data
+admin.office_name: Office name
+admin.placeholder_office_url: 'Office URL with protocol, language segment and without a slash at the end.<br /><span style="padding-left: 80px;">Example: <b>http://example.com/ru</b></span>'
+admin.placeholder_office_url_wolang: 'Office URL with protocol, without lang segment and without a slash at the end.<br /><span style="padding-left: 80px;">Example: <b>http://example.com</b></span>'
+admin.placeholder_office_domain: 'Office domain<br /><span style="padding-left: 80px;">Example: <b>example.com</b></span>'
+admin.placeholder_related_url: 'The office related URL with protocol and without a slash at the end<br /><span style="padding-left: 80px;">Example: <b>http://related.eample.com</b></span>'
+admin.available_currencies: Available Currencies
+admin.email: Email
+admin.updatedAt: Updated at
+admin.include_lang_in_url: Include language in url
+Office: Office
+ID: ID
+admin.error.office_locale_host_exists: An office with locale '{locale}' and host '{host}' already exists. The existed office alias is '{alias}'
+admin.error.office_host_exists: Default office for host '{host}' already exists. The existed office alias is '{alias}'
+admin.cache_clear_success: 'Cache has been cleared successfully'
+admin.clear_cache: 'Clear cache'

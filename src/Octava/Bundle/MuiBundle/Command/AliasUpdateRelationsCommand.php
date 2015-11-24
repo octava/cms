@@ -49,7 +49,7 @@ class AliasUpdateRelationsCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Translations updated:</info> ' . $extCount);
 
-        $transRepository = $em->getRepository('OctavaTranslationBundle:Translation');
+        $transRepository = $em->getRepository('OctavaMuiBundle:Translation');
         /** @var OctavaTranslation[] $transItems */
         $transItems = $transRepository->findAll();
         $transCount = 0;

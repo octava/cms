@@ -1,6 +1,7 @@
 {
     "name": "octava/cms",
     "description": "One more cms",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Vladimir Pak",
@@ -31,7 +32,8 @@
         "sonata-project/user-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^2.4",
         "simplethings/entity-audit-bundle": "^0.7",
-        "jms/i18n-routing-bundle": "^1.1"
+        "jms/i18n-routing-bundle": "^1.1",
+        "iphp/filestore-bundle": "^0.2.5"
     },
     "require-dev": {
         "phpro/grumphp": "^0.5.2",
