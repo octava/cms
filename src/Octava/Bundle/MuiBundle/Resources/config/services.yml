@@ -1,6 +1,7 @@
 imports:
     - { resource: services/locale.yml }
     - { resource: services/office.yml }
+    - { resource: services/translation.yml }
 
 services:
     octava_mui.router.default_pattern_generation_strategy:
