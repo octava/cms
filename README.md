@@ -2,7 +2,7 @@
 
 One more symfony cms
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/0df10747-186d-43ab-9c27-1a77bde8ff1a/big.png)](https://insight.sensiolabs.com/projects/0df10747-186d-43ab-9c27-1a77bde8ff1a)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/6aa358a4-d01d-4229-bfd3-fdb295b6575f/big.png)](https://insight.sensiolabs.com/projects/6aa358a4-d01d-4229-bfd3-fdb295b6575f)
 
 ## Requirements 
 
