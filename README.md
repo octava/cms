@@ -8,3 +8,4 @@ One more symfony cms
 
 * PHP >= 5.6
 * MySql >= 5.6
+

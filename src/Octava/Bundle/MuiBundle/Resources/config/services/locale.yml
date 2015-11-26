@@ -6,7 +6,7 @@ parameters:
 services:
     octava_mui.locale_manager:
         class: %octava_mui.locale_manager.class%
-        arguments: [ @sonata.admin.entity_manager, %locale% ]
+        arguments: [ @doctrine.orm.entity_manager, %locale% ]
 
     octava_mui.admin.locale:
         class: %octava_mui.admin.locale.class%

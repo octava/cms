@@ -1,0 +1,26 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{% block sonata_top_bar_nav %}
+    {% if app.user and is_granted('ROLE_SONATA_ADMIN') %}
+        {% for item in admin_menu_manager.tree %}
+            {% if item.level == 0 %}
+                {% set admin = item.type == constant('TYPE_MODULE', item) ? admin_menu_manager.adminObject(item.adminClass) : false  %}
+                {% set active = admin_menu_manager.active(item, _currentAdminRoute) %}
+                {% if admin_menu_manager.visible(item) %}
+                    <li class="dark-nav {{ active ? 'active' : '' }}">
+                        {% if admin %}
+                            <a href="{{ admin.generateUrl('list') }}" style="font-weight: normal; font-size:12px;">{{ item.title }}</a>
+                        {% else %}
+                            <a class="accordion-toggle {{ active ? '' : 'collapsed' }} " data-toggle="collapse" href="#menuItem{{ loop.index0 }}"><span>{{ item.title }} <i class="icon-caret-down"></i></span></a>
+                        {% endif %}
+                        {% if item.children|length > 0 %}
+                            <ul id="menuItem{{ loop.index0 }}" class="{{ active ? '' : 'collapse' }}">
+                                {% include 'OctavaAdminBundle:Menu:sub_menu.html.twig' with { 'children': item.children } %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -2,6 +2,8 @@
 
 namespace Octava\Bundle\AdministratorBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Resource
  */
@@ -21,7 +23,7 @@ class Resource
      * @var \DateTime
      */
     private $updatedAt;
-    
+
     /**
      * @var string
      */

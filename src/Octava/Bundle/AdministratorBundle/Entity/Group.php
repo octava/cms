@@ -4,6 +4,7 @@ namespace Octava\Bundle\AdministratorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Octava\Bundle\AdministratorBundle\Entity\Resource as EntityResource;
 
 /**

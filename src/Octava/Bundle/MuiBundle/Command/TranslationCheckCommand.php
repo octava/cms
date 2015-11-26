@@ -13,13 +13,11 @@ class TranslationCheckCommand extends ContainerAwareCommand
 {
     const TYPE_PLACEHOLDERS = 'placeholders';
     const TYPE_FILE_STRUCTURE = 'file_structure';
-    const TYPE_DB_EXPORT = 'db_export';
     const TYPE_DB_CONTENT = 'db_content';
 
     protected $types = [
         self::TYPE_PLACEHOLDERS => 'octava_mui.translation_check.placeholders',
         self::TYPE_FILE_STRUCTURE => 'octava_mui.translation_check.file_structure',
-        self::TYPE_DB_EXPORT => 'octava_mui.translation_check.db_export',
         self::TYPE_DB_CONTENT => 'octava_mui.translation_check.db_content',
     ];
 
@@ -39,6 +37,7 @@ class TranslationCheckCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface|Output $output
      * @return int
+     * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -56,6 +55,13 @@ class TranslationCheckCommand extends ContainerAwareCommand
             $result = $result && !$res;
         }
 
-        return $result ? 1 : 0;
+        if (!$result) {
+            throw new \RuntimeException(
+                'Something wrong with translations.'
+                .'Please run "'.$this->getName().'" manually with verbose mode'
+            );
+        }
+
+        return 0;
     }
 }

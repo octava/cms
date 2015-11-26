@@ -1,0 +1,17 @@
+<!-- OctavaAdminBundle:Menu:submenu.html.twig -->
+{% for child in children %}
+    {% if admin_menu_manager.visible(child) %}
+        {% set active = admin_menu_manager.active(child, _currentAdminRoute) %}
+        {% set admin = child.type == constant('TYPE_MODULE', child) ? admin_menu_manager.adminObject(child.adminClass) : false  %}
+        {% if admin %}
+            <li class="{{ active ? 'active' : '' }} {{ loop.last ? 'last' : '' }}"><a href="{{ admin.generateUrl('list') }}">{{ child.title }}</a></li>
+        {% else %}
+            <li class="{{ active ? 'active' : '' }}  dropdown-submenu {{ loop.last ? 'last' : '' }}">
+                <a href="#" style="font-weight:bold">{{ child.title }} <i class="icon-caret-right"></i></a>
+                <ul class="dropdown-menu">
+                    {% include 'OctavaAdminBundle:Menu:sub_menu.html.twig' with { 'children': child.children } %}
+                </ul>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}

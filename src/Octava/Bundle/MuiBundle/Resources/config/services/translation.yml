@@ -7,9 +7,10 @@ parameters:
 
     octava_mui.translation_check.db_content.class: Octava\Bundle\MuiBundle\Translation\Check\DbContent
     octava_mui.translation_check.file_structure.class: Octava\Bundle\MuiBundle\Translation\Check\FileStructure
-    octava_mui.translation_check.db_export.class: Octava\Bundle\MuiBundle\Translation\Check\DbExport
     octava_mui.translation_check.placeholders.class: Octava\Bundle\MuiBundle\Translation\Check\Placeholders
 
+    octava_mui.translation_handler.loader.class: Octava\Bundle\MuiBundle\Translation\Handler\Loader
+    octava_mui.translation_handler.dumper.class: Octava\Bundle\MuiBundle\Translation\Handler\Dumper
 services:
     octava_mui.translation_manager:
         class: %octava_mui.translation_manager.class%
@@ -56,15 +57,24 @@ services:
             - @octava_mui.locale_manager
             - @translation.loader
             - @translator.default
-            - @sonata.admin.entity_manager
+            - @doctrine.orm.entity_manager
 
     octava_mui.translation_check.file_structure:
         class: %octava_mui.translation_check.file_structure.class%
         arguments: [%kernel.root_dir%]
 
-    octava_mui.translation_check.db_export:
-        class: %octava_mui.translation_check.db_export.class%
-
     octava_mui.translation_check.placeholders:
         class: %octava_mui.translation_check.placeholders.class%
         arguments: [ @octava_mui.locale_manager, @doctrine.orm.entity_manager ]
+
+    octava_mui.translation_handler.loader:
+        class: %octava_mui.translation_handler.loader.class%
+        arguments: [ @doctrine.orm.entity_manager, @logger ]
+        tags:
+            - { name: translation.loader, alias: zdb }
+
+    octava_mui.translation_handler.dumper:
+        class: %octava_mui.translation_handler.dumper.class%
+        arguments: [ @octava_mui.translation_manager ]
+        tags:
+            - { name: translation.dumper, alias: zdb }
