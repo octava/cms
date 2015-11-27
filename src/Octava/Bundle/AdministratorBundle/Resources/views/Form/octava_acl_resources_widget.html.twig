@@ -1,4 +1,4 @@
-{% block acl_resources_widget %}
+{% block octava_acl_resources_widget %}
 {% set ids = [] %}
 {% for raw in data %}
     {% set ids = ids|merge([raw.id]) %}
@@ -27,7 +27,7 @@
     {% endfor %}
 {% endfor %}
 </table>
-<p><span class="label label-default" style="background-color:#DFF0D8">&nbsp;&nbsp;&nbsp;</span> - {{ 'admin.acl_rule_defined_in_groups'|trans({}, 'RoboAdministratorBundle') }}</p>
+<p><span class="label label-default" style="background-color:#DFF0D8">&nbsp;&nbsp;&nbsp;</span> - {{ 'admin.acl_rule_defined_in_groups'|trans({}, 'OctavaAdministratorBundle') }}</p>
 
 <script type="text/javascript">
 $(function(){

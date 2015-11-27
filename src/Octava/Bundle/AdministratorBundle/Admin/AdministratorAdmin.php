@@ -131,12 +131,9 @@ class AdministratorAdmin extends Admin
             ->add('id')
             ->add('username')
             ->add('email')
-            ->add('enabled')
-            ->add('salt')
-            ->add('password')
             ->add('lastLogin')
-            ->add('createdAt')
             ->add('updatedAt')
+            ->add('enabled')
             ->add('showHidden')
             ->add('_action', 'actions', [
                 'actions' => [

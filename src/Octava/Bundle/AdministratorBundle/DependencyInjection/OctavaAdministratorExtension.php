@@ -41,7 +41,7 @@ class OctavaAdministratorExtension extends Extension implements PrependExtension
             : [];
         $container->setParameter(
             'twig.form.resources',
-            array_merge($twigFormResources, ['OctavaAdministratorBundle:Form:acl_resources_widget.html.twig'])
+            array_merge($twigFormResources, ['OctavaAdministratorBundle:Form:octava_acl_resources_widget.html.twig'])
         );
     }
 

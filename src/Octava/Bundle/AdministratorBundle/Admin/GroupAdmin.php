@@ -2,10 +2,12 @@
 
 namespace Octava\Bundle\AdministratorBundle\Admin;
 
+use Octava\Bundle\AdministratorBundle\Form\Type\ResourcesType;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class GroupAdmin extends Admin
@@ -32,13 +34,16 @@ class GroupAdmin extends Admin
             ->add('name')
             ->add('createdAt')
             ->add('updatedAt')
-            ->add('_action', 'actions', [
-                'actions' => [
-                    'show' => [],
-                    'edit' => [],
-                    'delete' => [],
+            ->add(
+                '_action',
+                'actions',
+                [
+                    'actions' => [
+                        'edit' => [],
+                        'delete' => [],
+                    ],
                 ]
-            ]);
+            );
     }
 
     /**
@@ -51,7 +56,7 @@ class GroupAdmin extends Admin
             ->add('name')
             ->end()
             ->with('ACL')
-            ->add('resources', 'acl_resources', ['required' => false])
+            ->add('resources', ResourcesType::TYPE_NAME, ['required' => false])
             ->end();
     }
 
@@ -65,5 +70,10 @@ class GroupAdmin extends Admin
             ->add('name')
             ->add('createdAt')
             ->add('updatedAt');
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('show');
     }
 }

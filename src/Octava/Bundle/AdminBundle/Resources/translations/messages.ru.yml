@@ -1,0 +1,14 @@
+sonata_core_template_box_file_found_in: Этот файл может быть найден в
+label_type_equals: равен
+label_type_not_equals: не равен
+contains: содержит
+does not contain: не содержит
+is equal to: равно
+is not equal to: не равно
+is empty: пустой
+is not empty: не является пустым
+=: =
+>=: >=
+>: >
+<=: <=
+<: <

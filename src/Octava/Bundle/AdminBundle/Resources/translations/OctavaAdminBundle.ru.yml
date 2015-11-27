@@ -1,0 +1,14 @@
+admin.breadcrumbs_home: Главная
+admin.breadcrumbs_create: Создание записи
+admin.breadcrumbs_edit: Редактирование записи
+admin.breadcrumbs_show: Детали записи
+admin.list_actions_field: Действия
+admin.error.not_found: Страница не найдена
+breadcrumbs_home: Главная
+breadcrumbs_create: Создание записи
+breadcrumbs_edit: Редактирование записи
+breadcrumbs_show: Детали записи
+admin.delete: Удалить
+admin._action: Действия
+admin.id: ID
+admin.dashboard: Панель управления

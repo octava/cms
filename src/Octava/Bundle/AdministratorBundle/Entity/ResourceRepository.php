@@ -19,7 +19,6 @@ class ResourceRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->select('DISTINCT r.action')
-            ->from('Robo\AdministratorBundle\Entity\Resource', 'r1')
             ->getQuery();
         $rows = $queryBuilder->getResult();
         $ret = [];

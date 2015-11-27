@@ -12,8 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class Resources extends AbstractType
+class ResourcesType extends AbstractType
 {
+    const TYPE_NAME = 'octava_acl_resources';
     /**
      * @var EntityManager
      */
@@ -85,16 +86,18 @@ class Resources extends AbstractType
      */
     public function getName()
     {
-        return 'acl_resources';
+        return self::TYPE_NAME;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'class' => 'Octava\\Bundle\\AdministratorBundle\\Entity\\Resource',
-            'multiple' => true,
-            'selectedCell' => []
-        ]);
+        $resolver->setDefaults(
+            [
+                'class' => 'Octava\\Bundle\\AdministratorBundle\\Entity\\Resource',
+                'multiple' => true,
+                'selectedCell' => [],
+            ]
+        );
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -119,12 +122,12 @@ class Resources extends AbstractType
                 continue;
             }
             $a = explode('\\', $row->getResource());
-            $domain = $a[0] . $a[1];
+            $domain = $a[0].$a[1];
             $label = $this->getTranslator()->trans($row->getLabel(), [], $domain);
             $group = $this->getTranslator()->trans($row->getGroupLabel(), [], $row->getGroupLabelDomain());
             $choices[$group][$label][$row->getAction()] = $row;
         }
-
+        
         $actions = $repository->getActions();
         $view->vars['acl_data'] = $choices;
         $view->vars['acl_actions'] = $actions;

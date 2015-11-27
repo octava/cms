@@ -1,2 +1,34 @@
+ID: ID
+Actions: Действия
 security.login.username: Username
 security.login.password: Password
+admin.id: ID
+admin.username: Логин
+admin.email: Email
+admin.enabled: Активный
+admin.last_login: Последний вход
+admin.created_at: Создан
+admin.updated_at: Обновлен
+admin._action: Действия
+admin.administrator_list: Администраторы
+admin.plain_password: Пароль
+admin.groups: Группы
+admin.tab.administrator: Администратор
+admin.tab.group: Группа
+admin.tab.acl: ACL
+admin.error.access_denied: Недостаточно прав
+admin.acl_rule_defined_in_groups: Разрешение определено в группе
+admin.name: Имя
+admin.group_list: Группы
+form.label_groups: Группа
+users: Администраторы
+groups: Группы
+admin.show_hidden: Показать скрытые
+admin.resources: Ресурсы
+
+admin.locales: Языки
+admin.tab.locale: Язык
+
+Administrator: Администратор
+Group: Группа
+ACL: ACL

@@ -1,0 +1,14 @@
+admin.breadcrumbs_home: Home
+admin.breadcrumbs_create: Create item
+admin.breadcrumbs_edit: Edit item
+admin.breadcrumbs_show: Show item
+admin.list_actions_field: Actions
+admin.error.not_found: Page Not Found
+breadcrumbs_home: Home
+breadcrumbs_create: Create item
+breadcrumbs_edit: Edit item
+breadcrumbs_show: Show item
+admin.delete: Delete
+admin._action: Actions
+admin.id: ID
+admin.dashboard: Dashboard
