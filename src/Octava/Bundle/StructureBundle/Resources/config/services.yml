@@ -1,4 +1,37 @@
+parameters:
+    octava_structure.config.structure_config.class: Octava\Bundle\StructureBundle\Config\StructureConfig
+    octava_structure.admin.structure.class: Octava\Bundle\StructureBundle\Admin\StructureAdmin
+    octava_structure.cache.class: Doctrine\Common\Cache\FilesystemCache
+    octava_structure.routing.structure_pages_loader.class: Octava\Bundle\StructureBundle\Routing\StructurePagesLoader
+    octava_structure.routing.structure_bundles_loader.class: Octava\Bundle\StructureBundle\Routing\StructureBundlesLoader
+    octava_structure.structure_manager.class: Octava\Bundle\StructureBundle\StructureManager
+
 services:
-#    octava_structure.example:
-#        class: Octava\Bundle\StructureBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    octava_structure.admin.structure:
+        class: %octava_structure.admin.structure.class%
+        arguments: [~, Octava\Bundle\StructureBundle\Entity\Structure, OctavaStructureBundle:StructureAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Admin, label: Structure }
+
+    octava_structure.cache:
+        class: %octava_structure.cache.class%
+        arguments: [%kernel.cache_dir%/structure]
+
+    octava_structure.routing.structure_pages_loader:
+        class: %octava_structure.routing.structure_pages_loader.class%
+        arguments:
+            - @file_locator
+            - @doctrine.orm.entity_manager
+            - @octava_structure.config.structure_config
+        tags:
+            - { name: routing.loader }
+
+    octava_structure.routing.structure_bundles_loader:
+        class: %octava_structure.routing.structure_bundles_loader.class%
+        arguments: [ @sonata.admin.entity_manager, @routing.resolver ]
+        tags:
+            - { name: routing.loader }
+
+    octava_structure.structure_manager:
+        class: %octava_structure.structure_manager.class%
+        arguments: [ @sonata.admin.entity_manager, @event_dispatcher ]

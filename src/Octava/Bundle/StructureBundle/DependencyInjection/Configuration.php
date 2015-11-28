@@ -2,6 +2,7 @@
 
 namespace Octava\Bundle\StructureBundle\DependencyInjection;
 
+use Octava\Bundle\StructureBundle\Config\StructureConfig;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -21,9 +22,16 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('octava_structure');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+            ->arrayNode(StructureConfig::KEY_ADDITIONAL_TEMPLATES)
+            ->useAttributeAsKey('name')
+            ->prototype('scalar')->end()
+            ->end()
+            ->scalarNode(StructureConfig::KEY_DEFAULT_TEMPLATE)
+            ->defaultValue('OctavaStructureBundle:Default:index.html.twig')
+            ->end()
+            ->end();
 
         return $treeBuilder;
     }

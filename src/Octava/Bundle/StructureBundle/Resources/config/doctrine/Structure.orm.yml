@@ -1,0 +1,73 @@
+Octava\Bundle\StructureBundle\Entity\Structure:
+    type: entity
+    table: structure
+    gedmo:
+        translation:
+            locale: locale
+
+    repositoryClass: Octava\Bundle\StructureBundle\Entity\StructureRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        title:
+            type: string
+            length: '500'
+            gedmo:
+                - translatable
+        description:
+            type: text
+            gedmo:
+                - translatable
+        type:
+            type: string
+            length: 255
+        alias:
+            type: string
+            length: 255
+            gedmo:
+                - translatable
+        path:
+            type: string
+            length: '1000'
+            gedmo:
+                - translatable
+        state:
+            type: boolean
+            gedmo:
+                - translatable
+        template:
+            type: string
+            nullable: true
+            options:
+                comment: 'Шаблон для отображения страниц. Null - шаблон по умолчанию'
+        routeName:
+            type: string
+            unique: true
+            options:
+                comment: 'Имя роута для генерации урлов.'
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]
+
+    oneToMany:
+        children:
+            targetEntity: Structure
+            mappedBy: parent
+            fetch: EXTRA_LAZY
+            cascade: ['remove']
+
+    manyToOne:
+        parent:
+            targetEntity: Structure
+            inversedBy: children
+            fetch: EXTRA_LAZY
+            joinColumn:
+                onDelete: CASCADE
