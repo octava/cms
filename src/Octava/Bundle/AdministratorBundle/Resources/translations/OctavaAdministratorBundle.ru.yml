@@ -1,8 +1,5 @@
-ID: ID
-Actions: Действия
 security.login.username: Username
 security.login.password: Password
-admin.id: ID
 admin.username: Логин
 admin.email: Email
 admin.enabled: Активный

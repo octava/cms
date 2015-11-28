@@ -2,11 +2,11 @@
 namespace Octava\Bundle\AdministratorBundle\Annotation;
 
 /**
- * Class Hidden
- * @package octava\cms\src\Octava\Bundle\AdministratorBundle\Annotation
+ * Class OctavaHidden
+ * @package Octava\Bundle\AdministratorBundle\Annotation
  * @Annotation
  */
-class Hidden
+class OctavaHidden
 {
     public $value = true;
 }

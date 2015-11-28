@@ -4,6 +4,7 @@ namespace Octava\Bundle\MuiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 /**
  * OfficeRepository
@@ -78,7 +79,7 @@ class OfficeRepository extends EntityRepository
     public function getOfficesByLocaleHost($lang, $host, $excludedIds = null)
     {
         $qb = $this->createQueryBuilder('o')
-            ->where('o.default_language = :defaultLanguage')
+            ->where('o.defaultLanguage = :defaultLanguage')
             ->andWhere('o.host = :host')
             ->setParameter('defaultLanguage', $lang)
             ->setParameter('host', $host);
@@ -111,5 +112,10 @@ class OfficeRepository extends EntityRepository
         $offices = $qb->getQuery()->getResult();
 
         return $offices;
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('clearCache');
     }
 }

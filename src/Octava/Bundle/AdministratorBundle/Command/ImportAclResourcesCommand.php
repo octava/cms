@@ -1,8 +1,8 @@
 <?php
 namespace Octava\Bundle\AdministratorBundle\Command;
 
-use Octava\Bundle\AdministratorBundle\Annotation\AclActions;
-use Octava\Bundle\AdministratorBundle\Annotation\Hidden;
+use Octava\Bundle\AdministratorBundle\Annotation\OctavaAclActions;
+use Octava\Bundle\AdministratorBundle\Annotation\OctavaHidden;
 use Octava\Bundle\AdministratorBundle\Entity\Resource as EntityResource;
 use Octava\Bundle\AdministratorBundle\Entity\Resource;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -42,20 +42,20 @@ class ImportAclResourcesCommand extends ContainerAwareCommand
 
             $annotation = $annotationReader->getClassAnnotation(
                 $reflection,
-                'Octava\\Bundle\\AdministratorBundle\\Annotation\\AclActions'
+                'Octava\\Bundle\\AdministratorBundle\\Annotation\\OctavaAclActions'
             );
 
             if (empty($annotation)) {
-                $annotation = new AclActions();
+                $annotation = new OctavaAclActions();
             }
 
             $hiddenAnnotation = $annotationReader->getClassAnnotation(
                 $reflection,
-                'Octava\\Bundle\\AdministratorBundle\\Annotation\\Hidden'
+                'Octava\\Bundle\\AdministratorBundle\\Annotation\\OctavaHidden'
             );
 
             if (empty($hiddenAnnotation)) {
-                $hiddenAnnotation = new Hidden();
+                $hiddenAnnotation = new OctavaHidden();
                 $hiddenAnnotation->value = false;
             }
 

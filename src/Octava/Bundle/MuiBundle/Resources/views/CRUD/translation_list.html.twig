@@ -1,0 +1,18 @@
+{% extends 'OctavaAdminBundle:CRUD:list.html.twig' %}
+{% trans_default_domain 'OctavaMuiBundle' %}
+
+{% form_theme form.translations 'OctavaMuiBundle:Form:translation_translations.html.twig' %}
+
+{% block side_bar_before_nav %}
+    {{ admin.getTree().show()|raw }}
+{% endblock %}
+
+{% block actions %}
+    {% spaceless %}
+        {{ parent() }}
+        {#<li>#}
+        {#<a class="sonata-action-element" href="{{ admin.generateUrl('clearCache') }}">#}
+        {#<i class="fa fa-plus-circle"></i>#}
+        {#{{ 'admin.clear_cache'|trans }}</a></li>#}
+    {% endspaceless %}
+{% endblock %}

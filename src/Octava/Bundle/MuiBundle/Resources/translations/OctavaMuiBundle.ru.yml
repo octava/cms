@@ -1,10 +1,17 @@
+ID: ID
+Office: Офисы
+Locale: Локаль
+Actions: Действия
+Created at: Дата создания
+Updated at: Дата изменения
+
 admin.id: ID
 admin.admin: Админ
 admin.name: Название
 admin.alias: Алиас
 admin.base: По-умолчанию
 admin.state: Статус
-admin.locale: Локали
+admin.locale: Локаль
 admin.locale_list: Локали
 admin.common: Общее
 admin.position: Позиция
@@ -24,13 +31,35 @@ admin.placeholder_office_url: 'URL офиса с протоколом, сегм�
 admin.placeholder_office_url_wolang: 'URL офиса с протоколом, без сегмента языка и без слеша на конце.<br /><span style="padding-left: 80px;">Например: <b>http://example.com</b></span>'
 admin.placeholder_office_domain: 'Доменное имя офиса<br /><span style="padding-left: 80px;">Например: <b>example.com</b></span>'
 admin.placeholder_related_url: 'URL связанного с офисом сайта с протоколом и без слеша на конце <br /><span style="padding-left: 80px;">Например: <b>http://related.eample.com</b></span>'
-admin.available_currencies: Доступные валюты
+admin.currencies: Доступные валюты
 admin.email: Email
 admin.update_date: Изменен
 admin.include_lang_in_url: Включить язык в урл
-Office: Офисы
-ID: ID
 admin.error.office_locale_host_exists: Офис с локалью '{locale}' и хостом '{host}' уже существует. Алиас существующего офиса '{alias}'
 admin.error.office_host_exists: Офис для хоста '{host}' уже существует. Алиас существующего офиса '{alias}'
 admin.cache_clear_success: 'Кеш успешно очищен'
 admin.clear_cache: 'Очистить кеш'
+
+admin.translation_list: Перевод
+admin.translations: Перевод
+admin.domain: Домен
+admin.all: Все
+admin.link_export: Экспорт
+admin.link_import: Импортировать
+admin.import_success_message: Сообщения успешно сохранены
+admin.source: Источник
+admin.action: Действие
+admin.export: Экпорт
+admin.translation_export: Экпорт переводов
+admin.import: Импорт
+admin.translation_import: Импорт переводов
+admin.language: Язык
+admin.for_language: Для языка
+Translation: Перевод
+
+admin.filter.show_locale_value: Доп. язык
+admin.filter.translations: Значение
+admin.filter.empty_value: Пустые значения
+admin.filter.location: Расположение
+admin.filter.location.frontend: Фронтенд
+admin.filter.location.backend: Админка

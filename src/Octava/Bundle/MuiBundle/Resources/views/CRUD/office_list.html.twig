@@ -1,0 +1,12 @@
+{% extends 'OctavaAdminBundle:CRUD:list.html.twig' %}
+{% trans_default_domain 'OctavaMuiBundle' %}
+
+{% block actions %}
+    {% spaceless %}
+        {{ parent() }}
+        <li>
+            <a class="sonata-action-element" href="{{ admin.generateUrl('clearCache') }}">
+                <i class="fa fa-plus-circle"></i>
+                {{ 'admin.clear_cache'|trans }}</a></li>
+    {% endspaceless %}
+{% endblock %}

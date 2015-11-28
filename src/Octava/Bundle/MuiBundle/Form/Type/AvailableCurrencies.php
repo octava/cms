@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AvailableCurrencies extends AbstractType
 {
+    const TYPE_NAME = 'octava_available_currencies';
     /**
      * @var Currencies
      */
@@ -40,6 +41,7 @@ class AvailableCurrencies extends AbstractType
     public function setCurrencyDict(Currencies $currencyDict)
     {
         $this->currencyDict = $currencyDict;
+
         return $this;
     }
 
@@ -50,7 +52,7 @@ class AvailableCurrencies extends AbstractType
      */
     public function getName()
     {
-        return 'octava_available_currencies';
+        return self::TYPE_NAME;
     }
 
     public function getParent()

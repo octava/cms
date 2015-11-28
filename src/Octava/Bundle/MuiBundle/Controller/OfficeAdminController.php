@@ -5,17 +5,12 @@ namespace Octava\Bundle\MuiBundle\Controller;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class OfficeAdminController extends CRUDController
 {
     public function clearCacheAction()
     {
-        if (!$this->admin->isGranted('CLEAR_CACHE')) {
-            throw new AccessDeniedException();
-        }
-
-        $command = $this->getParameter('kernel.root_dir') . '/console cache:clear';
+        $command = $this->getParameter('kernel.root_dir').'/console cache:clear';
         $process = new Process($command);
         $process->setTimeout(3600);
         try {
@@ -24,6 +19,10 @@ class OfficeAdminController extends CRUDController
         } catch (RuntimeException $e) {
             $this->addFlash('sonata_flash_error', $e->getMessage());
         }
-        return $this->redirectToRoute('admin_robo_office_office_list');
+
+        return $this->redirectToRoute(
+            'admin_octava_mui_office_list',
+            ['filter' => $this->admin->getFilterParameters()]
+        );
     }
 }

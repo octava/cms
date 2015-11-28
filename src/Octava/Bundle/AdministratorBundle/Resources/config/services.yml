@@ -4,6 +4,7 @@ parameters:
     octava_administrator.admin.group: Octava\Bundle\AdministratorBundle\Admin\GroupAdmin
     octava_administrator.config.administrator.class: Octava\Bundle\AdministratorBundle\Config\AdministratorConfig
     octava_administrator.form_type.resources.class: Octava\Bundle\AdministratorBundle\Form\Type\ResourcesType
+    octava_administrator.twig.administrator_extension.class: Octava\Bundle\AdministratorBundle\Twig\AdministratorExtension
 
 services:
     octava_administrator.security_handler.administrator:
@@ -19,3 +20,9 @@ services:
             - @octava_administrator.config.administrator
         tags:
             - { name: form.type, alias: octava_acl_resources }
+
+    octava_administrator.twig.administrator_extension:
+        class: %octava_administrator.twig.administrator_extension.class%
+        arguments: [ @security.token_storage ]
+        tags:
+            - { name: twig.extension }

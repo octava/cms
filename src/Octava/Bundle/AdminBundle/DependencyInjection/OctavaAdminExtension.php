@@ -32,6 +32,7 @@ class OctavaAdminExtension extends Extension implements PrependExtensionInterfac
         $configName = 'sonata_admin';
         $configs = [];
         $configs['templates']['layout'] = 'OctavaAdminBundle::standard_layout.html.twig';
+        $configs['templates']['list'] = 'OctavaAdminBundle:CRUD:list.html.twig';
         $container->prependExtensionConfig($configName, $configs);
     }
 }

@@ -1,8 +1,5 @@
-ID: ID
-Actions: Actions
 security.login.username: Username
 security.login.password: Password
-admin.id: ID
 admin.username: Username
 admin.email: Email
 admin.enabled: Active
@@ -23,7 +20,7 @@ admin.group_list: Groups
 form.label_groups: Group
 users: Users
 groups: Groups
-admin.show_hidden: Show Hidden
+admin.show_hidden: Show OctavaHidden
 admin.resources: Resources
 
 admin.locales: Locales

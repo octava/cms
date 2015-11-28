@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class LocaleAdmin extends Admin
 {
+    protected $translationDomain = 'OctavaMuiBundle';
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -17,8 +19,6 @@ class LocaleAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('name')
             ->add('alias')
             ->add('state')
@@ -33,11 +33,10 @@ class LocaleAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('name')
             ->add('alias')
             ->add('state')
+            ->add('updatedAt')
             ->add('position')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -56,8 +55,6 @@ class LocaleAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('name')
             ->add('alias')
             ->add('state')

@@ -35,11 +35,20 @@ class LabelTranslatorStrategy implements LabelTranslatorStrategyInterface
         if ($context == 'breadcrumb' && substr($label, -strlen($deleteStr)) == $deleteStr) {
             return $this->translator->trans('admin.delete', [], 'OctavaAdminBundle');
         }
-        if ($label == '_action') {
+        if (in_array($label, ['_action', 'Action'])) {
             return $this->translator->trans('admin._action', [], 'OctavaAdminBundle');
+        }
+        if (in_array($label, ['Actions'])) {
+            return $this->translator->trans('Actions', [], 'OctavaAdminBundle');
         }
         if ($label == 'id') {
             return $this->translator->trans('admin.id', [], 'OctavaAdminBundle');
+        }
+        if (in_array($label, ['created_at', 'createdAt', 'Created At'])) {
+            return $this->translator->trans('admin.created_at', [], 'OctavaAdminBundle');
+        }
+        if (in_array($label, ['updated_at', 'updatedAt', 'Updated At'])) {
+            return $this->translator->trans('admin.updated_at', [], 'OctavaAdminBundle');
         }
 
         $label = str_replace('.', '_', $label);

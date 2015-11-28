@@ -2,11 +2,11 @@
 namespace Octava\Bundle\AdministratorBundle\Annotation;
 
 /**
- * Class AclActions
- * @package octava\cms\src\Octava\Bundle\AdministratorBundle\Annotation
+ * Class OctavaAclActions
+ * @package Octava\Bundle\AdministratorBundle\Annotation
  * @Annotation
  */
-class AclActions
+class OctavaAclActions
 {
     public $value = ["LIST", "CREATE", "EDIT", "DELETE"];
 }

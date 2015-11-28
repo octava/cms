@@ -1,3 +1,10 @@
+ID: ID
+Office: Office
+Locale: Locale
+Actions: Actions
+Created at: Created at
+Updated at: Updated at
+
 admin.id: ID
 admin.admin: Admin
 admin.name: Name
@@ -24,13 +31,35 @@ admin.placeholder_office_url: 'Office URL with protocol, language segment and wi
 admin.placeholder_office_url_wolang: 'Office URL with protocol, without lang segment and without a slash at the end.<br /><span style="padding-left: 80px;">Example: <b>http://example.com</b></span>'
 admin.placeholder_office_domain: 'Office domain<br /><span style="padding-left: 80px;">Example: <b>example.com</b></span>'
 admin.placeholder_related_url: 'The office related URL with protocol and without a slash at the end<br /><span style="padding-left: 80px;">Example: <b>http://related.eample.com</b></span>'
-admin.available_currencies: Available Currencies
+admin.currencies: Available Currencies
 admin.email: Email
 admin.updatedAt: Updated at
 admin.include_lang_in_url: Include language in url
-Office: Office
-ID: ID
 admin.error.office_locale_host_exists: An office with locale '{locale}' and host '{host}' already exists. The existed office alias is '{alias}'
 admin.error.office_host_exists: Default office for host '{host}' already exists. The existed office alias is '{alias}'
 admin.cache_clear_success: 'Cache has been cleared successfully'
 admin.clear_cache: 'Clear cache'
+
+admin.translations: Translations
+admin.translation_list: Translation List
+admin.domain: Domain
+admin.all: All
+admin.link_export: Download
+admin.link_import: Import
+admin.import_success_message: Messages were saved successfully
+admin.source: Source
+admin.action: Action
+admin.export: Export
+admin.translation_export: Translation export
+admin.import: Import
+admin.translation_import: Translation import
+admin.language: Language
+admin.for_language: For language
+Translation: Translation
+
+admin.filter.show_locale_value: Add locale
+admin.filter.translations: Value
+admin.filter.empty_value: Empty values
+admin.filter.location: Location
+admin.filter.location.frontend: Frontend
+admin.filter.location.backend: Admin

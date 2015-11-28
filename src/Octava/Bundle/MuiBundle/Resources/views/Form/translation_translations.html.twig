@@ -1,0 +1,13 @@
+{% block translations_widget %}
+    {% for locale in locales() %}
+        {% set disable = not octava_administrator_locales() is empty and locale.alias not in octava_administrator_locales()|keys %}
+        <div style="padding-bottom:10px;">
+            <div><b>{{ locale.name }}</b></div>
+            <div>
+                <textarea class="form-control"
+                        {% if disable %} readonly="readonly"{% endif %}
+                          name="{{ full_name }}[{{ locale.alias }}]">{{ value[locale.alias] is defined ?  value[locale.alias] : '' }}</textarea>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

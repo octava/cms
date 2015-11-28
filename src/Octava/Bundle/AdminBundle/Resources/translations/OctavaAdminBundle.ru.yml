@@ -12,3 +12,8 @@ admin.delete: Удалить
 admin._action: Действия
 admin.id: ID
 admin.dashboard: Панель управления
+admin.created_at: Создан
+admin.updated_at: Обновлен
+
+ID: ID
+Actions: Действия

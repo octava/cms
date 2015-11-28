@@ -12,3 +12,8 @@ admin.delete: Delete
 admin._action: Actions
 admin.id: ID
 admin.dashboard: Dashboard
+admin.created_at: Created at
+admin.updated_at: Updated at
+
+ID: ID
+Actions: Actions
