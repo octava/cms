@@ -19,9 +19,7 @@ class GroupAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('name')
-            ->add('createdAt')
-            ->add('updatedAt');
+            ->add('name');
     }
 
     /**

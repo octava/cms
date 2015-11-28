@@ -72,6 +72,20 @@ Octava\Bundle\AdministratorBundle\Entity\Administrator:
                         referencedColumnName: id
                         onDelete: CASCADE
 
+        locales:
+            targetEntity: Octava\Bundle\MuiBundle\Entity\Locale
+            orderBy: { 'position': 'ASC' }
+            joinTable:
+                name: acl_administrator_locale
+                joinColumns:
+                    administratorId:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    localeId:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+
     lifecycleCallbacks:
         prePersist:   [ prePersist ]
         preUpdate:    [ preUpdate ]

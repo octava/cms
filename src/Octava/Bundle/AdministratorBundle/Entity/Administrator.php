@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\UserInterface;
 use Octava\Bundle\AdministratorBundle\Entity\Resource as EntityResource;
+use Octava\Bundle\MuiBundle\Entity\Locale;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
 
@@ -80,6 +81,10 @@ class Administrator implements UserInterface
      * @var string
      */
     private $plainPassword;
+    /**
+     * @var Collection
+     */
+    private $locales;
 
     /**
      * Constructor
@@ -103,6 +108,7 @@ class Administrator implements UserInterface
                 $resources[$resource->getId()] = $resource;
             }
         }
+
         return $resources;
     }
 
@@ -116,6 +122,7 @@ class Administrator implements UserInterface
             /** @var EntityResource $resource */
             $resources[$resource->getId()] = $resource;
         }
+
         return $resources;
     }
 
@@ -609,6 +616,7 @@ class Administrator implements UserInterface
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
+
         return $this;
     }
 
@@ -749,5 +757,39 @@ class Administrator implements UserInterface
     public function removeRole($role)
     {
         // TODO: Implement removeRole() method.
+    }
+
+    /**
+     * Add locale
+     *
+     * @param Locale $locale
+     *
+     * @return Administrator
+     */
+    public function addLocale(Locale $locale)
+    {
+        $this->locales[] = $locale;
+
+        return $this;
+    }
+
+    /**
+     * Remove locale
+     *
+     * @param Locale $locale
+     */
+    public function removeLocale(Locale $locale)
+    {
+        $this->locales->removeElement($locale);
+    }
+
+    /**
+     * Get locales
+     *
+     * @return Collection
+     */
+    public function getLocales()
+    {
+        return $this->locales;
     }
 }

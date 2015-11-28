@@ -167,10 +167,14 @@ class AdministratorAdmin extends Admin
             ->add('groups', null, ['expanded' => true, 'multiple' => true])
             ->end()
             ->with($this->trans('admin.tab.acl'))
-            ->add('resources', 'acl_resources', ['required' => false, 'selectedCell' => $selected])
+            ->add(
+                'resources',
+                'octava_acl_resources',
+                ['required' => false, 'selectedCell' => $selected]
+            )
             ->end()
             ->with($this->trans('admin.tab.locale'))
-            ->add('locales', null, ['expanded' => true, 'multiple' => true])
+            ->add('locales', null, ['multiple' => true])
             ->end();
     }
 
