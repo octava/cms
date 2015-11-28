@@ -3,8 +3,9 @@
     "description": "Admin users and group",
     "type": "bundle",
     "require": {
-        "sonata-project/admin-bundle": "^2.3",
-        "sonata-project/user-bundle": "^2.2"
+        "sonata-project/admin-bundle": "2.4.*@dev",
+        "sonata-project/doctrine-orm-admin-bundle": "2.4.*@dev",
+        "sonata-project/block-bundle": "2.4.*@dev"
     },
     "license": "MIT",
     "authors": [
