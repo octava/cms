@@ -18,7 +18,7 @@ class Types
     /**
      * @var string
      */
-    protected $translationDomain;
+    protected $translationDomain = 'OctavaAdminMenuBundle';
 
     /**
      * Types constructor.
@@ -36,25 +36,15 @@ class Types
     {
         return [
             AdminMenu::TYPE_FOLDER => $this->translator->trans(
-                'admin.menu_item.type.folder',
+                'admin.type.folder',
                 [],
                 $this->translationDomain
             ),
             AdminMenu::TYPE_MODULE => $this->translator->trans(
-                'admin.menu_item.type.module',
+                'admin.type.module',
                 [],
                 $this->translationDomain
             ),
         ];
-    }
-
-    /**
-     * @param mixed $translationDomain
-     * @return self
-     */
-    public function setTranslationDomain($translationDomain)
-    {
-        $this->translationDomain = $translationDomain;
-        return $this;
     }
 }

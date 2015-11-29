@@ -5,6 +5,7 @@ parameters:
     octava_admin_menu.twig.admin_menu_extension.class: Octava\Bundle\AdminMenuBundle\Twig\AdminMenuExtension
     octava_admin_menu.form_type.entity_type.class: Octava\Bundle\AdminMenuBundle\Form\Type\EntityType
     octava_admin_menu.form_type.admin_class_choice_type.class: Octava\Bundle\AdminMenuBundle\Form\Type\AdminClassChoiceType
+    octava_admin_menu.menu_builder.class: Octava\Bundle\AdminMenuBundle\MenuBuilder
 
 services:
     octava_admin_menu.admin_menu_manager:
@@ -39,3 +40,12 @@ services:
         arguments: [ @octava_admin_menu.admin_menu_manager ]
         tags:
             - { name: form.type, alias: octava_admin_menu_admin_class_choice }
+
+    octava_admin_menu.menu_builder:
+        class: %octava_admin_menu.menu_builder.class%
+        arguments:
+            - @sonata.admin.pool
+            - @knp_menu.factory
+            - @knp_menu.menu_provider
+            - @event_dispatcher
+            - @request_stack

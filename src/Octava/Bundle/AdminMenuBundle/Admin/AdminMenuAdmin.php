@@ -50,9 +50,10 @@ class AdminMenuAdmin extends Admin
         $container = $this->getConfigurationPool()
             ->getContainer();
 
-        $this->adminMenuManager = $container
-            ->get('octava_admin_menu.admin_menu_manager');
+        $this->adminMenuManager = $container->get('octava_admin_menu.admin_menu_manager');
         $this->dictTypes = $container->get('octava_admin_menu.dict.types');
+        $this->treeManager = $container->get('octava_tree.tree_manager');
+        $this->translationMapper = $container->get('octava_mui.form.translation_mapper');
     }
 
     /**
@@ -60,11 +61,6 @@ class AdminMenuAdmin extends Admin
      */
     public function getDictTypes()
     {
-        if (null === $this->dictTypes) {
-            $this->dictTypes = $this->getConfigurationPool()
-                ->getContainer()->get('octava_admin_menu.dict.types');
-        }
-
         return $this->dictTypes;
     }
 
@@ -73,11 +69,6 @@ class AdminMenuAdmin extends Admin
      */
     public function getAdminMenuManager()
     {
-        if (null === $this->adminMenuManager) {
-            $this->adminMenuManager = $this->getConfigurationPool()
-                ->getContainer()->get('octava_admin_menu.admin_menu_manager');
-        }
-
         return $this->adminMenuManager;
     }
 
@@ -86,11 +77,6 @@ class AdminMenuAdmin extends Admin
      */
     public function getTreeManager()
     {
-        if (null === $this->treeManager) {
-            $this->treeManager = $this->getConfigurationPool()
-                ->getContainer()->get('octava_tree.tree_manager');
-        }
-
         return $this->treeManager;
     }
 
@@ -106,11 +92,6 @@ class AdminMenuAdmin extends Admin
      */
     public function getTranslationMapper()
     {
-        if (null === $this->translationMapper) {
-            $this->translationMapper = $this->getConfigurationPool()
-                ->getContainer()->get('octava_mui.form.translation_mapper');
-        }
-
         return $this->translationMapper;
     }
 
@@ -139,7 +120,6 @@ class AdminMenuAdmin extends Admin
                     'sortable' => false,
                     'code' => null,
                     'template' => 'OctavaAdminMenuBundle:CRUD:admin_menu_list_title_field.html.twig',
-                    'label' => 'admin.list.title',
                 ]
             )
             ->add(
@@ -147,7 +127,6 @@ class AdminMenuAdmin extends Admin
                 null,
                 [
                     'sortable' => false,
-                    'label' => 'admin.list.sort',
                 ]
             )
             ->add(
@@ -162,25 +141,24 @@ class AdminMenuAdmin extends Admin
                             'template' => 'OctavaAdminMenuBundle:CRUD:admin_menu_list__action_create.html.twig',
                         ],
                     ],
-                    'label' => 'admin.list.action',
                 ]
             )
             ->remove('batch');
 
-        $treeQuery = $this->getRepository()
-            ->createQueryBuilder('m')
-            ->where('m.type = :type')
-            ->setParameter('type', AdminMenu::TYPE_FOLDER);
-
-        $this->getTreeManager()->setQueryBuilder($treeQuery)
-            ->setParentField('parent')
-            ->setNameField('title')
-            ->setOrderString('m.position')
-            ->setActZeroAsNull(true)
-            ->setLinkPath($this->generateUrl('list'))
-            ->setLevelTemplate('OctavaTreeBundle:JsNavigation:level.html.twig')
-            ->setTreeTemplate('OctavaTreeBundle:JsNavigation:tree.html.twig')
-            ->setSelected(PHP_INT_MAX);
+//        $treeQuery = $this->getRepository()
+//            ->createQueryBuilder('m')
+//            ->where('m.type = :type')
+//            ->setParameter('type', AdminMenu::TYPE_FOLDER);
+//
+//        $this->getTreeManager()->setQueryBuilder($treeQuery)
+//            ->setParentField('parent')
+//            ->setNameField('title')
+//            ->setOrderString('m.position')
+//            ->setActZeroAsNull(true)
+//            ->setLinkPath($this->generateUrl('list'))
+//            ->setLevelTemplate('OctavaTreeBundle:JsNavigation:level.html.twig')
+//            ->setTreeTemplate('OctavaTreeBundle:JsNavigation:tree.html.twig')
+//            ->setSelected(PHP_INT_MAX);
     }
 
     /**

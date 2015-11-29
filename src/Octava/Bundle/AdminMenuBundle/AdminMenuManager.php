@@ -124,4 +124,23 @@ class AdminMenuManager
 
         return $a[0].$a[1];
     }
+
+    /**
+     * @param string $class
+     * @return Admin
+     */
+    public function getAdminObject($class)
+    {
+        if (empty($this->adminObjects)) {
+            foreach ($this->pool->getDashboardGroups() as $group) {
+                foreach ($group['items'] as $admin) {
+                    /** @var Admin $admin */
+                    $key = get_class($admin);
+                    $this->adminObjects[$key] = $admin;
+                }
+            }
+        }
+
+        return empty($this->adminObjects[$class]) ? null : $this->adminObjects[$class];
+    }
 }
