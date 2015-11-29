@@ -3,6 +3,8 @@ parameters:
     octava_admin_menu.dict.types.class: Octava\Bundle\AdminMenuBundle\Dict\Types
     octava_admin_menu.admin.admin_menu.class: Octava\Bundle\AdminMenuBundle\Admin\AdminMenuAdmin
     octava_admin_menu.twig.admin_menu_extension.class: Octava\Bundle\AdminMenuBundle\Twig\AdminMenuExtension
+    octava_admin_menu.form_type.entity_type.class: Octava\Bundle\AdminMenuBundle\Form\Type\EntityType
+    octava_admin_menu.form_type.admin_class_choice_type.class: Octava\Bundle\AdminMenuBundle\Form\Type\AdminClassChoiceType
 
 services:
     octava_admin_menu.admin_menu_manager:
@@ -17,13 +19,7 @@ services:
         class: %octava_admin_menu.admin.admin_menu.class%
         arguments: [~, Octava\Bundle\AdminMenuBundle\Entity\AdminMenu, OctavaAdminMenuBundle:AdminMenuAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Admin, label: admin.menu_item.title}
-        calls:
-            - [ setTranslationDomain, [OctavaAdminMenuBundle] ]
-            - [ setDictTypes, [@octava_admin_menu.dict.types] ]
-            - [ setAdminMenuManager, [@octava_admin_menu.admin_menu_manager] ]
-            - [ setTranslationMapper, [@robo_translation.form_mapper] ]
-            - [ setTree, [@octava_tree.tree_manager]]
+            - {name: sonata.admin, manager_type: orm, group: Admin, label: "Admin Menu"}
 
     octava_admin_menu.twig.admin_menu_extension:
         class: %octava_admin_menu.twig.admin_menu_extension.class%
@@ -31,3 +27,15 @@ services:
         arguments: [@octava_admin_menu.admin_menu_manager]
         tags:
             - { name: twig.extension }
+
+    octava_admin_menu.form_type.entity_type:
+        class: %octava_admin_menu.form_type.entity_type.class%
+        arguments: [ @octava_admin_menu.admin_menu_manager ]
+        tags:
+            - { name: form.type, alias: octava_admin_menu_entity }
+
+    octava_admin_menu.form_type.admin_class_choice_type:
+        class: %octava_admin_menu.form_type.admin_class_choice_type.class%
+        arguments: [ @octava_admin_menu.admin_menu_manager ]
+        tags:
+            - { name: form.type, alias: octava_admin_menu_admin_class_choice }

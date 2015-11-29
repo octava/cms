@@ -1,0 +1,16 @@
+{% block octava_admin_menu_admin_class_choice_widget %}
+    {% set cssClass = 'chzn-select' %}
+    {% if attr['class'] is defined and attr['class'] is not empty %}
+        {% set cssClass = attr['class'] %}
+    {% endif %}
+    {% set attr = attr|merge({'class': cssClass}) %}
+    <select {{ block('widget_attributes') }}>
+        <option value=""></option>
+        {% for k,v in admin_class_list %}
+            {% if not v['used'] or data == k %}
+                <option data-title-ru="{{ v['ru'] }}" data-title-en="{{ v['en'] }}"
+                        value="{{ k }}" {{ data == k ? 'selected' : '' }}>{{ v['value'] }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endblock %}

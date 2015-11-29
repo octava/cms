@@ -46,7 +46,7 @@ Octava\Bundle\AdminMenuBundle\Entity\AdminMenu:
             mappedBy: parent
             cascade: ['remove']
             orderBy:
-                sort: ASC
+                position: ASC
 
     manyToOne:
         parent:

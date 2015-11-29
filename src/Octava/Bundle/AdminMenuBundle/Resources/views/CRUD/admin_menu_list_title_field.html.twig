@@ -1,0 +1,3 @@
+<td style="padding-left: {{ (object.level+1) * 30 }}px;{{ object.type == constant('TYPE_FOLDER', object) ? 'font-weight:bold' : '' }}">
+    {{ object.type == constant('TYPE_FOLDER', object) ? '<i class="icon-folder-open-alt"></i>' : '' }} {{ value }}
+</td>

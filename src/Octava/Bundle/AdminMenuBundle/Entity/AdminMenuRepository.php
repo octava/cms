@@ -14,7 +14,7 @@ class AdminMenuRepository extends EntityRepository
 {
     public function getMenuTree()
     {
-        $entities = $this->findBy([], ['sort' => 'ASC']);
+        $entities = $this->findBy([], ['position' => 'ASC']);
         $tree = $this->createTree($entities);
         return $tree;
     }

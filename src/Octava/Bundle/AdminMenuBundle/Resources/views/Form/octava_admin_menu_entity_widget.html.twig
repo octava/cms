@@ -1,0 +1,18 @@
+{% block octava_admin_menu_entity_widget %}
+    {% set cssClass = 'form-control' %}
+    {% if attr['class'] is defined and attr['class'] is not empty %}
+        {% set cssClass = attr['class'] %}
+    {% endif %}
+    {% if data.id is not defined %}
+        {% set data = default_data %}
+    {% endif %}
+    {% set attr = attr|merge({'class': cssClass}) %}
+    <select {{ block('widget_attributes') }}>
+        <option value=""></option>
+        {% for k,v in tree_list %}
+            {% if k not in excluded_ids %}
+                <option value="{{ k }}" {{ data.id is defined and data.id == k ? 'selected' : '' }}>{{ v }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endblock %}

@@ -5,16 +5,26 @@ namespace Octava\Bundle\AdminMenuBundle\Admin;
 use Octava\Bundle\AdminMenuBundle\AdminMenuManager;
 use Octava\Bundle\AdminMenuBundle\Dict\Types;
 use Octava\Bundle\AdminMenuBundle\Entity\AdminMenu;
+use Octava\Bundle\AdminMenuBundle\Entity\AdminMenuRepository;
+use Octava\Bundle\AdminMenuBundle\Form\Type\AdminClassChoiceType;
+use Octava\Bundle\AdminMenuBundle\Form\Type\EntityType;
+use Octava\Bundle\MuiBundle\Form\TranslationMapper;
+use Octava\Bundle\TreeBundle\TreeManager;
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminMenuAdmin extends Admin
 {
+    /**
+     * @var string
+     */
+    protected $translationDomain = 'OctavaAdminMenuBundle';
+
     /**
      * @var Types
      */
@@ -24,6 +34,16 @@ class AdminMenuAdmin extends Admin
      * @var AdminMenuManager
      */
     protected $adminMenuManager;
+
+    /**
+     * @var TreeManager
+     */
+    protected $treeManager;
+
+    /**
+     * @var TranslationMapper
+     */
+    protected $translationMapper;
 
     public function configure()
     {
@@ -40,6 +60,11 @@ class AdminMenuAdmin extends Admin
      */
     public function getDictTypes()
     {
+        if (null === $this->dictTypes) {
+            $this->dictTypes = $this->getConfigurationPool()
+                ->getContainer()->get('octava_admin_menu.dict.types');
+        }
+
         return $this->dictTypes;
     }
 
@@ -48,7 +73,45 @@ class AdminMenuAdmin extends Admin
      */
     public function getAdminMenuManager()
     {
+        if (null === $this->adminMenuManager) {
+            $this->adminMenuManager = $this->getConfigurationPool()
+                ->getContainer()->get('octava_admin_menu.admin_menu_manager');
+        }
+
         return $this->adminMenuManager;
+    }
+
+    /**
+     * @return TreeManager
+     */
+    public function getTreeManager()
+    {
+        if (null === $this->treeManager) {
+            $this->treeManager = $this->getConfigurationPool()
+                ->getContainer()->get('octava_tree.tree_manager');
+        }
+
+        return $this->treeManager;
+    }
+
+    public function getMenuTree()
+    {
+        $ret = $this->getAdminMenuManager()->getTree();
+
+        return $ret;
+    }
+
+    /**
+     * @return TranslationMapper
+     */
+    public function getTranslationMapper()
+    {
+        if (null === $this->translationMapper) {
+            $this->translationMapper = $this->getConfigurationPool()
+                ->getContainer()->get('octava_mui.form.translation_mapper');
+        }
+
+        return $this->translationMapper;
     }
 
     public function validate(ErrorElement $errorElement, $object)
@@ -60,35 +123,33 @@ class AdminMenuAdmin extends Admin
                 ->end();
         }
     }
-    
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('title')
-            ->add('type')
-            ->add('adminClass')
-            ->add('position');
-    }
 
     /**
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        $this->setTemplate('list', 'OctavaAdminMenuBundle:CRUD:admin_menu_list.html.twig');
+
         $listMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('title')
-            ->add('type')
-            ->add('adminClass')
-            ->add('position')
+            ->add(
+                'title',
+                null,
+                [
+                    'sortable' => false,
+                    'code' => null,
+                    'template' => 'OctavaAdminMenuBundle:CRUD:admin_menu_list_title_field.html.twig',
+                    'label' => 'admin.list.title',
+                ]
+            )
+            ->add(
+                'position',
+                null,
+                [
+                    'sortable' => false,
+                    'label' => 'admin.list.sort',
+                ]
+            )
             ->add(
                 '_action',
                 'actions',
@@ -97,9 +158,29 @@ class AdminMenuAdmin extends Admin
                         'show' => [],
                         'edit' => [],
                         'delete' => [],
+                        'create' => [
+                            'template' => 'OctavaAdminMenuBundle:CRUD:admin_menu_list__action_create.html.twig',
+                        ],
                     ],
+                    'label' => 'admin.list.action',
                 ]
-            );
+            )
+            ->remove('batch');
+
+        $treeQuery = $this->getRepository()
+            ->createQueryBuilder('m')
+            ->where('m.type = :type')
+            ->setParameter('type', AdminMenu::TYPE_FOLDER);
+
+        $this->getTreeManager()->setQueryBuilder($treeQuery)
+            ->setParentField('parent')
+            ->setNameField('title')
+            ->setOrderString('m.position')
+            ->setActZeroAsNull(true)
+            ->setLinkPath($this->generateUrl('list'))
+            ->setLevelTemplate('OctavaTreeBundle:JsNavigation:level.html.twig')
+            ->setTreeTemplate('OctavaTreeBundle:JsNavigation:tree.html.twig')
+            ->setSelected(PHP_INT_MAX);
     }
 
     /**
@@ -107,14 +188,71 @@ class AdminMenuAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('title')
-            ->add('type')
-            ->add('adminClass')
-            ->add('position');
+        $id = $this->getRequest()->get($this->getIdParameter());
+        $parent = null;
+        $excludedIds = [];
+        if (!empty($id)) {
+            if ($this->getRequest()->get('_route') != 'admin_octava_adminmenu_adminmenu_create') {
+                $excludedIds[] = $id;
+            } else {
+                $parent = $this->getRepository()->find($id);
+            }
+        }
+
+        $this->setTemplate('edit', 'OctavaAdminMenuBundle:CRUD:admin_menu_edit.html.twig');
+
+        $this->getTranslationMapper()
+            ->setFormMapper($formMapper)
+            ->with()
+            ->add(
+                'title',
+                'text',
+                [
+                    'translatable' => true,
+                ]
+            )
+            ->add(
+                'parent',
+                EntityType::TYPE_NAME,
+                [
+                    'class' => $this->getClass(),
+                    'empty_value' => '',
+                    'required' => false,
+                    'excluded_ids' => $excludedIds,
+                    'default_data' => $parent,
+                ]
+            )
+            ->add(
+                'type',
+                'choice',
+                [
+                    'choices' => $this->getDictTypes()->getChoices(),
+                    'empty_value' => '',
+                    'attr' => [
+                        'data-type-select' => '1',
+                    ],
+                ]
+            )
+            ->add(
+                'adminClass',
+                AdminClassChoiceType::TYPE_NAME,
+                [
+                    'empty_value' => '',
+                    'attr' => [
+                        'class' => 'chzn-select',
+                        'data-class-select' => '1',
+                    ],
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'position',
+                'number',
+                [
+                    'required' => false,
+                ]
+            )
+            ->end();
     }
 
     /**
@@ -130,5 +268,23 @@ class AdminMenuAdmin extends Admin
             ->add('type')
             ->add('adminClass')
             ->add('position');
+    }
+
+    /**
+     * @return AdminMenuRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getConfigurationPool()
+            ->getContainer()
+            ->get('doctrine.orm.entity_manager')
+            ->getRepository($this->getClass());
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('show');
+        $collection->remove('batch');
+        $collection->remove('export');
     }
 }

@@ -792,4 +792,48 @@ class Administrator implements UserInterface
     {
         return $this->locales;
     }
+
+    public function getLocalesAlias()
+    {
+        $result = [];
+        foreach ($this->getLocales() as $entity) {
+            $result[$entity->getAlias()] = $entity->getAlias();
+        }
+
+        return $result;
+    }
+
+    public function isDisabledByAdministratorLocales($locale)
+    {
+        $result = !empty($this->getLocalesAlias()) && !in_array($locale, $this->getLocalesAlias());
+
+        return $result;
+    }
+
+    public function sortLocales(Locale $a, Locale $b)
+    {
+        if (in_array($a->getAlias(), $this->getLocalesAlias())
+            && in_array($b->getAlias(), $this->getLocalesAlias())
+        ) {
+            if ($a->getPosition() == $b->getPosition()) {
+                $result = 0;
+            } else {
+                $result = ($a->getPosition() < $b->getPosition()) ? -1 : 1;
+            }
+        } else {
+            if (in_array($a->getAlias(), $this->getLocalesAlias())) {
+                $result = -1;
+            } elseif (in_array($b->getAlias(), $this->getLocalesAlias())) {
+                $result = 1;
+            } else {
+                if ($a->getPosition() == $b->getPosition()) {
+                    $result = 0;
+                } else {
+                    $result = ($a->getPosition() < $b->getPosition()) ? -1 : 1;
+                }
+            }
+        }
+
+        return $result;
+    }
 }

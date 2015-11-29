@@ -24,6 +24,9 @@ class StructureAdmin extends Admin
      * @var Router
      */
     public $router;
+    /**
+     * @var string
+     */
     protected $translationDomain = 'OctavaStructureBundle';
     /**
      * @var EventDispatcherInterface
