@@ -1,7 +1,6 @@
 <?php
 namespace Octava\Bundle\AdminMenuBundle;
 
-use Doctrine\Common\Collections\Collection;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
@@ -12,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class MenuBuilder
+class Builder
 {
     /**
      * @var RequestStack
@@ -157,25 +156,34 @@ class MenuBuilder
 
     /**
      * @param ItemInterface $menu
-     * @param AdminMenu[]|Collection $tree
+     * @param AdminMenu[] $tree
+     * @param int $level
      */
-    protected function generateMenu(&$menu, $tree)
+    protected function generateMenu(&$menu, &$tree, $level = 0)
     {
-        foreach ($tree as $item) {
-            $type = $item->getType();
-            $options = [];
-            if (AdminMenu::TYPE_FOLDER !== $type) {
-                $admin = $this->adminMenuManager->getAdminObject($item->getAdminClass());
-                $options = $admin->generateMenuUrl('list');
-                $options['extras'] = [
-                    'admin' => $admin,
-                ];
-            }
+        while (!empty($tree)) {
+            $item = array_shift($tree);
 
-            $label = $item->getTitle();
-            $child = $menu->addChild($label, $options);
-            if (!$item->getChildren()->isEmpty()) {
-                $this->generateMenu($child, $item->getChildren());
+            $type = $item->getType();
+            $itemLabel = $item->getTitle();
+            $itemLevel = $item->getLevel();
+
+            if ($itemLevel == $level) {
+                $options = [];
+                if (AdminMenu::TYPE_FOLDER !== $type) {
+                    $admin = $this->adminMenuManager->getAdminObject($item->getAdminClass());
+                    $options = $admin->generateMenuUrl('list');
+                    $options['extras'] = [
+                        'admin' => $admin,
+                    ];
+                }
+                $child = $menu->addChild($itemLabel, $options);
+            } elseif ($itemLevel > $level) {
+                array_unshift($tree, $item);
+                $this->generateMenu($child, $tree, $itemLevel);
+            } else {
+                array_unshift($tree, $item);
+                break;
             }
         }
     }
