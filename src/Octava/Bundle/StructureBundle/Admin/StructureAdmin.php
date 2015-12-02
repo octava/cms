@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Routing\Route;
 
 class StructureAdmin extends Admin
 {
@@ -58,6 +59,14 @@ class StructureAdmin extends Admin
      * @var FilesystemCache
      */
     protected $menuCache;
+
+    /**
+     * @return TranslationMapper
+     */
+    public function getTranslationMapper()
+    {
+        return $this->translationMapper;
+    }
 
     public function configure()
     {
@@ -289,7 +298,7 @@ class StructureAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $this->setTemplate('edit', 'RoboStructureBundle:CRUD:edit.html.twig');
+        $this->setTemplate('edit', 'OctavaStructureBundle:CRUD:structure_edit.html.twig');
 
         $request = $this->getRequest();
         $isCreateAction = $request->attributes->get('_sonata_name') == 'admin_octava_structure_structure_create';
@@ -302,15 +311,59 @@ class StructureAdmin extends Admin
             $parentChoiceParams['data'] = $request->get($this->getIdParameter());
         }
 
-        $formMapper
-            ->add('title')
-            ->add('description')
-            ->add('type')
-            ->add('alias')
-            ->add('path')
-            ->add('state')
-            ->add('template')
-            ->add('routeName');
+        $this->getTranslationMapper()
+            ->setFormMapper($formMapper)
+            ->with()
+            ->add(
+                'title',
+                'text',
+                [
+                    'translatable' => true,
+                    'label' => $this->trans('admin.title'),
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'alias',
+                'text',
+                ['label' => $this->trans('admin.alias'), 'translatable' => true, 'required' => false]
+            )
+            ->add(
+                'type',
+                'choice',
+                [
+                    'label' => $this->trans('admin.content_type'),
+                    'choices' => $this->getContentTypes(),
+                ]
+            )
+            ->add('routeName', null, ['required' => false])
+            ->add('template', 'choice', ['choices' => $this->getStructureTemplates(), 'required' => false])
+            ->add(
+                'parent_id',
+                'choice',
+                $parentChoiceParams
+            )
+            ->add(
+                'description',
+                'ckeditor',
+                [
+                    'translatable' => true,
+                    'label' => $this->trans('admin.description'),
+                    'required' => true,
+                    'config' => ['allowedContent' => true],
+                ]
+            )
+            ->add(
+                'state',
+                'checkbox',
+                [
+                    'label' => $this->trans('admin.state'),
+                    'required' => false,
+                    'translatable' => true,
+                    'attr' => ['data-addHidden' => 0],
+                ]
+            )
+            ->end();
     }
 
     /**
@@ -338,5 +391,40 @@ class StructureAdmin extends Admin
     protected function getRepository()
     {
         return $this->getEntityManager()->getRepository($this->getClass());
+    }
+
+    /**
+     * Получить список типов модулей которые можно привязть к узлу
+     * @return array
+     */
+    protected function getContentTypes()
+    {
+        $types = [
+            Structure::TYPE_PAGE => $this->trans('admin.page_type'),
+            Structure::TYPE_STRUCTURE_EMPTY => $this->trans('admin.robo_structure_empty'),
+        ];
+        foreach ($this->getRouter()->getRouteCollection() as $route) {
+            /** @var Route $route */
+            if ($route->hasDefault('_structure_type')
+                && $route->getDefault('_structure_type') != Structure::TYPE_PAGE
+            ) {
+                $type = $route->getDefault('_structure_type');
+                $types[$type] = $this->trans($type);
+            }
+        }
+
+        return $types;
+    }
+
+    protected function getStructureTemplates()
+    {
+        $ret = [
+            '' => $this->trans('admin.default_template'),
+        ];
+        foreach ($this->structureConfig->getAdditionalTemplates() as $name => $template) {
+            $ret[$template] = $this->trans(sprintf('admin.%s', $name));
+        }
+
+        return $ret;
     }
 }

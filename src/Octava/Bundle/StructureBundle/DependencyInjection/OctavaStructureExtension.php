@@ -28,7 +28,7 @@ class OctavaStructureExtension extends Extension
 
         $definition = new Definition(
             $container->getParameter('octava_structure.config.structure_config.class'),
-            $config
+            [$config]
         );
         $container->setDefinition('octava_structure.config.structure_config', $definition);
     }

@@ -53,6 +53,10 @@ class LabelTranslatorStrategy implements LabelTranslatorStrategyInterface
 
         $label = str_replace('.', '_', $label);
 
-        return sprintf('admin.%s', strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $label)));
+        $result = preg_replace('/^translation___(.*)___[a-z]{2}$/i', '$1', $label);
+        $result = strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $result));
+        $result = 'admin.'.$result;
+
+        return $result;
     }
 }

@@ -120,6 +120,7 @@ class AdminMenuAdmin extends Admin
                     'sortable' => false,
                     'code' => null,
                     'template' => 'OctavaAdminMenuBundle:CRUD:admin_menu_list_title_field.html.twig',
+                    'label' => $this->trans('admin.title'),
                 ]
             )
             ->add(
