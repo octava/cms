@@ -4,6 +4,7 @@ namespace Octava\Bundle\StructureBundle\Admin;
 
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
+use Octava\Bundle\MuiBundle\Form\TranslationMapper;
 use Octava\Bundle\StructureBundle\Config\StructureConfig;
 use Octava\Bundle\StructureBundle\Entity\Structure;
 use Octava\Bundle\StructureBundle\Entity\StructureRepository;
@@ -49,20 +50,34 @@ class StructureAdmin extends Admin
     protected $structureCache;
 
     /**
+     * @var TranslationMapper
+     */
+    protected $translationMapper;
+
+    /**
      * @var FilesystemCache
      */
     protected $menuCache;
+
+    public function configure()
+    {
+        $container = $this->getConfigurationPool()
+            ->getContainer();
+
+        $this->router = $container->get('router');
+        $this->menuCache = $container->get('octava_menu.cache');
+        $this->structureCache = $container->get('octava_structure.cache');
+        $this->translationMapper = $container->get('octava_mui.form.translation_mapper');
+        $this->dispatcher = $container->get('event_dispatcher');
+        $this->entityManager = $container->get('doctrine.orm.entity_manager');
+        $this->structureConfig = $container->get('octava_structure.config.structure_config');
+    }
 
     /**
      * @return Router
      */
     public function getRouter()
     {
-        if (null === $this->router) {
-            $this->router = $this->getConfigurationPool()
-                ->getContainer()->get('router.default');
-        }
-
         return $this->router;
     }
 
@@ -71,11 +86,6 @@ class StructureAdmin extends Admin
      */
     public function getMenuCache()
     {
-        if (null === $this->menuCache) {
-            $this->menuCache = $this->getConfigurationPool()
-                ->getContainer()->get('octava_menu.cache');
-        }
-
         return $this->menuCache;
     }
 
@@ -84,11 +94,6 @@ class StructureAdmin extends Admin
      */
     public function getDispatcher()
     {
-        if (null === $this->dispatcher) {
-            $this->dispatcher = $this->getConfigurationPool()
-                ->getContainer()->get('event_dispatcher');
-        }
-
         return $this->dispatcher;
     }
 
@@ -97,11 +102,6 @@ class StructureAdmin extends Admin
      */
     public function getEntityManager()
     {
-        if (null === $this->entityManager) {
-            $this->entityManager = $this->getConfigurationPool()
-                ->getContainer()->get('doctrine.orm.entity_manager');
-        }
-
         return $this->entityManager;
     }
 
@@ -110,11 +110,6 @@ class StructureAdmin extends Admin
      */
     public function getStructureConfig()
     {
-        if (null === $this->structureConfig) {
-            $this->structureConfig = $this->getConfigurationPool()
-                ->getContainer()->get('octava_structure.config.structure_config');
-        }
-
         return $this->structureConfig;
     }
 
@@ -123,11 +118,6 @@ class StructureAdmin extends Admin
      */
     public function getStructureCache()
     {
-        if (null === $this->structureCache) {
-            $this->structureCache = $this->getConfigurationPool()
-                ->getContainer()->get('octava_structure.cache');
-        }
-
         return $this->structureCache;
     }
 
@@ -299,10 +289,20 @@ class StructureAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $this->setTemplate('edit', 'RoboStructureBundle:CRUD:edit.html.twig');
+
+        $request = $this->getRequest();
+        $isCreateAction = $request->attributes->get('_sonata_name') == 'admin_octava_structure_structure_create';
+        $parentSelect = $this->getRepository()->getFlatTreeForSelect($this->getSubject()->getId());
+        $parentChoiceParams = [
+            'label' => $this->trans('admin.parent_item'),
+            'choices' => [$this->trans('admin.select.root_element')] + $parentSelect,
+        ];
+        if ($isCreateAction) {
+            $parentChoiceParams['data'] = $request->get($this->getIdParameter());
+        }
+
         $formMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('title')
             ->add('description')
             ->add('type')
@@ -330,5 +330,13 @@ class StructureAdmin extends Admin
             ->add('state')
             ->add('template')
             ->add('routeName');
+    }
+
+    /**
+     * @return StructureRepository
+     */
+    protected function getRepository()
+    {
+        return $this->getEntityManager()->getRepository($this->getClass());
     }
 }
