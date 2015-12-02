@@ -1,1 +1,35 @@
 Structure: Structure
+robo_structure_empty: -- Link doesn't exist --
+robo_structure_site_map: Site Map
+
+admin.id: Id
+admin.structure: Structure
+admin.title: Title
+admin.description: Text
+admin.alias: Alias
+admin.path: Path
+admin.state: State
+admin._action: Actions
+admin.parent_item: Parent item
+admin.select.default_option: -- Select --
+admin.select.root_element: -- Root element --
+admin.result_url: Result URL
+admin.structure_list: Structure
+admin.content_type: Content type
+admin.page_type: -- Page --
+admin.refresh_cache: Refresh cache
+admin.robo_faq_homepage: FAQ
+admin.robo_faq_answer: FAQ Answer
+admin.robo_asset_index: Asset Index
+admin.content: Content
+admin.robo_structure_empty: -- Link doesn't exist --
+admin.robo_structure_site_map: Site Map
+admin.type: Type
+admin.template: Page Template
+admin.default_template: By Default
+admin.route_name: Route Name
+admin.no: no
+admin.structure_history: Revisions
+admin.add_date: Created At
+admin.update_date: Updated At
+admin.structure_history_list: Revision List

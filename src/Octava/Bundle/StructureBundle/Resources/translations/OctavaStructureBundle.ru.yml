@@ -1,1 +1,35 @@
 Structure: Структура
+robo_structure_empty: -- Ссылка отсутствует --
+robo_structure_site_map: Карта сайта
+
+admin.id: Id
+admin.structure: Структура
+admin.title: Заголовок
+admin.description: Текст
+admin.alias: Алиас
+admin.path: Path
+admin.state: Статус
+admin._action: Действия
+admin.parent_item: Родительский узел
+admin.select.default_option: -- Выбрать --
+admin.select.root_element: -- Корневой элемент --
+admin.result_url: Результирующий URL
+admin.structure_list: Структура
+admin.content_type: Тип контента
+admin.page_type: -- Страница --
+admin.refresh_cache: Обновить кеш
+admin.robo_faq_homepage: FAQ
+admin.robo_faq_answer: FAQ Ответ
+admin.robo_asset_index: Закрытые контракты
+admin.content: Контент
+admin.robo_structure_empty: -- Ссылка отсутствует --
+admin.robo_structure_site_map: Карта сайта
+admin.type: Тип
+admin.template: Шаблон страницы
+admin.default_template: По умолчанию
+admin.route_name: Имя роута
+admin.no: нет
+admin.structure_history: Изменения
+admin.add_date: Created At
+admin.update_date: Updated At
+admin.structure_history_list: Изменения

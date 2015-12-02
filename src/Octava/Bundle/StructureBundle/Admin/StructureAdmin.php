@@ -13,6 +13,7 @@ use Octava\Bundle\StructureBundle\StructureEvents;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\DataTransformer\ModelToIdPropertyTransformer;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
@@ -311,6 +312,7 @@ class StructureAdmin extends Admin
             $parentChoiceParams['data'] = $request->get($this->getIdParameter());
         }
 
+
         $this->getTranslationMapper()
             ->setFormMapper($formMapper)
             ->with()
@@ -339,7 +341,7 @@ class StructureAdmin extends Admin
             ->add('routeName', null, ['required' => false])
             ->add('template', 'choice', ['choices' => $this->getStructureTemplates(), 'required' => false])
             ->add(
-                'parent_id',
+                'parent',
                 'choice',
                 $parentChoiceParams
             )
@@ -364,6 +366,17 @@ class StructureAdmin extends Admin
                 ]
             )
             ->end();
+
+
+        $transformer = new ModelToIdPropertyTransformer(
+            $this->getModelManager(),
+            'Octava\\Bundle\StructureBundle\\Entity\\Structure',
+            'parent',
+            false
+        );
+
+        $formMapper->get('parent')->resetViewTransformers()->addViewTransformer($transformer, true);
+        $formMapper->get('parent')->addModelTransformer($transformer, true);
     }
 
     /**

@@ -4,13 +4,14 @@ namespace Octava\Bundle\StructureBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Structure
  * @UniqueEntity("routeName")
  */
-class Structure
+class Structure implements Translatable
 {
     /**
      * Ссылка отсутствует
@@ -98,11 +99,24 @@ class Structure
     private $level = 1;
 
     /**
+     * @var string
+     */
+    private $locale;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**
