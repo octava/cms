@@ -1,0 +1,15 @@
+{% spaceless %}
+    <td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}"
+        objectId="{{ admin.id(object) }}"{% if field_description.options.row_align is defined %} style="text-align:{{ field_description.options.row_align }}"{% endif %}>
+        <!-- Split button -->
+        <div class="btn-group">
+            {% for url in admin.getStructureUrls(object) %}
+                <a href="{{ url.href }}"
+                   title="{{ url.href }}"
+                   class="btn btn-sm {% if url.found %}btn-success{% else %}btn-danger{% endif %}"
+                   target="_blank"
+                >{{ url.title }}</a>
+            {% endfor %}
+        </div>
+    </td>
+{% endspaceless %}

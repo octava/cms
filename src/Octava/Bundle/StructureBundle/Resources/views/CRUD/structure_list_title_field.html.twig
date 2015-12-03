@@ -1,0 +1,8 @@
+<td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}"
+    objectId="{{ admin.id(object) }}"
+    style="padding-left: {{ (object.level+1) * 30 }}px;{{ object.level == 1 ? 'font-weight:bold;' : '' }}">
+    {%- if object.type is constant('Octava\\Bundle\\StructureBundle\\Entity\\Structure::TYPE_PAGE') -%}
+        <i class="fa fa-folder-open-o"></i>
+    {% endif %}
+    {{ value }}
+</td>

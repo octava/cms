@@ -1,0 +1,10 @@
+{%- trans_default_domain 'OctavaStructureBundle' -%}
+<td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}"
+    objectId="{{ admin.id(object) }}"{% if field_description.options.row_align is defined %} style="text-align:{{ field_description.options.row_align }}"{% endif %}>
+    {% set states = admin.getAvailableStates(object) %}
+    {% if states %}
+        <span class="label label-success">{{ states }}</span>
+    {% else %}
+        <span class="label label-danger">{{ 'admin.no'|trans }}</span>
+    {% endif %}
+</td>

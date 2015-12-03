@@ -19,6 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Route;
 
 class StructureAdmin extends Admin
@@ -237,6 +238,38 @@ class StructureAdmin extends Admin
         return implode(', ', $ret);
     }
 
+    public function getStructureUrls(Structure $object)
+    {
+        $urls = [];
+        $container = $this->configurationPool->getContainer();
+        $translations = $this->getEntityManager()
+            ->getRepository('GedmoTranslatable:Translation')->findTranslations($object);
+        foreach ($container->get('octava_mui.office_manager')->getRoutingOffices() as $alias => $office) {
+            $url = empty($translations[$alias]['path']) ? $object->getPath() : $translations[$alias]['path'];
+            $title = $alias;
+            $found = false;
+            if (!empty($translations[$alias]['state']) && $object->getType() != $object::TYPE_STRUCTURE_EMPTY) {
+                try {
+                    $url = $container->get('router')->generate(
+                        $object->getRouteName(),
+                        ['_locale' => $alias, '_catch_exception' => 1]
+                    );
+                    if (!empty($url)) {
+                        $found = true;
+                    }
+                } catch (RouteNotFoundException $e) {
+                }
+            }
+            $urls[] = [
+                'href' => $url,
+                'found' => $found,
+                'title' => $title,
+            ];
+        }
+
+        return $urls;
+    }
+
     protected function getFilteredParentId()
     {
         $parameters = $this->getFilterParameters();
@@ -269,29 +302,54 @@ class StructureAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        $this->setTemplate('edit', 'OctavaStructureBundle:CRUD:structure_list.html.twig');
+
         $listMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('title')
-            ->add('description')
-            ->add('type')
-            ->add('alias')
-            ->add('path')
-            ->add('state')
-            ->add('template')
-            ->add('routeName')
+            ->add(
+                'title',
+                null,
+                [
+                    'template' => 'OctavaStructureBundle:CRUD:structure_list_title_field.html.twig',
+                    'sortable' => false,
+                ]
+            )
+            ->add(
+                'type',
+                null,
+                [
+                    'sortable' => false,
+                ]
+            )
+            ->add(
+                'path',
+                null,
+                [
+                    'template' => 'OctavaStructureBundle:CRUD:structure_list_path_field.html.twig',
+                    'sortable' => false,
+                ]
+            )
+            ->add(
+                'state',
+                null,
+                [
+                    'template' => 'OctavaStructureBundle:CRUD:structure_list_state_field.html.twig',
+                    'sortable' => false,
+                ]
+            )
             ->add(
                 '_action',
                 'actions',
                 [
                     'actions' => [
-                        'show' => [],
+                        'create' => [
+                            'template' => 'OctavaStructureBundle:CRUD:structure_list__action_create.html.twig',
+                        ],
                         'edit' => [],
                         'delete' => [],
                     ],
                 ]
-            );
+            )
+            ->remove('batch');
     }
 
     /**

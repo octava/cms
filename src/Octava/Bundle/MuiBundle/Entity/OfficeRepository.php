@@ -56,7 +56,7 @@ class OfficeRepository extends EntityRepository
         /** @var Office[] $offices */
         $offices = $this->createQueryBuilder('o')
             ->select('o')
-            ->leftJoin('RoboLocaleBundle:Locale', 'l', Join::LEFT_JOIN, 'l.alias = o.defaultLanguage')
+            ->leftJoin('OctavaMuiBundle:Locale', 'l', Join::LEFT_JOIN, 'l.alias = o.defaultLanguage')
             ->where('l.state = 1')
             ->orderBy('l.position')
             ->getQuery()
