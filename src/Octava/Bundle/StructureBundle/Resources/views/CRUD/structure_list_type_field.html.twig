@@ -1,0 +1,8 @@
+{% spaceless %}
+    {%- trans_default_domain 'OctavaStructureBundle' -%}
+    <td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}"
+        objectId="{{ admin.id(object) }}"
+        style="">
+        {{ value|trans }}
+    </td>
+{% endspaceless %}

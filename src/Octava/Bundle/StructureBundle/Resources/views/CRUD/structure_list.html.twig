@@ -1,10 +1,12 @@
 {% extends "OctavaAdminBundle:CRUD:list.html.twig" %}
 
 {% block actions %}
-    <a class="sonata-action-element" href="{{ admin.generateUrl('refreshCache') }}">
-        <i class="fa fa-refresh"></i>
-        {{ 'admin.refresh_cache'|trans({}, 'OctavaStructureBundle') }}
-    </a>
+    <li>
+        <a class="sonata-action-element" href="{{ admin.generateUrl('refreshCache') }}">
+            <i class="fa fa-refresh"></i>
+            {{ 'admin.refresh_cache'|trans({}, 'OctavaStructureBundle') }}
+        </a>
+    </li>
     {{ parent() }}
 {% endblock %}
 
@@ -26,3 +28,4 @@
 
 {% block list_footer '' %}
 {% block pager_results '' %}
+{% block pager_links '' %}

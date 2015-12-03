@@ -11,11 +11,10 @@ use Octava\Bundle\StructureBundle\Entity\StructureRepository;
 use Octava\Bundle\StructureBundle\Event\ItemUpdateEvent;
 use Octava\Bundle\StructureBundle\StructureEvents;
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Form\DataTransformer\ModelToIdPropertyTransformer;
+use Sonata\AdminBundle\Form\DataTransformer\ModelToIdTransformer;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -152,9 +151,19 @@ class StructureAdmin extends Admin
         return $object;
     }
 
+    /**
+     * @param Structure $object
+     * @return void
+     */
     public function preUpdate($object)
     {
-        $this->prePersist($object);
+        $object->preUpdate();
+        if ($object->getState()) {
+            $object->setState(true);
+        }
+        $this->getConfigurationPool()->getContainer()
+            ->get('octava_structure.structure_manager')
+            ->update($object->getId());
     }
 
     /**
@@ -163,6 +172,7 @@ class StructureAdmin extends Admin
      */
     public function prePersist($object)
     {
+        $object->prePersist();
         if ($object->getState()) {
             $object->setState(true);
         }
@@ -279,30 +289,11 @@ class StructureAdmin extends Admin
     }
 
     /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('title')
-            ->add('description')
-            ->add('type')
-            ->add('alias')
-            ->add('path')
-            ->add('state')
-            ->add('template')
-            ->add('routeName');
-    }
-
-    /**
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $this->setTemplate('edit', 'OctavaStructureBundle:CRUD:structure_list.html.twig');
+        $this->setTemplate('list', 'OctavaStructureBundle:CRUD:structure_list.html.twig');
 
         $listMapper
             ->add(
@@ -318,6 +309,7 @@ class StructureAdmin extends Admin
                 null,
                 [
                     'sortable' => false,
+                    'template' => 'OctavaStructureBundle:CRUD:structure_list_type_field.html.twig',
                 ]
             )
             ->add(
@@ -366,10 +358,10 @@ class StructureAdmin extends Admin
             'label' => $this->trans('admin.parent_item'),
             'choices' => [$this->trans('admin.select.root_element')] + $parentSelect,
         ];
-        if ($isCreateAction) {
-            $parentChoiceParams['data'] = $request->get($this->getIdParameter());
+        if ($isCreateAction && $request->get($this->getIdParameter())) {
+            $parentChoiceParams['data'] = $this->getRepository()
+                ->find($request->get($this->getIdParameter()));
         }
-
 
         $this->getTranslationMapper()
             ->setFormMapper($formMapper)
@@ -379,24 +371,27 @@ class StructureAdmin extends Admin
                 'text',
                 [
                     'translatable' => true,
-                    'label' => $this->trans('admin.title'),
-                    'required' => false,
                 ]
             )
             ->add(
                 'alias',
                 'text',
-                ['label' => $this->trans('admin.alias'), 'translatable' => true, 'required' => false]
+                [
+                    'translatable' => true,
+                ]
             )
             ->add(
                 'type',
                 'choice',
                 [
-                    'label' => $this->trans('admin.content_type'),
                     'choices' => $this->getContentTypes(),
                 ]
             )
-            ->add('routeName', null, ['required' => false])
+            ->add(
+                'routeName',
+                null,
+                ['required' => false]
+            )
             ->add('template', 'choice', ['choices' => $this->getStructureTemplates(), 'required' => false])
             ->add(
                 'parent',
@@ -408,8 +403,7 @@ class StructureAdmin extends Admin
                 'ckeditor',
                 [
                     'translatable' => true,
-                    'label' => $this->trans('admin.description'),
-                    'required' => true,
+                    'required' => false,
                     'config' => ['allowedContent' => true],
                 ]
             )
@@ -417,7 +411,6 @@ class StructureAdmin extends Admin
                 'state',
                 'checkbox',
                 [
-                    'label' => $this->trans('admin.state'),
                     'required' => false,
                     'translatable' => true,
                     'attr' => ['data-addHidden' => 0],
@@ -425,35 +418,12 @@ class StructureAdmin extends Admin
             )
             ->end();
 
-
-        $transformer = new ModelToIdPropertyTransformer(
+        $transformerStructure = new ModelToIdTransformer(
             $this->getModelManager(),
-            'Octava\\Bundle\StructureBundle\\Entity\\Structure',
-            'parent',
-            false
+            $this->getClass()
         );
-
-        $formMapper->get('parent')->resetViewTransformers()->addViewTransformer($transformer, true);
-        $formMapper->get('parent')->addModelTransformer($transformer, true);
-    }
-
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
-    {
-        $showMapper
-            ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('title')
-            ->add('description')
-            ->add('type')
-            ->add('alias')
-            ->add('path')
-            ->add('state')
-            ->add('template')
-            ->add('routeName');
+        $formMapper->get('parent')->resetViewTransformers()
+            ->addViewTransformer($transformerStructure, true);
     }
 
     /**
@@ -497,5 +467,19 @@ class StructureAdmin extends Admin
         }
 
         return $ret;
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add(
+            'refreshCache',
+            'refreshCache',
+            [
+                '_controller' => $collection->getBaseControllerName().':refreshCache',
+            ]
+        );
+        $collection->remove('show');
+        $collection->remove('batch');
+        $collection->remove('export');
     }
 }

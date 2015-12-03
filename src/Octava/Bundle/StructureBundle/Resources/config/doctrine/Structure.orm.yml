@@ -23,6 +23,7 @@ Octava\Bundle\StructureBundle\Entity\Structure:
                 - translatable
         description:
             type: text
+            nullable: true
             gedmo:
                 - translatable
         type:

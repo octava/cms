@@ -143,7 +143,7 @@ class Structure implements Translatable
      */
     public function __toString()
     {
-        return (string)$this->getId();
+        return (string)$this->getTitle();
     }
 
     /**
@@ -482,28 +482,27 @@ class Structure implements Translatable
      */
     public function setPathByParent()
     {
-        $path = '/'.$this->getAlias().'/';
-        if ($this->getParent()) {
-            $path = rtrim($this->getParent()->getPath(), '/').'/'.$this->getAlias().'/';
+        if ($this->getAlias()) {
+            $path = '/'.$this->getAlias().'/';
+            if ($this->getParent()) {
+                $path = rtrim($this->getParent()->getPath(), '/').'/'.$this->getAlias().'/';
+            }
+            $this->setPath($path);
         }
-        $this->setPath($path);
     }
 
     /**
-     * @return bool
+     * @return void
      */
     public function updateRouteName()
     {
-        if ($this->getRouteName()) {
-            return false;
+        if (!$this->getRouteName() && $this->getPath()) {
+            $routeName = $this->type;
+            if (in_array($this->type, [self::TYPE_PAGE, self::TYPE_STRUCTURE_EMPTY])) {
+                $path = $this->getPath();
+                $routeName = sprintf('structure_page_%s', str_replace('/', '_', trim($path, '/')));
+            }
+            $this->setRouteName($routeName);
         }
-        $routeName = $this->type;
-        if (in_array($this->type, [self::TYPE_PAGE, self::TYPE_STRUCTURE_EMPTY])) {
-            $path = $this->getPath();
-            $routeName = sprintf('structure_page_%s', str_replace('/', '_', trim($path, '/')));
-        }
-        $this->setRouteName($routeName);
-
-        return true;
     }
 }

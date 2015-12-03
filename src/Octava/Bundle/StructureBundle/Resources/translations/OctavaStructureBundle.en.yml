@@ -1,5 +1,10 @@
 Structure: Structure
-robo_structure_empty: -- Link doesn't exist --
+ID: ID
+Actions: Actions
+Created at: Created At
+Updated at: Updated At
+octava_structure_empty: -- Link doesn't exist --
+page: Page
 robo_structure_site_map: Site Map
 
 admin.id: Id
@@ -30,6 +35,6 @@ admin.default_template: By Default
 admin.route_name: Route Name
 admin.no: no
 admin.structure_history: Revisions
-admin.add_date: Created At
-admin.update_date: Updated At
+admin.created_at: Created At
+admin.updated_at: Updated At
 admin.structure_history_list: Revision List

@@ -67,7 +67,7 @@ class StructureRepository extends EntityRepository implements ContainerAwareInte
                 continue;
             }
 
-            if (in_array($item->getParent()->getId(), $excludeParentIds)) {
+            if ($item->getParent() && in_array($item->getParent()->getId(), $excludeParentIds)) {
                 $excludeParentIds[] = $item->getId();
                 continue;
             }
@@ -95,7 +95,8 @@ class StructureRepository extends EntityRepository implements ContainerAwareInte
         }
         $ret = [];
         foreach ($structures as $structure) {
-            if (intval($structure->getParent()->getId()) == $parentId) {
+            $structureParentId = $structure->getParent() ? intval($structure->getParent()->getId()) : 0;
+            if ($structureParentId == $parentId) {
                 $structure->setLevel($level);
                 $ret[$structure->getId()] = $structure;
                 $ret += $this->getFlatTree($structure->getId(), $level + 1, $structures);

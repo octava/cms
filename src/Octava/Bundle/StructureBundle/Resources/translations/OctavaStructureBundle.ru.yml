@@ -1,5 +1,10 @@
 Structure: Структура
-robo_structure_empty: -- Ссылка отсутствует --
+ID: ID
+Actions: Действия
+Created at: Создан
+Updated at: Обновлен
+octava_structure_empty: -- Ссылка отсутствует --
+page: Страница
 robo_structure_site_map: Карта сайта
 
 admin.id: Id
@@ -30,6 +35,6 @@ admin.default_template: По умолчанию
 admin.route_name: Имя роута
 admin.no: нет
 admin.structure_history: Изменения
-admin.add_date: Created At
-admin.update_date: Updated At
+admin.created_at: Создан
+admin.updated_at: Обновлен
 admin.structure_history_list: Изменения
