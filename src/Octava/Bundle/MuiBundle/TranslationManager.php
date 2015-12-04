@@ -6,6 +6,7 @@ use Octava\Bundle\MuiBundle\Entity\Translation;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class TranslationManager
@@ -34,15 +35,34 @@ class TranslationManager
     protected $importLog = [];
 
     /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
      * @param $cacheDir
      * @param EntityManager $entityManager
      * @param LoggerInterface $logger
+     * @param TranslatorInterface $translator
      */
-    public function __construct($cacheDir, EntityManager $entityManager, LoggerInterface $logger)
-    {
+    public function __construct(
+        $cacheDir,
+        EntityManager $entityManager,
+        LoggerInterface $logger,
+        TranslatorInterface $translator
+    ) {
         $this->cacheDir = $cacheDir;
         $this->entityManager = $entityManager;
         $this->logger = $logger;
+        $this->translator = $translator;
+    }
+
+    /**
+     * @return TranslatorInterface
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
     }
 
     /**
@@ -86,6 +106,7 @@ class TranslationManager
             /** @var \Symfony\Component\Finder\SplFileInfo $file */
             unlink($file->getPathname());
         }
+
         return true;
     }
 
@@ -158,7 +179,7 @@ class TranslationManager
                             'domain' => $domain,
                             'source' => $source,
                             'old_value' => $oldValue,
-                            'target' => $target
+                            'target' => $target,
                         ];
                     }
                 } else {
@@ -175,7 +196,7 @@ class TranslationManager
                             'domain' => $domain,
                             'source' => $source,
                             'old_value' => '',
-                            'target' => $target
+                            'target' => $target,
                         ];
                     }
                 }
@@ -274,5 +295,16 @@ class TranslationManager
                 $catalogue->add($data, $domain);
             }
         }
+    }
+
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    {
+        if (is_null($domain)) {
+            $class = get_called_class();
+            $classSegments = explode('\\', $class);
+            $domain = $classSegments[0].$classSegments[1];
+        }
+
+        return $this->getTranslator()->trans($id, $parameters, $domain, $locale);
     }
 }

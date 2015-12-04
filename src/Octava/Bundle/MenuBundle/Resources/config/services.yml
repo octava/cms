@@ -1,7 +1,19 @@
 parameters:
     octava_menu.cache.class: Doctrine\Common\Cache\FilesystemCache
+    octava_menu.admin.menu.class: Octava\Bundle\MenuBundle\Admin\MenuAdmin
+    octava_menu.config.menu_config.class: Octava\Bundle\MenuBundle\Config\MenuConfig
+    octava_menu.menu_manager.class: Octava\Bundle\MenuBundle\MenuManager
 
 services:
     octava_menu.cache:
         class: %octava_menu.cache.class%
         arguments: [%kernel.cache_dir%/structure]
+
+    octava_menu.admin.menu:
+        class: %octava_menu.admin.menu.class%
+        arguments: [~, Octava\Bundle\MenuBundle\Entity\Menu, OctavaMenuBundle:MenuAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Menu }
+    octava_menu.menu_manager:
+        class: %octava_menu.menu_manager.class%
+        arguments: [ @octava_mui.translation_manager, @octava_menu.config.menu_config ]

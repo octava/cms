@@ -11,7 +11,7 @@ services:
         class: %octava_structure.admin.structure.class%
         arguments: [~, Octava\Bundle\StructureBundle\Entity\Structure, OctavaStructureBundle:StructureAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Admin, label: Structure }
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Structure }
 
     octava_structure.cache:
         class: %octava_structure.cache.class%

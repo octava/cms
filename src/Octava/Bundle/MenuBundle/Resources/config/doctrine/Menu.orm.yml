@@ -1,0 +1,78 @@
+Octava\Bundle\MenuBundle\Entity\Menu:
+    type: entity
+    table: menu
+    repositoryClass: Octava\Bundle\MenuBundle\Entity\MenuRepository
+
+    gedmo:
+        translation:
+            locale: locale
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        title:
+            type: string
+            length: 255
+            gedmo:
+                - translatable
+        proxyTitle:
+            type: boolean
+            nullable: true
+            gedmo:
+                - translatable
+        link:
+            type: string
+            length: 255
+            gedmo:
+                - translatable
+        proxyLink:
+            type: boolean
+            nullable: true
+            gedmo:
+                - translatable
+        location:
+            type: string
+            length: 50
+            gedmo:
+                - sortableGroup
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+        state:
+            type: boolean
+
+        isTest:
+            type: boolean
+            default: 0
+
+    lifecycleCallbacks:
+        prePersist:   [ prePersist ]
+        preUpdate:    [ preUpdate ]
+
+    oneToMany:
+        children:
+            targetEntity: Menu
+            mappedBy: parent
+            cascade: ['remove']
+
+    manyToOne:
+        parent:
+            targetEntity: Menu
+            inversedBy: children
+            joinColumn:
+                onDelete: CASCADE
+        structure:
+            targetEntity: Octava\Bundle\StructureBundle\Entity\Structure
+            joinColumn:
+                name: structureId
+                referencedColumnName: id
+                onDelete: CASCADE

@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class RoboRepositoryFactory implements RepositoryFactory, ContainerAwareInterface
+class OctavaRepositoryFactory implements RepositoryFactory, ContainerAwareInterface
 {
     /**
      * @var Container

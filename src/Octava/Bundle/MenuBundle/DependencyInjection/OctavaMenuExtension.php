@@ -2,10 +2,11 @@
 
 namespace Octava\Bundle\MenuBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -24,5 +25,11 @@ class OctavaMenuExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $definition = new Definition(
+            $container->getParameter('octava_menu.config.menu_config.class'),
+            [$config]
+        );
+        $container->setDefinition('octava_menu.config.menu_config', $definition);
     }
 }

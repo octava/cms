@@ -18,6 +18,7 @@ services:
             - %kernel.cache_dir%
             - @doctrine.orm.entity_manager
             - @octava_mui.translation.logger
+            - @translator
 
     octava_mui.twig.translation_extension:
         class: %octava_mui.twig.translation_extension.class%
