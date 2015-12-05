@@ -1,0 +1,6 @@
+{% spaceless %}
+    <td class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}"
+        objectId="{{ admin.id(object) }}">
+        <a href="/{{ app.request.locale }}{{ value }}" target="_blank">{{ value }}</a>
+    </td>
+{% endspaceless %}

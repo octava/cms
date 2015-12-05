@@ -158,9 +158,7 @@ class StructureAdmin extends Admin
     public function preUpdate($object)
     {
         $object->preUpdate();
-        if ($object->getState()) {
-            $object->setState(true);
-        }
+
         $this->getConfigurationPool()->getContainer()
             ->get('octava_structure.structure_manager')
             ->update($object->getId());

@@ -1,0 +1,34 @@
+admin.from_structure: Из Структуры
+admin.own_value: Своё значение
+admin.import_flash_message: 'Добавлено элементов: <b>%count%</b><br />'
+admin.menu: Меню
+admin.content: Содержание
+admin.title: Заголовок
+admin.link: Ссылка
+admin.state: Статус
+admin.is_test: Тест
+admin.only_for_test: Только для тестовых клиентов
+admin.location: Местоположение
+admin.order: Порядок
+admin._action: Действия
+admin.parent_item: Родительский узел
+admin.structure_relation: Связанный элемент структуры
+admin.not_related: -- Не связан --
+admin.select.default_option: -- Выбрать --
+admin.select.root_element: -- Корневой элемент --
+admin.menu_list: Меню
+admin.link_import: Импортировать Структуру
+admin.refresh_cache: Обновить кеш
+admin.position: Позиция
+admin.link_action_create: Создать
+admin.menu_history_list: Изменения
+admin.menu_history: Изменения
+refresh_cache: Сбросить кэш
+admin.menu: Меню
+
+top_menu: Верхнее меню
+bottom_menu: Нижнее меню
+short_bottom_menu: Нижнее краткое меню
+right_menu: Правое меню
+
+Menu: Меню

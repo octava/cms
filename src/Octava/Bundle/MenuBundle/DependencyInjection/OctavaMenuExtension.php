@@ -31,5 +31,23 @@ class OctavaMenuExtension extends Extension
             [$config]
         );
         $container->setDefinition('octava_menu.config.menu_config', $definition);
+
+        $this->registerFormTypeTemplates($container);
+    }
+
+    protected function registerFormTypeTemplates(ContainerBuilder $container)
+    {
+        $twigFormResources = $container->hasParameter('twig.form.resources')
+            ? $container->getParameter('twig.form.resources')
+            : [];
+        $container->setParameter(
+            'twig.form.resources',
+            array_merge(
+                $twigFormResources,
+                [
+                    'OctavaMenuBundle:Form:menu_related_text_type.html.twig',
+                ]
+            )
+        );
     }
 }

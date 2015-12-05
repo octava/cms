@@ -1,0 +1,34 @@
+admin.from_structure: From Structure
+admin.own_value: Own value
+admin.import_flash_message: 'New elements: <b>%count%</b><br />'
+admin.menu: Menu
+admin.content: Content
+admin.title: Title
+admin.link: Link
+admin.state: State
+admin.is_test: Test
+admin.only_for_test: Only for test clients
+admin.location: Location
+admin.order: Order
+admin._action: Actions
+admin.parent_item: Parent item
+admin.structure_relation: Structure related item
+admin.not_related: -- Not related --
+admin.select.default_option: -- Select --
+admin.select.root_element: -- Root element --
+admin.menu_list: Menu
+admin.link_import: Import from Structure
+admin.refresh_cache: Refresh cache
+admin.position: Position
+admin.link_action_create: Create
+admin.menu_history_list: Revisions List
+admin.menu_history: Revisions
+refresh_cache: Refresh cache
+admin.menu: Menu
+
+top_menu: Top menu
+bottom_menu: Bottom menu
+short_bottom_menu: Bottom short menu
+right_menu: Right menu
+
+Menu: Menu

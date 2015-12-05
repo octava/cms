@@ -1,6 +1,7 @@
 <?php
 namespace Octava\Bundle\MenuBundle;
 
+use Doctrine\Common\Cache\ClearableCache;
 use Octava\Bundle\MenuBundle\Config\MenuConfig;
 use Octava\Bundle\MuiBundle\TranslationManager;
 
@@ -27,11 +28,16 @@ class MenuManager
      * MenuManager constructor.
      * @param TranslationManager $translationManager
      * @param MenuConfig $menuConfig
+     * @param ClearableCache $menuCache
      */
-    public function __construct(TranslationManager $translationManager, MenuConfig $menuConfig)
-    {
+    public function __construct(
+        TranslationManager $translationManager,
+        MenuConfig $menuConfig,
+        ClearableCache $menuCache
+    ) {
         $this->translationManager = $translationManager;
         $this->menuConfig = $menuConfig;
+        $this->menuCache = $menuCache;
     }
 
     /**
@@ -54,5 +60,15 @@ class MenuManager
         }
 
         return $this->locationsCache;
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearCache()
+    {
+        $this->menuCache->deleteAll();
+
+        return $this;
     }
 }

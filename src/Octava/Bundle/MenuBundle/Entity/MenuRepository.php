@@ -122,7 +122,7 @@ class MenuRepository extends EntityRepository implements ContainerAwareInterface
             ->leftJoin('m.structure', 's')
             ->andWhere('m.location = :location')
             ->setParameter('location', $location)
-            ->orderBy('m.ord');
+            ->orderBy('m.position');
 
         $query = $queryBuilder->getQuery();
         $query
@@ -161,7 +161,7 @@ class MenuRepository extends EntityRepository implements ContainerAwareInterface
 
         return $queryBuilder->andWhere('m.location = :location')
             ->setParameter('location', $location)
-            ->orderBy('m.ord')
+            ->orderBy('m.position')
             ->getQuery()->getResult();
     }
 
@@ -185,10 +185,15 @@ class MenuRepository extends EntityRepository implements ContainerAwareInterface
         return $queryBuilder->andWhere('m.location = :location')
             ->setParameter('location', $location)
             ->andWhere('m.state = 1')
-            ->orderBy('m.ord')
+            ->orderBy('m.position')
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param $structureId
+     * @param $location
+     * @return Menu[]
+     */
     public function getActiveByStructureIdAndLocation($structureId, $location)
     {
         return $this->createQueryBuilder('m')

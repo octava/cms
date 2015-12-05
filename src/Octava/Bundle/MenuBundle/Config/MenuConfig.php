@@ -16,6 +16,14 @@ class MenuConfig
 
     public function getLocations()
     {
+        if (empty($this->config['locations'])) {
+            $this->config['locations'] = [
+                ['alias' => 'top', 'name' => 'top_menu', 'trans_domain' => 'OctavaMenuBundle'],
+                ['alias' => 'right', 'name' => 'right_menu', 'trans_domain' => 'OctavaMenuBundle'],
+                ['alias' => 'bottom', 'name' => 'bottom_menu', 'trans_domain' => 'OctavaMenuBundle'],
+            ];
+        }
+
         return $this->config['locations'];
     }
 }

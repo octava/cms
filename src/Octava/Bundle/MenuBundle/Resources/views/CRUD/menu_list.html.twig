@@ -1,0 +1,38 @@
+{% extends "OctavaAdminBundle:CRUD:list.html.twig" %}
+{% trans_default_domain 'OctavaMenuBundle' %}
+
+{% block actions %}
+    <li>
+        <a class="sonata-action-element" href="{{ admin.generateUrl('import') }}">
+            <i class="fa fa-download"></i>
+            {{ 'admin.link_import'|trans }}
+        </a>
+    </li>
+    <li>
+        <a class="sonata-action-element" href="{{ admin.generateUrl('refreshCache') }}">
+            <i class="fa fa-refresh"></i>
+            {{ 'admin.refresh_cache'|trans }}
+        </a>
+    </li>
+    {{ parent() }}
+{% endblock %}
+
+{% block table_body %}
+    <tbody data-no-turbolink>
+    {% for object in admin.getMenuTree() %}
+        <tr id="row_{{ object.id }}">
+            {% include admin.getTemplate('inner_list_row') %}
+        </tr>
+    {% endfor %}
+    </tbody>
+{% endblock %}
+
+{#{% block side_bar_before_nav %}#}
+    {#<div>#}
+        {#{{ admin.getTreeManager().get|raw }}#}
+    {#</div>#}
+{#{% endblock %}#}
+
+{% block list_footer '' %}
+{% block pager_results '' %}
+{% block pager_links '' %}

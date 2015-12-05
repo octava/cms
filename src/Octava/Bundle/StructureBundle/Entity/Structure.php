@@ -464,6 +464,10 @@ class Structure implements Translatable
 
         $this->setPathByParent();
         $this->updateRouteName();
+
+        if ($this->getState()) {
+            $this->setState(true);
+        }
     }
 
     /**
@@ -475,6 +479,10 @@ class Structure implements Translatable
 
         $this->setPathByParent();
         $this->updateRouteName();
+
+        if ($this->getState()) {
+            $this->setState(true);
+        }
     }
 
     /**
@@ -504,5 +512,18 @@ class Structure implements Translatable
             }
             $this->setRouteName($routeName);
         }
+    }
+
+    /**
+     * Получить подготовленный путь
+     * @return string
+     */
+    public function getPreparedPath()
+    {
+        if ($this->getType() == self::TYPE_STRUCTURE_EMPTY) {
+            return '';
+        }
+
+        return $this->path;
     }
 }

@@ -1,0 +1,43 @@
+{% trans_default_domain OctavaMenuBundle %}
+{% block octava_menu_related_text_widget %}
+    {% set structureRelated = form.parent.structure.vars.value %}
+    {% set structureRelated = form.parent.structure.vars.value %}
+
+    {% if structureRelated %}
+        {% set proxyField = name|replace({ (from_field) : proxy_field}) %}
+        {% set proxyValue = form.parent[proxyField].vars.value %}
+        <div>
+            <label><input type="radio" value="1" {% if proxyValue == 1 %}checked="checked"{% endif %}
+                        {% if form.vars.disabled %} disabled="disabled"{% endif %}
+                          name="{{ proxyField }}"
+                          onclick="changeProxyValue(this);"/> {{ 'admin.from_structure'|trans }}
+            </label>
+            &nbsp;&nbsp;
+            <label><input type="radio" value="0" {% if proxyValue != 1 %}checked="checked"{% endif %}
+                        {% if form.vars.disabled %} disabled="disabled"{% endif %}
+                          name="{{ proxyField }}"
+                          onclick="changeProxyValue(this);"/> {{ 'admin.own_value'|trans }}
+            </label>
+
+            <div style="display: none;"
+                 class="structure_value">{% if structure_value is iterable %}{% if locale in structure_value|keys %}{{ structure_value[locale] }}{% else %}{{ structure_value['en'] }}{% endif %}{% else %}{{ structure_value }}{% endif %}</div>
+        </div>
+
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} {% if proxyValue %}readonly{% endif %} />
+
+        <script type="text/javascript">
+            function changeProxyValue(obj) {
+                $('input[name*="[' + obj.name + ']"]').val(obj.value);
+                if (obj.value == 1) {
+                    var structure_value = $(obj).parent().parent().find('.structure_value').text();
+                    $(obj).parent().parent().next().val(structure_value).attr('readonly', 'readonly');
+                } else {
+                    $(obj).parent().parent().next().removeAttr('readonly');
+                }
+            }
+        </script>
+    {% else %}
+        {{ form_widget(form) }}
+    {% endif %}
+
+{% endblock %}
