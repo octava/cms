@@ -35,5 +35,8 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "phpunit/phpunit": "^5.0",
         "therat/symdep": "dev-master"
-    }
+    },
+    "bin": [
+        "bin/install.sh"
+    ]
 }

@@ -47,6 +47,26 @@ class LoadAdministrator extends AbstractFixture implements FixtureInterface, Ord
         $manager->persist($administrator);
 
         $manager->flush();
+
+        $sql = <<<SQL
+        SELECT
+            @groupId:=id
+        FROM
+            acl_group
+        WHERE
+            name = 'admin';
+
+        INSERT INTO acl_group_resource
+        SELECT @groupId, id
+        FROM acl_resource
+        WHERE id not IN (SELECT resourceId
+        FROM acl_group_resource
+        WHERE groupId = @groupId
+        AND resourceId = acl_resource.id)
+SQL;
+        $statement = $this->container->get('doctrine.orm.entity_manager')
+            ->getConnection()
+            ->executeQuery($sql);
     }
 
     /**

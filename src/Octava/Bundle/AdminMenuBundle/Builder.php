@@ -5,6 +5,7 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
 use Octava\Bundle\AdminMenuBundle\Entity\AdminMenu;
+use Psr\Log\LoggerInterface;
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Event\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -48,13 +49,19 @@ class Builder
      */
     protected $adminMenuManager;
 
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
     public function __construct(
         Pool $pool,
         FactoryInterface $factory,
         MenuProviderInterface $provider,
         EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack,
-        AdminMenuManager $adminMenuManager
+        AdminMenuManager $adminMenuManager,
+        LoggerInterface $logger
     ) {
         $this->pool = $pool;
         $this->factory = $factory;
@@ -62,6 +69,7 @@ class Builder
         $this->eventDispatcher = $eventDispatcher;
         $this->requestStack = $requestStack;
         $this->adminMenuManager = $adminMenuManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -82,71 +90,6 @@ class Builder
 
         $tree = $this->adminMenuManager->getTree();
         $this->generateMenu($menu, $tree);
-
-//        foreach ($this->pool->getAdminGroups() as $name => $group) {
-//            $attributes = [];
-//
-//            $extras = [
-//                'icon' => $group['icon'],
-//                'label_catalogue' => $group['label_catalogue'],
-//                'roles' => $group['roles'],
-//            ];
-//
-//            // Check if the menu group is built by a menu provider
-//            if (isset($group['provider'])) {
-//                $subMenu = $this->provider->get($group['provider']);
-//
-//                $menu
-//                    ->addChild($subMenu)
-//                    ->setExtras(array_merge($subMenu->getExtras(), $extras))
-//                    ->setAttributes(array_merge($subMenu->getAttributes(), $attributes));
-//
-//                continue;
-//            }
-//
-//            // The menu group is built by config
-//            $menu->addChild(
-//                $name,
-//                [
-//                    'label' => $group['label'],
-//                    'attributes' => $attributes,
-//                    'extras' => $extras,
-//                ]
-//            );
-//
-//            foreach ($group['items'] as $item) {
-//                if (isset($item['admin']) && !empty($item['admin'])) {
-//                    $admin = $this->pool->getInstance($item['admin']);
-//
-//                    // skip menu item if no `list` url is available or user doesn't have the LIST access rights
-//                    if (!$admin->hasRoute('list') || !$admin->isGranted('LIST')) {
-//                        continue;
-//                    }
-//
-//                    $label = $admin->getLabel();
-//                    $options = $admin->generateMenuUrl('list');
-//                    $options['extras'] = [
-//                        'translation_domain' => $admin->getTranslationDomain(),
-//                        'admin' => $admin,
-//                    ];
-//                } else {
-//                    $label = $item['label'];
-//                    $options = [
-//                        'route' => $item['route'],
-//                        'routeParameters' => $item['route_params'],
-//                        'extras' => [
-//                            'translation_domain' => $group['label_catalogue'],
-//                        ],
-//                    ];
-//                }
-//
-//                $menu[$name]->addChild($label, $options);
-//            }
-//
-//            if (0 === count($menu[$name]->getChildren())) {
-//                $menu->removeChild($name);
-//            }
-//        }
 
         $event = new ConfigureMenuEvent($this->factory, $menu);
         $this->eventDispatcher->dispatch(ConfigureMenuEvent::SIDEBAR, $event);
@@ -172,10 +115,14 @@ class Builder
                 $options = [];
                 if (AdminMenu::TYPE_FOLDER !== $type) {
                     $admin = $this->adminMenuManager->getAdminObject($item->getAdminClass());
-                    $options = $admin->generateMenuUrl('list');
-                    $options['extras'] = [
-                        'admin' => $admin,
-                    ];
+                    if ($admin) {
+                        $options = $admin->generateMenuUrl('list');
+                        $options['extras'] = [
+                            'admin' => $admin,
+                        ];
+                    } else {
+                        $this->logger->alert('Admin not found for class', [$item->getAdminClass()]);
+                    }
                 }
                 $child = $menu->addChild($itemLabel, $options);
             } elseif ($itemLevel > $level) {

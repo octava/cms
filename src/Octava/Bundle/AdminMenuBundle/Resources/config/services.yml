@@ -50,3 +50,4 @@ services:
             - @event_dispatcher
             - @request_stack
             - @octava_admin_menu.admin_menu_manager
+            - @logger
