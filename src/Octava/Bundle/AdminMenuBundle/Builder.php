@@ -114,14 +114,14 @@ class Builder
             if ($itemLevel == $level) {
                 $options = [];
                 if (AdminMenu::TYPE_FOLDER !== $type) {
-                    $admin = $this->adminMenuManager->getAdminObject($item->getAdminClass());
+                    $admin = $this->pool->getInstance($item->getServiceId());
                     if ($admin) {
                         $options = $admin->generateMenuUrl('list');
                         $options['extras'] = [
                             'admin' => $admin,
                         ];
                     } else {
-                        $this->logger->alert('Admin not found for class', [$item->getAdminClass()]);
+                        $this->logger->alert('Admin not found for class', [$item->getServiceId()]);
                     }
                 }
                 $child = $menu->addChild($itemLabel, $options);

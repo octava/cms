@@ -42,11 +42,6 @@ class AdminMenu implements Translatable
     private $type;
 
     /**
-     * @var string
-     */
-    private $adminClass;
-
-    /**
      * @var integer
      */
     private $position;
@@ -70,6 +65,10 @@ class AdminMenu implements Translatable
      * @var int
      */
     private $level;
+    /**
+     * @var string
+     */
+    private $serviceId;
 
     /**
      * Constructor
@@ -99,6 +98,7 @@ class AdminMenu implements Translatable
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
         return $this;
     }
 
@@ -117,6 +117,7 @@ class AdminMenu implements Translatable
     public function setLevel($level)
     {
         $this->level = $level;
+
         return $this;
     }
 
@@ -141,6 +142,20 @@ class AdminMenu implements Translatable
     }
 
     /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return AdminMenu
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
      * Get updatedAt
      *
      * @return \DateTime
@@ -148,6 +163,20 @@ class AdminMenu implements Translatable
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return AdminMenu
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     /**
@@ -194,30 +223,6 @@ class AdminMenu implements Translatable
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get adminClass
-     *
-     * @return string
-     */
-    public function getAdminClass()
-    {
-        return $this->adminClass;
-    }
-
-    /**
-     * Set adminClass
-     *
-     * @param string $adminClass
-     *
-     * @return AdminMenu
-     */
-    public function setAdminClass($adminClass)
-    {
-        $this->adminClass = $adminClass;
 
         return $this;
     }
@@ -318,5 +323,29 @@ class AdminMenu implements Translatable
     public function preUpdate()
     {
         // Add your code here
+    }
+
+    /**
+     * Get serviceId
+     *
+     * @return string
+     */
+    public function getServiceId()
+    {
+        return $this->serviceId;
+    }
+
+    /**
+     * Set serviceId
+     *
+     * @param string $serviceId
+     *
+     * @return AdminMenu
+     */
+    public function setServiceId($serviceId)
+    {
+        $this->serviceId = $serviceId;
+
+        return $this;
     }
 }

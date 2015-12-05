@@ -44,6 +44,7 @@ class LoadAdministrator extends AbstractFixture implements FixtureInterface, Ord
         $administrator->setEnabled(true);
         $administrator->setEmail('admin@example.com');
         $administrator->addGroup($group);
+        $administrator->setShowHidden(true);
         $manager->persist($administrator);
 
         $manager->flush();

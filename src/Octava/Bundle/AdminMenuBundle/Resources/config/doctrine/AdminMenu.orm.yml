@@ -27,7 +27,7 @@ Octava\Bundle\AdminMenuBundle\Entity\AdminMenu:
             length: 255
             options:
                 comment: "folder|module"
-        adminClass:
+        serviceId:
             type: string
             length: 255
             nullable: true

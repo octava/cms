@@ -53,7 +53,7 @@ class AdminMenuManager
         $existingModules = [];
         foreach ($tree as $row) {
             if ($row->getType() == AdminMenu::TYPE_MODULE) {
-                $existingModules[] = $row->getAdminClass();
+                $existingModules[] = $row->getServiceId();
             }
         }
         $ret = [];

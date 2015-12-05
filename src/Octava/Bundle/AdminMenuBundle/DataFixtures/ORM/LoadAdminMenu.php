@@ -37,7 +37,6 @@ class LoadAdminMenu extends AbstractFixture implements FixtureInterface, Ordered
      */
     public function load(ObjectManager $manager)
     {
-        $container = $this->getContainer();
         $poll = $this->getContainer()->get('sonata.admin.pool');
         $translator = $this->getContainer()->get('translator');
 
@@ -52,7 +51,7 @@ class LoadAdminMenu extends AbstractFixture implements FixtureInterface, Ordered
                 $menu = new AdminMenu();
                 $menu->setTitle($translator->trans($item['label'], [], $group['label_catalogue']));
                 $menu->setType(AdminMenu::TYPE_MODULE);
-                $menu->setAdminClass(get_class($container->get($item['admin'])));
+                $menu->setServiceId($item['admin']);
                 $menu->setParent($parent);
 
                 $manager->persist($menu);
