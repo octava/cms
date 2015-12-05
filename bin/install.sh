@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-./app/console doctrine:schema:drop --force
-./app/console doctrine:schema:create
-./app/console octava:administrator:import-acl-resources
-./app/console doctrine:fixtures:load -n
-./app/console octava:mui:translation:update-db
-./app/console cache:clear
+read -p "Are you sure? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]];
+then
+    # do dangerous stuff
+    ./app/console doctrine:schema:drop --force
+    ./app/console doctrine:schema:create
+    ./app/console octava:administrator:import-acl-resources
+    ./app/console doctrine:fixtures:load -n
+    ./app/console octava:mui:translation:update-db
+    ./app/console cache:clear
+fi
