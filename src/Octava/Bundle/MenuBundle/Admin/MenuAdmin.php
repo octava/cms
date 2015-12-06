@@ -294,7 +294,7 @@ class MenuAdmin extends Admin
     {
         $request = $this->getRequest();
 
-        $isCreateAction = $request->attributes->get('_sonata_name') == 'admin_robo_menu_menu_create';
+        $isCreateAction = $request->attributes->get('_sonata_name') == 'admin_octava_menu_menu_create';
 
         $structureRepository = $this
             ->entityManager
@@ -376,7 +376,7 @@ class MenuAdmin extends Admin
 
         $transformerStructure = new ModelToIdTransformer(
             $this->getModelManager(),
-            'Robo\\StructureBundle\\Entity\\Structure'
+            'OctavaStructureBundle:Structure'
         );
         $formMapper->get('structure')->resetViewTransformers()->addViewTransformer($transformerStructure, true);
     }

@@ -1,9 +1,8 @@
 {% block tree_css %}
-<!--link rel="stylesheet" href="{{ asset('bundles/robotree/css/style.css') }}" type="text/css" media="all" /-->
 {% endblock %}
 
 {% block tree_js %}
-<script src="{{ asset('bundles/robotree/js/jquery.jstree.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/octavatree/js/jquery.jstree.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript" >
     var selected_id = 'node-{{ tree_selected }}';
@@ -42,6 +41,6 @@
                 'ul_id': 'tree'
             } %}
         </li>
-    <ul>
+    </ul>
 </div>
 {% endblock %}

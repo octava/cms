@@ -440,7 +440,7 @@ class StructureAdmin extends Admin
     {
         $types = [
             Structure::TYPE_PAGE => $this->trans('admin.page_type'),
-            Structure::TYPE_STRUCTURE_EMPTY => $this->trans('admin.robo_structure_empty'),
+            Structure::TYPE_STRUCTURE_EMPTY => $this->trans('admin.octava_structure_empty'),
         ];
         foreach ($this->getRouter()->getRouteCollection() as $route) {
             /** @var Route $route */

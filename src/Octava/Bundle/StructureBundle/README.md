@@ -31,22 +31,22 @@
 news:
     resource: "@NewsBundle/Resources/config/routing.yml"
     prefix:   /
-    type: robo_structure
+    type: octava_structure
 ```
 
 Таким образом подключается стандартная конфигурация рутинга бандла NewsBundle. Нестандартным является
-указание типа `robo_structure`. Данный тип влючает обработку файла конфига специальным загрузчиком модуля Структуры.
+указание типа `octava_structure`. Данный тип влючает обработку файла конфига специальным загрузчиком модуля Структуры.
 
 2\. В файле `NewsBundle/Resources/config/routing.yml` пропишем стандартные пути с учётом подключения к структуре
 
 ```yml
 news_list:
     pattern:  /{page}
-    defaults: { _controller: RoboNewsBundle:Default:index, page: 1 }
+    defaults: { _controller: AppNewsBundle:Default:index, page: 1 }
 
 news_show:
     pattern:  %news_list.path%/show/{id}
-    defaults: { _controller: RoboNewsBundle:Default:show}
+    defaults: { _controller: AppNewsBundle:Default:show}
 ```
 
 Разберём по-очереди пути.
@@ -72,23 +72,23 @@ news_show:
 ## Перевод названий рутингов
 
 Перевод для вывода в селекбоксе в форме редактирования модуля Структура осуществляется в рамках
-домена `RoboStructureBundle`. Алиас для перевода аналогичен названию рутинга. Таким образом для перевода
+домена `OctavaStructureBundle`. Алиас для перевода аналогичен названию рутинга. Таким образом для перевода
 названия рутинга из примера выше нужно создать языковые файлы со следующим содержанием.
 
 ```yml
-#NewsBundle/Resources/translations/RoboStructureBundle.en.yml
+#NewsBundle/Resources/translations/OctavaStructureBundle.en.yml
 news_list: News list
 ```
 
 ## Параметры
 
-`default_template` - Шаблон по умолчанию. Если не задан, то берется `RoboStructureBundle:Default:id.html.twig`.
-`additional_templates` - Дополнительные шаблоны. Перевод названий шаблонов берется из домена RoboStructureBundle 
+`default_template` - Шаблон по умолчанию. Если не задан, то берется `OctavaStructureBundle:Default:id.html.twig`.
+`additional_templates` - Дополнительные шаблоны. Перевод названий шаблонов берется из домена OctavaStructureBundle 
 
 Пример:
 
 ```yml
-robo_structure:
+octava_structure:
     default_template: 'AppFrontBundle:Structure:default.html.twig' # Шаблон по умолчанию
     additional_templates: # Дополнительные шаблоны
         template_no_right_menu: 'AppFrontBundle:Structure:without_right_menu.html.twig'

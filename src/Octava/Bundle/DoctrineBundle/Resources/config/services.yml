@@ -1,9 +1,9 @@
 parameters:
-    octava_doctrine.orm_repository.robo_repository_factory.class: Octava\Bundle\DoctrineBundle\ORM\Repository\OctavaRepositoryFactory
+    octava_doctrine.orm_repository.octava_repository_factory.class: Octava\Bundle\DoctrineBundle\ORM\Repository\OctavaRepositoryFactory
 
 services:
-    octava_doctrine.orm_repository.robo_repository_factory:
-        class: %octava_doctrine.orm_repository.robo_repository_factory.class%
+    octava_doctrine.orm_repository.octava_repository_factory:
+        class: %octava_doctrine.orm_repository.octava_repository_factory.class%
         public: false
         calls:
             - [ setContainer, [@service_container] ]

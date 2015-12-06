@@ -19,7 +19,7 @@ class RepositoryFactoryPass implements CompilerPassInterface
         $def = $container->getDefinition('doctrine.orm.configuration');
         $def->addMethodCall(
             'setRepositoryFactory',
-            [new Reference('octava_doctrine.orm_repository.robo_repository_factory')]
+            [new Reference('octava_doctrine.orm_repository.octava_repository_factory')]
         );
     }
 }

@@ -69,7 +69,7 @@ class StructureBundlesLoader extends DelegatingLoader
         $structureData = $structureRepository->getActiveListByTypes(array_keys($straightRoutes));
 
         foreach ($straightRoutes as $name => $route) {
-            if (!isset($structureData[$name]) || $name == 'robo_structure_empty') {
+            if (!isset($structureData[$name]) || $name == 'octava_structure_empty') {
                 $controllerFakePath = str_replace(':', '_', $route->getDefault('_controller'));
                 $route->setPath('/octava/structure/error404/'.$controllerFakePath)
                     ->setDefault('_controller', 'OctavaStructureBundle:Default:error404');

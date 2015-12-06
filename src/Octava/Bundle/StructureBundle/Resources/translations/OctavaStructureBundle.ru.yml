@@ -5,7 +5,7 @@ Created at: Создан
 Updated at: Обновлен
 octava_structure_empty: -- Ссылка отсутствует --
 page: Страница
-robo_structure_site_map: Карта сайта
+octava_structure_site_map: Карта сайта
 
 admin.id: Id
 admin.structure: Структура
@@ -23,12 +23,12 @@ admin.structure_list: Структура
 admin.content_type: Тип контента
 admin.page_type: -- Страница --
 admin.refresh_cache: Обновить кеш
-admin.robo_faq_homepage: FAQ
-admin.robo_faq_answer: FAQ Ответ
-admin.robo_asset_index: Закрытые контракты
+admin.octava_faq_homepage: FAQ
+admin.octava_faq_answer: FAQ Ответ
+admin.octava_asset_index: Закрытые контракты
 admin.content: Контент
-admin.robo_structure_empty: -- Ссылка отсутствует --
-admin.robo_structure_site_map: Карта сайта
+admin.octava_structure_empty: -- Ссылка отсутствует --
+admin.octava_structure_site_map: Карта сайта
 admin.type: Тип
 admin.template: Шаблон страницы
 admin.default_template: По умолчанию

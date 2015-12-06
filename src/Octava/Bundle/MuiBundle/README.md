@@ -44,11 +44,11 @@
 
 # Мультиызычные вкладки в формах админки
 
-Для реализации используется сервис `robo_translation.form_mapper`. Данный сервис представляет собой обёртку над классом Сонаты FormMapper
+Для реализации используется сервис `octava_translation.form_mapper`. Данный сервис представляет собой обёртку над классом Сонаты FormMapper
 объект которого передаётся в метод `configureFormFields()` класса Admin.
 
 ## Шаги по созданию мультиязычных вкладок:
-1\. Подключаем сервис `robo_translation.form_mapper` зависимостью к сервису нужного объекта админки через сеттер:
+1\. Подключаем сервис `octava_translation.form_mapper` зависимостью к сервису нужного объекта админки через сеттер:
 
 ```yml
 #YourBundle/Resources/config/services.yml
@@ -56,7 +56,7 @@
 your_bundle.admin.items:
     ...
     calls:
-        - [ setTranslationMapper, [@robo_translation.form_mapper]]
+        - [ setTranslationMapper, [@octava_translation.form_mapper]]
         ...
 ```
 

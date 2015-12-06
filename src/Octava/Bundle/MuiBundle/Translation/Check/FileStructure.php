@@ -24,7 +24,7 @@ class FileStructure extends AbstractCheck
         $rootDir = $this->getRootDir();
 
         $files = glob($rootDir.'/src/*/*/*/translations/*.yml');
-        $files = array_merge_recursive($files, glob($rootDir.'/vendor/robo/*/*/*/*/translations/*.yml'));
+        $files = array_merge_recursive($files, glob($rootDir.'/vendor/octava/*/*/*/*/translations/*.yml'));
         $files = array_merge_recursive($files, glob($rootDir.'/app/*/*/translations/*.yml'));
 
         $data = $this->sort($files);

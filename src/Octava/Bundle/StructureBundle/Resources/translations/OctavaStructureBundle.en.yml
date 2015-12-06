@@ -5,7 +5,7 @@ Created at: Created At
 Updated at: Updated At
 octava_structure_empty: -- Link doesn't exist --
 page: Page
-robo_structure_site_map: Site Map
+octava_structure_site_map: Site Map
 
 admin.id: Id
 admin.structure: Structure
@@ -23,12 +23,12 @@ admin.structure_list: Structure
 admin.content_type: Content type
 admin.page_type: -- Page --
 admin.refresh_cache: Refresh cache
-admin.robo_faq_homepage: FAQ
-admin.robo_faq_answer: FAQ Answer
-admin.robo_asset_index: Asset Index
+admin.octava_faq_homepage: FAQ
+admin.octava_faq_answer: FAQ Answer
+admin.octava_asset_index: Asset Index
 admin.content: Content
-admin.robo_structure_empty: -- Link doesn't exist --
-admin.robo_structure_site_map: Site Map
+admin.octava_structure_empty: -- Link doesn't exist --
+admin.octava_structure_site_map: Site Map
 admin.type: Type
 admin.template: Page Template
 admin.default_template: By Default
