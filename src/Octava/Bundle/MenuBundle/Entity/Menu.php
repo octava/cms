@@ -58,7 +58,7 @@ class Menu implements Translatable
     /**
      * @var boolean
      */
-    private $isTest;
+    private $isTest = false;
     /**
      * @var Collection
      */

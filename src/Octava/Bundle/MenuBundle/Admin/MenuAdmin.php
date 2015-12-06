@@ -280,9 +280,8 @@ class MenuAdmin extends Admin
                         'edit' => [],
                         'delete' => [],
                         'create' => [
-                            'template' => 'OctavaStructureBundle:CRUD:menu_list__action_create.html.twig',
+                            'template' => 'OctavaMenuBundle:CRUD:menu_list__action_create.html.twig',
                         ],
-                        'history' => [],
                     ],
                 ]
             );
@@ -318,10 +317,9 @@ class MenuAdmin extends Admin
             ->with()
             ->add(
                 'title',
-                'menu_related_text',
+                'octava_menu_related_text',
                 [
                     'translatable' => true,
-                    'label' => $this->trans('admin.title'),
                     'from_field' => 'title',
                     'proxy_field' => 'proxyTitle',
                     'locale' => '',
@@ -332,10 +330,9 @@ class MenuAdmin extends Admin
             ->add('proxyTitle', 'hidden', ['translatable' => true])
             ->add(
                 'link',
-                'menu_related_text',
+                'octava_menu_related_text',
                 [
                     'translatable' => true,
-                    'label' => $this->trans('admin.link'),
                     'required' => false,
                     'from_field' => 'link',
                     'proxy_field' => 'proxyLink',
@@ -344,7 +341,7 @@ class MenuAdmin extends Admin
                 ]
             )
             ->add('proxyLink', 'hidden', ['translatable' => true])
-            ->add('ord', 'text', ['label' => $this->trans('admin.order'), 'required' => false])
+            ->add('position', 'text', ['label' => $this->trans('admin.order'), 'required' => false])
             ->add(
                 'location',
                 'choice',
@@ -367,8 +364,8 @@ class MenuAdmin extends Admin
                     'required' => false,
                 ]
             )
-            ->add('state', null, ['label' => $this->trans('admin.state'), 'required' => false])
-            ->add('isTest', null, ['label' => $this->trans('admin.only_for_test'), 'required' => false])
+            ->add('state', null, ['required' => false])
+            ->add('isTest', null, ['required' => false])
             ->end();
 
         $transformerMenu = new ModelToIdTransformer(

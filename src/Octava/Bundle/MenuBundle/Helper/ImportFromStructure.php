@@ -81,63 +81,64 @@ class ImportFromStructure
                 $structureId = $menuItem->getStructure()->getId();
                 $existStructureIds[$structureId] = $structureId;
             }
-
-            $structureParentId = $menuParent && $menuParent->getStructure()
-                ? $menuParent->getStructure()->getId() : null;
-            $structureAddElements = [];
-            /** @var Structure $structureItem */
-            foreach ($structureTree as $structureItem) {
-                if ($structureItem->getParent()
-                    && $structureItem->getParent()->getId() == $structureParentId
-                    && !isset($existStructureIds[$structureItem->getId()])
-                ) {
-                    $structureAddElements[] = $structureItem;
-                }
+        }
+        $structureParentId = $menuParent && $menuParent->getStructure()
+            ? $menuParent->getStructure()->getId() : null;
+        $structureAddElements = [];
+        /** @var Structure $structureItem */
+        foreach ($structureTree as $structureItem) {
+            $currentParentId = $structureItem->getParent() && $structureItem->getParent()->getId()
+                ? $structureItem->getParent()->getId() : null;
+            if ($currentParentId == $structureParentId
+                && !isset($existStructureIds[$structureItem->getId()])
+            ) {
+                $structureAddElements[] = $structureItem;
             }
+        }
+
+        if (count($structureAddElements)) {
             /** @var Menu[] $menuChildren */
             $menuChildren = [];
-            if (count($structureAddElements)) {
-                $translationRepository = $this->entityManager->getRepository('Gedmo\Translatable\Entity\Translation');
+            $translationRepository = $this->entityManager->getRepository('Gedmo\Translatable\Entity\Translation');
 
-                foreach ($structureAddElements as $structureItem) {
-                    /** @var Structure $structureItem */
-                    $menu = new Menu();
-                    $menu->setState(true);
-                    $menu->setLocation($location);
-                    $menu->setStructure($structureItem);
-                    $menu->setTitle($structureItem->getTitle());
-                    $menu->setLink($structureItem->getPreparedPath());
-                    if ($menuParent) {
-                        $menu->setParent($menuParent);
+            foreach ($structureAddElements as $structureItem) {
+                /** @var Structure $structureItem */
+                $menu = new Menu();
+                $menu->setState(true);
+                $menu->setLocation($location);
+                $menu->setStructure($structureItem);
+                $menu->setTitle($structureItem->getTitle());
+                $menu->setLink($structureItem->getPreparedPath());
+                if ($menuParent) {
+                    $menu->setParent($menuParent);
+                }
+                $this->entityManager->persist($menu);
+
+                $structureTranslations = $translationRepository->findTranslations($structureItem);
+                foreach ($this->localeManager->getAllAliases() as $localeAlias) {
+                    if (!isset($structureTranslations[$localeAlias])) {
+                        continue;
                     }
-                    $this->entityManager->persist($menu);
+                    $translation = $structureTranslations[$localeAlias];
 
-                    $structureTranslations = $translationRepository->findTranslations($structureItem);
-                    foreach ($this->localeManager->getAllAliases() as $localeAlias) {
-                        if (!isset($structureTranslations[$localeAlias])) {
-                            continue;
-                        }
-                        $translation = $structureTranslations[$localeAlias];
-
-                        $path = empty($translation['path']) ? $structureItem->getPath() : $translation['path'];
-                        $title = empty($translation['title']) ? $structureItem->getTitle() : $translation['title'];
-                        $translationRepository->translate($menu, 'title', $localeAlias, $title);
-                        $translationRepository->translate($menu, 'proxyTitle', $localeAlias, true);
-                        $translationRepository->translate(
-                            $menu,
-                            'link',
-                            $localeAlias,
-                            $structureItem->getType() == Structure::TYPE_STRUCTURE_EMPTY ? '' : $path
-                        );
-                        $translationRepository->translate($menu, 'proxyLink', $localeAlias, true);
-                    }
-
-                    $menuChildren[] = $menu;
-                    $this->updatedItems[] = $menu;
+                    $path = empty($translation['path']) ? $structureItem->getPath() : $translation['path'];
+                    $title = empty($translation['title']) ? $structureItem->getTitle() : $translation['title'];
+                    $translationRepository->translate($menu, 'title', $localeAlias, $title);
+                    $translationRepository->translate($menu, 'proxyTitle', $localeAlias, true);
+                    $translationRepository->translate(
+                        $menu,
+                        'link',
+                        $localeAlias,
+                        $structureItem->getType() == Structure::TYPE_STRUCTURE_EMPTY ? '' : $path
+                    );
+                    $translationRepository->translate($menu, 'proxyLink', $localeAlias, true);
                 }
 
-                $this->entityManager->flush();
+                $menuChildren[] = $menu;
+                $this->updatedItems[] = $menu;
             }
+
+            $this->entityManager->flush();
 
             foreach ($menuChildren as $value) {
                 if ($value->getStructure()) {
