@@ -74,7 +74,7 @@ class StructurePagesLoader extends FileLoader
                 $route = new Route($routePattern);
                 $route->setDefault(
                     '_controller',
-                    $this->getStructureConfig()->getDefaultTemplate()
+                    'OctavaStructureBundle:Default:index'
                 )
                     ->setDefault('id', $item->getId())
                     ->setDefault(Structure::ROUTING_ID_NAME, $item->getId())

@@ -1,0 +1,4 @@
+robo_structure_empty:
+    path: ''
+    defaults: {_controller: RoboStructureBundle:Default:error404}
+    methods: [GET]

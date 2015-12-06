@@ -1,0 +1,8 @@
+octava_structure_loader:
+    resource: .
+    type: octava_structure_pages
+
+octava_structure_structure:
+    resource: "@OctavaStructureBundle/Resources/config/routing_structure.yml"
+    prefix:   /
+    type: octava_structure

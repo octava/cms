@@ -135,31 +135,30 @@ class AdminMenuAdmin extends Admin
                 'actions',
                 [
                     'actions' => [
-                        'show' => [],
-                        'edit' => [],
-                        'delete' => [],
                         'create' => [
                             'template' => 'OctavaAdminMenuBundle:CRUD:admin_menu_list__action_create.html.twig',
                         ],
+                        'edit' => [],
+                        'delete' => [],
                     ],
                 ]
             )
             ->remove('batch');
 
-//        $treeQuery = $this->getRepository()
-//            ->createQueryBuilder('m')
-//            ->where('m.type = :type')
-//            ->setParameter('type', AdminMenu::TYPE_FOLDER);
-//
-//        $this->getTreeManager()->setQueryBuilder($treeQuery)
-//            ->setParentField('parent')
-//            ->setNameField('title')
-//            ->setOrderString('m.position')
-//            ->setActZeroAsNull(true)
-//            ->setLinkPath($this->generateUrl('list'))
-//            ->setLevelTemplate('OctavaTreeBundle:JsNavigation:level.html.twig')
-//            ->setTreeTemplate('OctavaTreeBundle:JsNavigation:tree.html.twig')
-//            ->setSelected(PHP_INT_MAX);
+        $treeQuery = $this->getRepository()
+            ->createQueryBuilder('m')
+            ->where('m.type = :type')
+            ->setParameter('type', AdminMenu::TYPE_FOLDER);
+
+        $this->getTreeManager()->setQueryBuilder($treeQuery)
+            ->setParentField('parent')
+            ->setNameField('title')
+            ->setOrderString('m.position')
+            ->setActZeroAsNull(true)
+            ->setLinkPath($this->generateUrl('list'))
+            ->setLevelTemplate('OctavaTreeBundle:JsNavigation:level.html.twig')
+            ->setTreeTemplate('OctavaTreeBundle:JsNavigation:tree.html.twig')
+            ->setSelected(PHP_INT_MAX);
     }
 
     /**
