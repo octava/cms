@@ -34,4 +34,7 @@ services:
 
     octava_structure.structure_manager:
         class: %octava_structure.structure_manager.class%
-        arguments: [ @sonata.admin.entity_manager, @event_dispatcher ]
+        arguments:
+            - @sonata.admin.entity_manager
+            - @event_dispatcher
+            - @request_stack

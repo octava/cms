@@ -83,7 +83,6 @@ class StructureItemUpdate implements EventSubscriberInterface
 
         $this->update($menuItems);
 
-        $this->entityManager->flush();
         $this->menuCache->deleteAll();
     }
 

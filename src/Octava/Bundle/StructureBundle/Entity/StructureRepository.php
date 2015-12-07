@@ -173,11 +173,9 @@ class StructureRepository extends EntityRepository implements ContainerAwareInte
     public function updateAllPathValues($parentId = 0)
     {
         $this->fullStructure = [];
-        $em = $this->getEntityManager();
         foreach ($this->getFlatTree($parentId) as $item) {
             $this->updatePath($item);
         }
-        $em->flush();
     }
 
     /**

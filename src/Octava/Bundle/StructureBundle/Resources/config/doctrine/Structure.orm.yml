@@ -6,12 +6,13 @@ Octava\Bundle\StructureBundle\Entity\Structure:
             locale: locale
 
     repositoryClass: Octava\Bundle\StructureBundle\Entity\StructureRepository
-    fields:
+    id:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
+    fields:
         createdAt:
             type: datetime
         updatedAt:
@@ -63,12 +64,13 @@ Octava\Bundle\StructureBundle\Entity\Structure:
             targetEntity: Structure
             mappedBy: parent
             fetch: EXTRA_LAZY
-            cascade: ['remove']
+            cascade: ['all']
 
     manyToOne:
         parent:
             targetEntity: Structure
             inversedBy: children
             fetch: EXTRA_LAZY
+            cascade: ['all']
             joinColumn:
                 onDelete: CASCADE
