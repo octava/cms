@@ -260,12 +260,13 @@ class StructureAdmin extends Admin
                 try {
                     $url = $container->get('router')->generate(
                         $object->getRouteName(),
-                        ['_locale' => $alias, '_catch_exception' => 1]
+                        ['_locale' => $alias, '_catch_exception' => true]
                     );
                     if (!empty($url)) {
                         $found = true;
                     }
                 } catch (RouteNotFoundException $e) {
+
                 }
             }
             $urls[] = [

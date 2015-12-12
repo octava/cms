@@ -6,6 +6,8 @@ parameters:
     octava_menu.event_listener.structure_item_update.class: Octava\Bundle\MenuBundle\EventListener\StructureItemUpdate
     octava_menu.form_type.menu_related_text_type.class: Octava\Bundle\MenuBundle\Form\Type\MenuRelatedTextType
     octava_menu.helper.import_from_structure.class: Octava\Bundle\MenuBundle\Helper\ImportFromStructure
+    octava_menu.twig.menu_extension.class: Octava\Bundle\MenuBundle\Twig\MenuExtension
+    octava_menu.filter_chain.class: Octava\Bundle\MenuBundle\Filter\FilterChain
 
 services:
     octava_menu.cache:
@@ -41,3 +43,17 @@ services:
     octava_menu.helper.import_from_structure:
         class: %octava_menu.helper.import_from_structure.class%
         arguments: [ @doctrine.orm.entity_manager, @octava_mui.locale_manager ]
+
+    octava_menu.filter_chain:
+        class: %octava_menu.filter_chain.class%
+
+    octava_menu.twig.menu_extension:
+        class: %octava_menu.twig.menu_extension.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @octava_structure.structure_manager
+            - @octava_menu.cache
+            - @octava_menu.filter_chain
+            - @request_stack
+        tags:
+            - { name: twig.extension }

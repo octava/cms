@@ -3,9 +3,22 @@ imports:
     - { resource: services/office.yml }
     - { resource: services/translation.yml }
 
+parameters:
+    octava_mui.config.route_config.class: Octava\Bundle\MuiBundle\Config\RouteConfig
+    octava_mui.router.i18n_router.class: Octava\Bundle\MuiBundle\Router\I18nRouter
+    octava_mui.router.pattern_generation_strategy.class: Octava\Bundle\MuiBundle\Router\PatternGenerationStrategy
+    octava_mui.admin.translation.class: Octava\Bundle\MuiBundle\Admin\TranslationAdmin
+
 services:
-    octava_mui.router.default_pattern_generation_strategy:
-        class: Octava\Bundle\MuiBundle\Router\DefaultPatternGenerationStrategy
+    octava_mui.admin.translation:
+        class: %octava_mui.admin.translation.class%
+        arguments: [~, Octava\Bundle\MuiBundle\Entity\Translation, OctavaMuiBundle:TranslationAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Admin, label: Translation}
+
+    octava_mui.router.pattern_generation_strategy:
+        class: %octava_mui.router.pattern_generation_strategy.class%
+        public: false
         arguments:
             - %jms_i18n_routing.strategy%
             - @translator
@@ -14,11 +27,14 @@ services:
             - %jms_i18n_routing.catalogue%
             - %jms_i18n_routing.default_locale%
         calls:
-            - [ setContainer, [@service_container] ]
+            - [ setContainer, [ @service_container ] ]
 
-
-    octava_mui.admin.translation:
-        class: Octava\Bundle\MuiBundle\Admin\TranslationAdmin
-        arguments: [~, Octava\Bundle\MuiBundle\Entity\Translation, OctavaMuiBundle:TranslationAdmin]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: Admin, label: Translation}
+    octava_mui.router.i18n_router:
+        class: %octava_mui.router.i18n_router.class%
+        parent: router.default
+        public: false
+        calls:
+            - [ setLocaleResolver, [ @jms_i18n_routing.locale_resolver ] ]
+            - [ setI18nLoaderId, [ 'jms_i18n_routing.loader' ] ]
+            - [ setDefaultLocale, [ %jms_i18n_routing.default_locale% ] ]
+            - [ setRedirectToHost, [ %jms_i18n_routing.redirect_to_host% ] ]

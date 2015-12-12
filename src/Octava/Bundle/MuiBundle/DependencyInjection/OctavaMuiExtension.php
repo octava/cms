@@ -24,7 +24,7 @@ class OctavaMuiExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         if ($container->hasParameter('jms_i18n_routing.default_locale')) {
@@ -40,10 +40,14 @@ class OctavaMuiExtension extends Extension
 
         $definition = new Definition(
             $container->getParameter('octava_mui.dict.currencies.class'),
-            [
-                $config['currencies'],
-            ]
+            [$config['currencies'],]
         );
         $container->setDefinition('octava_mui.dict.currencies', $definition);
+
+        $definition = new Definition(
+            $container->getParameter('octava_mui.config.route_config.class'),
+            [$config,]
+        );
+        $container->setDefinition('octava_mui.config.route_config', $definition);
     }
 }

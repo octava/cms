@@ -2,6 +2,7 @@
 
 namespace Octava\Bundle\MuiBundle\DependencyInjection;
 
+use Octava\Bundle\MuiBundle\Config\RouteConfig;
 use Octava\Bundle\MuiBundle\Dict\Currencies;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -32,7 +33,8 @@ class Configuration implements ConfigurationInterface
             ->validate()
             ->ifNotInArray($searchTypes)
             ->thenInvalid(
-                'The office search type %s is not supported. Allowed types: ' . json_encode($searchTypes)
+                'The office search type %s is not supported. Allowed types: '
+                .json_encode($searchTypes)
             )
             ->end()
             ->end()
@@ -46,6 +48,7 @@ class Configuration implements ConfigurationInterface
             ->prototype('scalar')->end()
             ->defaultValue(['/admin', '/_'])
             ->end()
+            ->booleanNode(RouteConfig::KEY_SKIP_EXCEPTION_IF_ROUTE_NOT_FOUND)->defaultFalse()->end()
             ->end();
 
         return $treeBuilder;
