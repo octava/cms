@@ -49,6 +49,10 @@ class Configuration implements ConfigurationInterface
             ->defaultValue(['/admin', '/_'])
             ->end()
             ->booleanNode(RouteConfig::KEY_SKIP_EXCEPTION_IF_ROUTE_NOT_FOUND)->defaultFalse()->end()
+            ->arrayNode('admin_locales')
+            ->defaultValue(['en', 'ru'])
+            ->prototype('scalar')->end()
+            ->end()
             ->end();
 
         return $treeBuilder;

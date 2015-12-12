@@ -27,14 +27,6 @@ class OctavaMuiExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        if ($container->hasParameter('jms_i18n_routing.default_locale')) {
-            $ignoreDefaultLocaleUrl = $container
-                    ->getParameter('jms_i18n_routing.strategy') == 'prefix_except_default';
-            $managerDefinition = $container->getDefinition('octava_mui.locale_manager');
-            $managerDefinition->replaceArgument(1, $container->getParameter('jms_i18n_routing.default_locale'));
-            $managerDefinition->addArgument($ignoreDefaultLocaleUrl);
-        }
-
         $pagesDefinition = $container->getDefinition('octava_mui.event_listener.office_by_locale_listener');
         $pagesDefinition->addArgument($config['url_ignore_prefixes']);
 
@@ -49,5 +41,8 @@ class OctavaMuiExtension extends Extension
             [$config,]
         );
         $container->setDefinition('octava_mui.config.route_config', $definition);
+
+        $localeConfig = $container->getDefinition('octava_mui.config.admin_locales_config');
+        $localeConfig->addArgument($config['admin_locales']);
     }
 }

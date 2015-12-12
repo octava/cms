@@ -8,6 +8,7 @@ parameters:
     octava_mui.router.i18n_router.class: Octava\Bundle\MuiBundle\Router\I18nRouter
     octava_mui.router.pattern_generation_strategy.class: Octava\Bundle\MuiBundle\Router\PatternGenerationStrategy
     octava_mui.admin.translation.class: Octava\Bundle\MuiBundle\Admin\TranslationAdmin
+    octava_mui.config.admin_locales_config.class: Octava\Bundle\MuiBundle\Config\AdminLocalesConfig
 
 services:
     octava_mui.admin.translation:
@@ -38,3 +39,11 @@ services:
             - [ setI18nLoaderId, [ 'jms_i18n_routing.loader' ] ]
             - [ setDefaultLocale, [ %jms_i18n_routing.default_locale% ] ]
             - [ setRedirectToHost, [ %jms_i18n_routing.redirect_to_host% ] ]
+            - [ setAdminLocalesConfig, [ @octava_mui.config.admin_locales_config ] ]
+
+    octava_mui.config.admin_locales_config:
+        class: %octava_mui.config.admin_locales_config.class%
+        calls:
+            - [setTranslator, [@translator]]
+        tags:
+            - { name: twig.extension }

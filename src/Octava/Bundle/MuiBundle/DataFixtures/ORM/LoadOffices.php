@@ -40,6 +40,7 @@ class LoadOffices extends AbstractFixture implements FixtureInterface, OrderedFi
         $entity->setRecognizeLanguage('en');
         $entity->setAvailableLanguages(['en', 'ru']);
         $entity->setCurrencies(['EUR', 'USD']);
+        $entity->setIncludeLangInUrl(false);
         $manager->persist($entity);
 
         $entity = new Office();

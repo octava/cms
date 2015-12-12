@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use JMS\I18nRoutingBundle\Exception\NotAcceptableLanguageException;
 use JMS\I18nRoutingBundle\Router\I18nLoader;
 use JMS\I18nRoutingBundle\Router\LocaleResolverInterface;
+use Octava\Bundle\MuiBundle\Config\AdminLocalesConfig;
 use Octava\Bundle\MuiBundle\Config\RouteConfig;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -18,7 +19,19 @@ class I18nRouter extends Router
 {
     const PARAMETER_CATCH_EXCEPTION = '_catch_exception';
 
+    /**
+     * @var AdminLocalesConfig
+     */
+    protected $adminLocalesConfig;
+
+    /**
+     * @var array
+     */
     private $hostMap = [];
+
+    /**
+     * @var string
+     */
     private $i18nLoaderId;
 
     /**
@@ -40,11 +53,6 @@ class I18nRouter extends Router
      * @var LocaleResolverInterface
      */
     private $localeResolver;
-
-    /**
-     * @var array
-     */
-    private $adminLocales;
 
     /**
      * @var array
@@ -111,13 +119,9 @@ class I18nRouter extends Router
         $this->defaultLocale = $locale;
     }
 
-    /**
-     * @param array $adminLocales
-     * @return $this
-     */
-    public function setAdminLocales($adminLocales)
+    public function setAdminLocalesConfig(AdminLocalesConfig $adminLocalesConfig)
     {
-        $this->adminLocales = $adminLocales;
+        $this->adminLocalesConfig = $adminLocalesConfig;
 
         return $this;
     }
@@ -281,7 +285,7 @@ class I18nRouter extends Router
 
     protected function getAdminRouteNamePrefix()
     {
-        $ret = implode('_', $this->adminLocales);
+        $ret = implode('_', $this->adminLocalesConfig->getLocales());
 
         return $ret.I18nLoader::ROUTING_PREFIX;
     }
