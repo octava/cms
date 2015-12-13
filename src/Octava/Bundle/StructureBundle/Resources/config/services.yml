@@ -5,6 +5,7 @@ parameters:
     octava_structure.routing.structure_pages_loader.class: Octava\Bundle\StructureBundle\Routing\StructurePagesLoader
     octava_structure.routing.structure_bundles_loader.class: Octava\Bundle\StructureBundle\Routing\StructureBundlesLoader
     octava_structure.structure_manager.class: Octava\Bundle\StructureBundle\StructureManager
+    octava_structure.twig.structure_extension.class: Octava\Bundle\StructureBundle\Twig\StructureExtension
 
 services:
     octava_structure.admin.structure:
@@ -38,3 +39,9 @@ services:
             - @sonata.admin.entity_manager
             - @event_dispatcher
             - @request_stack
+
+    octava_structure.twig.structure_extension:
+        class: %octava_structure.twig.structure_extension.class%
+        arguments: [ @octava_structure.structure_manager, @doctrine.orm.entity_manager ]
+        tags:
+            - { name: twig.extension }

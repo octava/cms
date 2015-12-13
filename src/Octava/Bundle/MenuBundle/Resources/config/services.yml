@@ -7,6 +7,7 @@ parameters:
     octava_menu.form_type.menu_related_text_type.class: Octava\Bundle\MenuBundle\Form\Type\MenuRelatedTextType
     octava_menu.helper.import_from_structure.class: Octava\Bundle\MenuBundle\Helper\ImportFromStructure
     octava_menu.twig.menu_extension.class: Octava\Bundle\MenuBundle\Twig\MenuExtension
+    octava_menu.twig.breadcrumbs_extension.class: Octava\Bundle\MenuBundle\Twig\BreadcrumbsExtension
     octava_menu.filter_chain.class: Octava\Bundle\MenuBundle\Filter\FilterChain
 
 services:
@@ -55,5 +56,11 @@ services:
             - @octava_menu.cache
             - @octava_menu.filter_chain
             - @request_stack
+        tags:
+            - { name: twig.extension }
+
+    octava_menu.twig.breadcrumbs_extension:
+        class: %octava_menu.twig.breadcrumbs_extension.class%
+        arguments: [ @octava_structure.structure_manager, @octava_mui.office_manager ]
         tags:
             - { name: twig.extension }
