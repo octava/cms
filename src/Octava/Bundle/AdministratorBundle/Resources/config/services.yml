@@ -15,7 +15,7 @@ services:
         class: %octava_administrator.form_type.resources.class%
         arguments:
             - @doctrine.orm.entity_manager
-            - @translator.logging
+            - @translator
             - @security.token_storage
             - @octava_administrator.config.administrator
         tags:
