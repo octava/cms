@@ -3,7 +3,6 @@ namespace Octava\Bundle\MuiBundle\Translation;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\Query;
 use Gedmo\Translatable\Entity\Translation;
 use SimpleThings\EntityAudit\AuditException;
 use Sonata\AdminBundle\Model\AuditManager;
@@ -46,6 +45,7 @@ class EntityAudit
     public function setAuditManager($auditManager)
     {
         $this->auditManager = $auditManager;
+
         return $this;
     }
 
@@ -64,6 +64,7 @@ class EntityAudit
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
+
         return $this;
     }
 
@@ -100,6 +101,7 @@ class EntityAudit
             }
         }
         $result = array_filter($result);
+
         return $result;
     }
 
@@ -136,6 +138,7 @@ class EntityAudit
             $result = $reader->find($className, $id, $rev);
         } catch (AuditException $e) {
         }
+
         return $result;
     }
 
@@ -174,6 +177,7 @@ class EntityAudit
             $result[$locale][$field]['compare'] = $compare;
         }
         $result = array_filter($result);
+
         return $result;
     }
 }

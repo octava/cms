@@ -185,7 +185,7 @@ class MenuAdmin extends Admin
         if ($object->getState()) {
             $object->setState(true);
         }
-        if ($object->getIsTest()) {
+        if ($object->isTest()) {
             $object->setIsTest(true);
         }
         if ($object->getProxyTitle()) {

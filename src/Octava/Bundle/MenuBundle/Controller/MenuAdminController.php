@@ -5,11 +5,9 @@ namespace Octava\Bundle\MenuBundle\Controller;
 use Octava\Bundle\MenuBundle\Admin\MenuAdmin;
 use Octava\Bundle\MenuBundle\Command\ResetProxyCommand;
 use Sonata\AdminBundle\Controller\CRUDController;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class MenuAdminController extends CRUDController
 {
@@ -63,14 +61,5 @@ class MenuAdminController extends CRUDController
         }
 
         return new RedirectResponse($this->admin->generateUrl('list'));
-    }
-
-    public function batchActionDelete(ProxyQueryInterface $query, Request $request = null)
-    {
-        /** @var MenuAdmin $admin */
-        $admin = $this->admin;
-        $admin->clearCache();
-
-        return parent::batchActionDelete($query);
     }
 }

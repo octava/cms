@@ -258,7 +258,7 @@ class MenuRepository extends EntityRepository implements ContainerAwareInterface
                 'structure_type' => $type,
                 'level' => $level,
                 'selected' => false,
-                'is_test' => $item->getIsTest(),
+                'is_test' => $item->isTest(),
                 'children' => $this->getTreeFromFlatList($list, $item->getId(), $level + 1),
             ];
         }

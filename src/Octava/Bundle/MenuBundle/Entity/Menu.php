@@ -366,7 +366,7 @@ class Menu implements Translatable
      *
      * @return boolean
      */
-    public function getIsTest()
+    public function isTest()
     {
         return $this->isTest;
     }
