@@ -3,9 +3,14 @@ namespace Octava\Bundle\TreeBundle;
 
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class TreeManager
 {
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
     /**
      * Query builder for target table
      * @var QueryBuilder
@@ -105,10 +110,12 @@ class TreeManager
 
     /**
      * @param TwigEngine $twigEngine
+     * @param RequestStack $requestStack
      */
-    public function __construct(TwigEngine $twigEngine)
+    public function __construct(TwigEngine $twigEngine, RequestStack $requestStack)
     {
         $this->twigEngine = $twigEngine;
+        $this->requestStack = $requestStack;
     }
 
     public function getQueryBuilder()
@@ -284,6 +291,7 @@ class TreeManager
         if ($this->sendData2Viewer()) {
             return $this->twigEngine->render($this->treeTemplate, $this->viewData);
         }
+
         return null;
     }
 
@@ -308,6 +316,7 @@ class TreeManager
     public function setLevelTemplate($levelTemplate)
     {
         $this->levelTemplate = $levelTemplate;
+
         return $this;
     }
 
@@ -318,6 +327,7 @@ class TreeManager
     public function setTreeTemplate($treeTemplate)
     {
         $this->treeTemplate = $treeTemplate;
+
         return $this;
     }
 
@@ -336,7 +346,7 @@ class TreeManager
         }
 
         if (!$this->token) {
-            $this->token = substr(md5(time() . mt_rand(1000, 10000)), 0, 8);
+            $this->token = substr(md5(time().mt_rand(1000, 10000)), 0, 8);
         }
 
         $this->viewData['tree_recursive_path'] = $this->levelTemplate;
@@ -361,13 +371,13 @@ class TreeManager
      */
     protected function getAdditionalUrlParamsAsString()
     {
-        $get = $_GET;
+        $get = $this->requestStack->getMasterRequest()->request->all();
         unset($get['filter'], $get[$this->getUrlParam()]);
 
         $params = array_merge($get, $this->additionalUrlParams);
         $str = http_build_query($params);
 
-        return $str ? '&' . $str : '';
+        return $str ? '&'.$str : '';
     }
 
     protected function getData()
@@ -400,9 +410,9 @@ class TreeManager
 
         $result = [];
 
-        $getIdMethod = 'get' . ucfirst($this->primaryField);
-        $getNameMethod = 'get' . ucfirst($this->nameField);
-        $getParentMethod = 'get' . ucfirst($this->parentField);
+        $getIdMethod = 'get'.ucfirst($this->primaryField);
+        $getNameMethod = 'get'.ucfirst($this->nameField);
+        $getParentMethod = 'get'.ucfirst($this->parentField);
 
         foreach ($rows as $value) {
             $currentId = $value->$getIdMethod();
