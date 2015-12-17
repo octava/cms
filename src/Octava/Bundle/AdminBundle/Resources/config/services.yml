@@ -5,4 +5,4 @@ services:
     octava_admin.translator.label_translator_strategy:
         class: %octava_admin.translator.label_translator_strategy.class%
         calls:
-            - [ setTranslator, [@translator] ]
+            - [ setTranslator, ['@translator'] ]

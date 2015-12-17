@@ -22,28 +22,28 @@ services:
         public: false
         arguments:
             - %jms_i18n_routing.strategy%
-            - @translator
+            - '@translator'
             - %jms_i18n_routing.locales%
             - %kernel.cache_dir%
             - %jms_i18n_routing.catalogue%
             - %jms_i18n_routing.default_locale%
         calls:
-            - [ setContainer, [ @service_container ] ]
+            - [ setContainer, [ '@service_container' ] ]
 
     octava_mui.router.i18n_router:
         class: %octava_mui.router.i18n_router.class%
         parent: router.default
         public: false
         calls:
-            - [ setLocaleResolver, [ @jms_i18n_routing.locale_resolver ] ]
+            - [ setLocaleResolver, [ '@jms_i18n_routing.locale_resolver' ] ]
             - [ setI18nLoaderId, [ 'jms_i18n_routing.loader' ] ]
             - [ setDefaultLocale, [ %jms_i18n_routing.default_locale% ] ]
             - [ setRedirectToHost, [ %jms_i18n_routing.redirect_to_host% ] ]
-            - [ setAdminLocalesConfig, [ @octava_mui.config.admin_locales_config ] ]
+            - [ setAdminLocalesConfig, [ '@octava_mui.config.admin_locales_config' ] ]
 
     octava_mui.config.admin_locales_config:
         class: %octava_mui.config.admin_locales_config.class%
         calls:
-            - [setTranslator, [@translator]]
+            - [setTranslator, ['@translator']]
         tags:
             - { name: twig.extension }

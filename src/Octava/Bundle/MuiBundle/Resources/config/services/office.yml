@@ -15,23 +15,23 @@ services:
 
     octava_mui.office_manager:
         class: %octava_mui.office_manager.class%
-        arguments: [ @doctrine.orm.entity_manager, %kernel.default_locale% ]
+        arguments: [ '@doctrine.orm.entity_manager', %kernel.default_locale% ]
 
     octava_mui.twig.office_extension:
         class: %octava_mui.twig.office_extension.class%
         public: false
-        arguments: [ @octava_mui.office_manager ]
+        arguments: [ '@octava_mui.office_manager' ]
         tags:
             - { name: twig.extension }
 
     octava_mui.event_listener.office_by_locale_listener:
         class: %octava_mui.event_listener.office_by_locale_listener.class%
-        arguments: [ @octava_mui.office_manager ]
+        arguments: [ '@octava_mui.office_manager' ]
         tags:
             - { name: kernel.event_subscriber }
 
     octava_mui.form_type.available_currencies:
         class: %octava_mui.form_type.available_currencies.class%
-        arguments: [ @octava_mui.dict.currencies ]
+        arguments: [ '@octava_mui.dict.currencies' ]
         tags:
             - { name: form.type, alias: octava_available_currencies }

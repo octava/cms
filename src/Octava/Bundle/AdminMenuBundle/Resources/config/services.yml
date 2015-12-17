@@ -10,11 +10,11 @@ parameters:
 services:
     octava_admin_menu.admin_menu_manager:
         class: %octava_admin_menu.admin_menu_manager.class%
-        arguments: [ @sonata.admin.pool, @translator, @doctrine.orm.entity_manager ]
+        arguments: [ '@sonata.admin.pool', '@translator', '@doctrine.orm.entity_manager' ]
 
     octava_admin_menu.dict.types:
         class: %octava_admin_menu.dict.types.class%
-        arguments: [ @translator ]
+        arguments: [ '@translator' ]
 
     octava_admin_menu.admin.admin_menu:
         class: %octava_admin_menu.admin.admin_menu.class%
@@ -25,29 +25,29 @@ services:
     octava_admin_menu.twig.admin_menu_extension:
         class: %octava_admin_menu.twig.admin_menu_extension.class%
         public: false
-        arguments: [@octava_admin_menu.admin_menu_manager]
+        arguments: ['@octava_admin_menu.admin_menu_manager']
         tags:
             - { name: twig.extension }
 
     octava_admin_menu.form_type.entity_type:
         class: %octava_admin_menu.form_type.entity_type.class%
-        arguments: [ @octava_admin_menu.admin_menu_manager ]
+        arguments: [ '@octava_admin_menu.admin_menu_manager' ]
         tags:
             - { name: form.type, alias: octava_admin_menu_entity }
 
     octava_admin_menu.form_type.admin_class_choice_type:
         class: %octava_admin_menu.form_type.admin_class_choice_type.class%
-        arguments: [ @octava_admin_menu.admin_menu_manager ]
+        arguments: [ '@octava_admin_menu.admin_menu_manager' ]
         tags:
             - { name: form.type, alias: octava_admin_menu_admin_class_choice }
 
     octava_admin_menu.builder:
         class: %octava_admin_menu.builder.class%
         arguments:
-            - @sonata.admin.pool
-            - @knp_menu.factory
-            - @knp_menu.menu_provider
-            - @event_dispatcher
-            - @request_stack
-            - @octava_admin_menu.admin_menu_manager
-            - @logger
+            - '@sonata.admin.pool'
+            - '@knp_menu.factory'
+            - '@knp_menu.menu_provider'
+            - '@event_dispatcher'
+            - '@request_stack'
+            - '@octava_admin_menu.admin_menu_manager'
+            - '@logger'

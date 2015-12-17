@@ -21,27 +21,27 @@ services:
     octava_structure.routing.structure_pages_loader:
         class: %octava_structure.routing.structure_pages_loader.class%
         arguments:
-            - @file_locator
-            - @doctrine.orm.entity_manager
-            - @octava_structure.config.structure_config
+            - '@file_locator'
+            - '@doctrine.orm.entity_manager'
+            - '@octava_structure.config.structure_config'
         tags:
             - { name: routing.loader }
 
     octava_structure.routing.structure_bundles_loader:
         class: %octava_structure.routing.structure_bundles_loader.class%
-        arguments: [ @sonata.admin.entity_manager, @routing.resolver ]
+        arguments: [ '@sonata.admin.entity_manager', '@routing.resolver' ]
         tags:
             - { name: routing.loader }
 
     octava_structure.structure_manager:
         class: %octava_structure.structure_manager.class%
         arguments:
-            - @sonata.admin.entity_manager
-            - @event_dispatcher
-            - @request_stack
+            - '@sonata.admin.entity_manager'
+            - '@event_dispatcher'
+            - '@request_stack'
 
     octava_structure.twig.structure_extension:
         class: %octava_structure.twig.structure_extension.class%
-        arguments: [ @octava_structure.structure_manager, @doctrine.orm.entity_manager ]
+        arguments: [ '@octava_structure.structure_manager', '@doctrine.orm.entity_manager' ]
         tags:
             - { name: twig.extension }

@@ -9,20 +9,20 @@ parameters:
 services:
     octava_administrator.security_handler.administrator:
         class: %octava_administrator.security_handler.administrator.class%
-        arguments: [ @doctrine.orm.entity_manager, @security.token_storage ]
+        arguments: [ '@doctrine.orm.entity_manager', '@security.token_storage' ]
 
     octava_administrator.form_type.resources:
         class: %octava_administrator.form_type.resources.class%
         arguments:
-            - @doctrine.orm.entity_manager
-            - @translator
-            - @security.token_storage
-            - @octava_administrator.config.administrator
+            - '@doctrine.orm.entity_manager'
+            - '@translator'
+            - '@security.token_storage'
+            - '@octava_administrator.config.administrator'
         tags:
             - { name: form.type, alias: octava_acl_resources }
 
     octava_administrator.twig.administrator_extension:
         class: %octava_administrator.twig.administrator_extension.class%
-        arguments: [ @security.token_storage ]
+        arguments: [ '@security.token_storage' ]
         tags:
             - { name: twig.extension }

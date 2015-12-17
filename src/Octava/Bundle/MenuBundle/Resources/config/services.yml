@@ -23,15 +23,15 @@ services:
     octava_menu.menu_manager:
         class: %octava_menu.menu_manager.class%
         arguments:
-         - @octava_mui.translation_manager
-         - @octava_menu.config.menu_config
-         - @octava_menu.cache
+         - '@octava_mui.translation_manager'
+         - '@octava_menu.config.menu_config'
+         - '@octava_menu.cache'
 
     octava_menu.event_listener.structure_item_update:
         class: %octava_menu.event_listener.structure_item_update.class%
         arguments:
-            - @doctrine.orm.entity_manager
-            - @octava_menu.cache
+            - '@doctrine.orm.entity_manager'
+            - '@octava_menu.cache'
             - %kernel.default_locale%
         tags:
             - { name: kernel.event_subscriber }
@@ -43,7 +43,7 @@ services:
 
     octava_menu.helper.import_from_structure:
         class: %octava_menu.helper.import_from_structure.class%
-        arguments: [ @doctrine.orm.entity_manager, @octava_mui.locale_manager ]
+        arguments: [ '@doctrine.orm.entity_manager', '@octava_mui.locale_manager' ]
 
     octava_menu.filter_chain:
         class: %octava_menu.filter_chain.class%
@@ -51,16 +51,16 @@ services:
     octava_menu.twig.menu_extension:
         class: %octava_menu.twig.menu_extension.class%
         arguments:
-            - @doctrine.orm.entity_manager
-            - @octava_structure.structure_manager
-            - @octava_menu.cache
-            - @octava_menu.filter_chain
-            - @request_stack
+            - '@doctrine.orm.entity_manager'
+            - '@octava_structure.structure_manager'
+            - '@octava_menu.cache'
+            - '@octava_menu.filter_chain'
+            - '@request_stack'
         tags:
             - { name: twig.extension }
 
     octava_menu.twig.breadcrumbs_extension:
         class: %octava_menu.twig.breadcrumbs_extension.class%
-        arguments: [ @octava_structure.structure_manager, @octava_mui.office_manager ]
+        arguments: [ '@octava_structure.structure_manager', '@octava_mui.office_manager' ]
         tags:
             - { name: twig.extension }

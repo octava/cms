@@ -1,4 +1,4 @@
 services:
 #    octava_setting.example:
 #        class: Octava\Bundle\SettingBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+#        arguments: ['@service_id', "plain_value", %parameter%]

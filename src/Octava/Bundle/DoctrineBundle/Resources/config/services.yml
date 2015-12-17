@@ -6,4 +6,4 @@ services:
         class: %octava_doctrine.orm_repository.octava_repository_factory.class%
         public: false
         calls:
-            - [ setContainer, [@service_container] ]
+            - [ setContainer, ['@service_container'] ]

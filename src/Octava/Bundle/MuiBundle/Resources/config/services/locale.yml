@@ -6,7 +6,7 @@ parameters:
 services:
     octava_mui.locale_manager:
         class: %octava_mui.locale_manager.class%
-        arguments: [ @doctrine.orm.entity_manager, %locale% ]
+        arguments: [ '@doctrine.orm.entity_manager', %locale% ]
 
     octava_mui.admin.locale:
         class: %octava_mui.admin.locale.class%
@@ -17,6 +17,6 @@ services:
     octava_mui.twig.locale_extension:
         class: %octava_mui.twig.locale_extension.class%
         public: false
-        arguments: [ @octava_mui.locale_manager, @octava_mui.office_manager ]
+        arguments: [ '@octava_mui.locale_manager', '@octava_mui.office_manager' ]
         tags:
             - { name: twig.extension }
