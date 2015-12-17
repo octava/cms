@@ -2,6 +2,10 @@ Octava\Bundle\AdminMenuBundle\Entity\AdminMenu:
     type: entity
     table: admin_menu
     repositoryClass: Octava\Bundle\AdminMenuBundle\Entity\AdminMenuRepository
+    gedmo:
+        translation:
+            locale: locale
+
     id:
         id:
             type: integer
@@ -22,6 +26,8 @@ Octava\Bundle\AdminMenuBundle\Entity\AdminMenu:
         title:
             type: string
             length: 255
+            gedmo:
+                - translatable
         type:
             type: string
             length: 255

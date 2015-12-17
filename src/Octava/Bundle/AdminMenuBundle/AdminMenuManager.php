@@ -4,7 +4,6 @@ namespace Octava\Bundle\AdminMenuBundle;
 use Doctrine\ORM\EntityManager;
 use Octava\Bundle\AdminMenuBundle\Entity\AdminMenu;
 use Octava\Bundle\AdminMenuBundle\Filter\FilterInterface;
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\Pool;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -56,33 +55,29 @@ class AdminMenuManager
                 $existingModules[] = $row->getServiceId();
             }
         }
+
         $ret = [];
-        foreach ($this->pool->getDashboardGroups() as $group) {
-            foreach ($group['items'] as $admin) {
-                /** @var Admin $admin */
-                $class = get_class($admin);
-                $ret[$class] = [
-                    'value' => $this->translator->trans(
-                        $admin->getLabel(),
-                        [],
-                        $this->getBundleName($class)
-                    ),
-                    'en' => $this->translator->trans(
-                        $admin->getLabel(),
-                        [],
-                        $this->getBundleName($class),
-                        'en'
-                    ),
-                    'ru' => $this->translator->trans(
-                        $admin->getLabel(),
-                        [],
-                        $this->getBundleName($class),
-                        'ru'
-                    ),
-                    'used' => in_array($class, $existingModules),
-                ];
+        $poll = $this->pool;
+        foreach ($poll->getAdminGroups() as $name => $group) {
+            $domain = $group['label_catalogue'];
+            foreach ($group['items'] as $item) {
+                $serviceId = $item['admin'];
+                $label = $item['label'];
+
+                if (in_array($serviceId, $existingModules)) {
+                    continue;
+                }
+
+                $ret[$serviceId] = $this->translator->trans(
+                    $label,
+                    [],
+                    $domain
+                );
             }
         }
+
+        \Symfony\Component\VarDumper\VarDumper::dump($ret);
+
 
         return $ret;
     }

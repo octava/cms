@@ -6,7 +6,7 @@ admin.type.folder: Folder
 admin.type.module: Module
 admin.title: Title
 admin.type: Type
-admin.admin_class: Admin Module
+admin.service_id: Admin Module
 admin.parent: Parent
 admin.position: Ord
 admin.action: Actions

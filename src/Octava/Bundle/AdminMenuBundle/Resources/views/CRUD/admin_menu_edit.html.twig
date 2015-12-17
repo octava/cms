@@ -1,33 +1,4 @@
 {% extends 'OctavaAdminBundle:CRUD:edit.html.twig' %}
 
-{% block form %}
-    {{ parent() }}
-    <script type="text/javascript">
-        $(function () {
+{% form_theme form.parent 'OctavaAdminMenuBundle:Form:octava_admin_menu_entity_widget.html.twig' %}
 
-            var $type = $('[data-type-select=1]'),
-                    $class = $('[data-class-select=1]'),
-                    $adminSelect = $('[name*="[adminClass]"]'),
-                    $titleRu = $('[name*="[translation___title___ru]"]'),
-                    $titleEn = $('[name*="[translation___title___en]"]');
-
-            $type.change(updateSelect);
-            $adminSelect.change(function () {
-                var $option = $adminSelect.find('option:selected');
-                $titleRu.val($option.attr('data-title-ru'));
-                $titleEn.val($option.attr('data-title-en'));
-            });
-
-            function updateSelect() {
-                if ($type.val() == 'module') {
-                    $class.closest('.form-group').show('fast');
-                } else {
-                    $class.closest('.form-group').hide('fast');
-                    $class.val('');
-                }
-            }
-
-            updateSelect();
-        });
-    </script>
-{% endblock %}

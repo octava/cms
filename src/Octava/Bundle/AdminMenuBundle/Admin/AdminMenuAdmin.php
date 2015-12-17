@@ -6,7 +6,6 @@ use Octava\Bundle\AdminMenuBundle\AdminMenuManager;
 use Octava\Bundle\AdminMenuBundle\Dict\Types;
 use Octava\Bundle\AdminMenuBundle\Entity\AdminMenu;
 use Octava\Bundle\AdminMenuBundle\Entity\AdminMenuRepository;
-use Octava\Bundle\AdminMenuBundle\Form\Type\AdminClassChoiceType;
 use Octava\Bundle\AdminMenuBundle\Form\Type\EntityType;
 use Octava\Bundle\MuiBundle\Form\TranslationMapper;
 use Octava\Bundle\TreeBundle\TreeManager;
@@ -16,6 +15,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminMenuAdmin extends Admin
@@ -99,7 +101,7 @@ class AdminMenuAdmin extends Admin
     {
         /** @var AdminMenu $object */
         if ($object->getType() == AdminMenu::TYPE_MODULE) {
-            $errorElement->with('adminClass')
+            $errorElement->with('serviceId')
                 ->addConstraint(new NotBlank())
                 ->end();
         }
@@ -184,7 +186,7 @@ class AdminMenuAdmin extends Admin
             ->with()
             ->add(
                 'title',
-                'text',
+                TextType::class,
                 [
                     'translatable' => true,
                 ]
@@ -202,7 +204,7 @@ class AdminMenuAdmin extends Admin
             )
             ->add(
                 'type',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => $this->getDictTypes()->getChoices(),
                     'empty_value' => '',
@@ -212,8 +214,8 @@ class AdminMenuAdmin extends Admin
                 ]
             )
             ->add(
-                'adminClass',
-                AdminClassChoiceType::TYPE_NAME,
+                'serviceId',
+                ChoiceType::class,
                 [
                     'empty_value' => '',
                     'attr' => [
@@ -221,11 +223,12 @@ class AdminMenuAdmin extends Admin
                         'data-class-select' => '1',
                     ],
                     'required' => false,
+                    'choices' => $this->getAdminMenuManager()->getAdminChoices(),
                 ]
             )
             ->add(
                 'position',
-                'number',
+                NumberType::class,
                 [
                     'required' => false,
                 ]
@@ -244,7 +247,7 @@ class AdminMenuAdmin extends Admin
             ->add('updatedAt')
             ->add('title')
             ->add('type')
-            ->add('adminClass')
+            ->add('serviceId')
             ->add('position');
     }
 

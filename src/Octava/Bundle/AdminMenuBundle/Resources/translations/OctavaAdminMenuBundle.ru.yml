@@ -6,7 +6,7 @@ admin.type.folder: Папка
 admin.type.module: Модуль
 admin.title: Заголовок
 admin.type: Тип
-admin.admin_class: Модуль
+admin.service_id: Модуль
 admin.parent: Родитель
 admin.position: Порядок
 admin.action: Действия
