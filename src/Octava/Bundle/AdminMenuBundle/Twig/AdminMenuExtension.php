@@ -7,7 +7,7 @@ use Octava\Bundle\AdminMenuBundle\AdminMenuManager;
  * Class AdminMenuExtension
  * @package Octava\Bundle\AdminMenuBundle\Twig
  */
-class AdminMenuExtension extends \Twig_Extension
+class AdminMenuExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     protected $adminMenuManager;
 

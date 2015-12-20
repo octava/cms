@@ -76,9 +76,6 @@ class AdminMenuManager
             }
         }
 
-        \Symfony\Component\VarDumper\VarDumper::dump($ret);
-
-
         return $ret;
     }
 

@@ -105,11 +105,17 @@ class TranslationMapper
      * @param string $name
      * @param string $type
      * @param array $options
+     * @param array $fieldDescriptionOptions
      * @return $this
      */
-    public function add($name, $type = 'text', array $options = [])
+    public function add($name, $type = 'text', array $options = [], array $fieldDescriptionOptions = [])
     {
-        $this->fields[] = ['name' => $name, 'type' => $type, 'options' => $options];
+        $this->fields[] = [
+            'name' => $name,
+            'type' => $type,
+            'options' => $options,
+            'fieldDescriptionOptions' => $fieldDescriptionOptions,
+        ];
 
         return $this;
     }
@@ -159,7 +165,7 @@ class TranslationMapper
                 $fieldName = $fieldData['name'];
                 if (isset($fieldData['options']['translatable'])) {
                     if ($fieldData['options']['translatable']) {
-                        $fieldName = 'translation___' . $fieldData['name'] . '___' . $localeData->getAlias();
+                        $fieldName = 'translation___'.$fieldData['name'].'___'.$localeData->getAlias();
                         $fieldData['options']['mapped'] = false;
 
                         if (isset($fieldData['options']['locale'])) {
@@ -185,7 +191,12 @@ class TranslationMapper
                     unset($fieldData['options']['translatable']);
                 }
 
-                $this->formMapper->add($fieldName, $fieldData['type'], $fieldData['options']);
+                $this->formMapper->add(
+                    $fieldName,
+                    $fieldData['type'],
+                    $fieldData['options'],
+                    $fieldData['fieldDescriptionOptions']
+                );
             }
 
             $this->formMapper->end();
@@ -221,6 +232,7 @@ class TranslationMapper
         if (false == $result) {
             $result = $this->isDisabledByAdministratorLocales($locale);
         }
+
         return $result;
     }
 
@@ -235,6 +247,7 @@ class TranslationMapper
         if ($administrator instanceof Administrator) {
             $result = $administrator->isDisabledByAdministratorLocales($locale);
         }
+
         return $result;
     }
 }

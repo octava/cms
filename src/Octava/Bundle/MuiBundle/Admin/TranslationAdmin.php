@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class TranslationAdmin extends Admin
 {
@@ -238,7 +239,7 @@ class TranslationAdmin extends Admin
             ->add('source')
             ->add(
                 'enLang',
-                'text',
+                TextType::class,
                 [
                     'mapped' => false,
                     'template' => 'OctavaMuiBundle:CRUD:translation_list_add_land.html.twig',
@@ -247,7 +248,7 @@ class TranslationAdmin extends Admin
                 ]
             )->add(
                 'ruLang',
-                'text',
+                TextType::class,
                 [
                     'mapped' => false,
                     'template' => 'OctavaMuiBundle:CRUD:translation_list_add_land.html.twig',
@@ -259,7 +260,7 @@ class TranslationAdmin extends Admin
         if (!empty($filterParameters['locales']['value'])) {
             $listMapper->add(
                 'addLang',
-                'text',
+                TextType::class,
                 [
                     'mapped' => false,
                     'template' => 'OctavaMuiBundle:CRUD:translation_list_add_land.html.twig',

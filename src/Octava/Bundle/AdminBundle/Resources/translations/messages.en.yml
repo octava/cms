@@ -3,15 +3,15 @@ label_type_equals: is equal to
 label_type_not_equals: is not equal to
 contains: contains
 does not contain: does not contain
-is equal to: is equal to
-is not equal to: is not equal to
-is empty: is empty
-is not empty: is not empty
-=: =
->=: >=
->: >
-<=: <=
-<: <
+'is equal to': is equal to
+'is not equal to': is not equal to
+'is empty': is empty
+'is not empty': is not empty
+'=': =
+'>=': >=
+'>': >
+'<=': <=
+'<': <
 Users: Users
 Groups: Groups
 Admin: Admin

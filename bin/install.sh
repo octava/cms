@@ -8,6 +8,7 @@ then
     ./app/console doctrine:schema:create
     ./app/console octava:administrator:import-acl-resources
     ./app/console octava:mui:translation:update-db
-    ./app/console cache:clear
     ./app/console doctrine:fixtures:load -n
+    ./app/console octava:admin-menu:generate
+    ./app/console octava:administrator:grant-all
 fi

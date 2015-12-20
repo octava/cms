@@ -5,7 +5,7 @@ use Octava\Bundle\MuiBundle\OfficeManager;
 use Octava\Bundle\StructureBundle\Entity\Structure;
 use Octava\Bundle\StructureBundle\StructureManager;
 
-class BreadcrumbsExtension extends \Twig_Extension
+class BreadcrumbsExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     const EXTENSION_NAME = 'octava_breadcrumbs';
 
