@@ -6,9 +6,10 @@ then
     ./app/console cache:clear
     ./app/console doctrine:schema:drop --force
     ./app/console doctrine:schema:create
-    ./app/console octava:administrator:import-acl-resources
     ./app/console octava:mui:translation:update-db
     ./app/console doctrine:fixtures:load -n
-    ./app/console octava:admin-menu:generate
+    ./app/console cache:clear
+    ./app/console octava:administrator:import-acl-resources
     ./app/console octava:administrator:grant-all
+    ./app/console octava:admin-menu:generate
 fi
