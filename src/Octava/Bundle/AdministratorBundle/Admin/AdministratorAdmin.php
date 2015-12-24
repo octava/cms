@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdministratorAdmin extends Admin
@@ -161,7 +162,7 @@ class AdministratorAdmin extends Admin
             ->add('username')
             ->add('email')
             ->add('enabled')
-            ->add('plainPassword', 'text', ['required' => false])
+            ->add('plainPassword', TextType::class, ['required' => false])
             ->end()
             ->with($this->trans('admin.tab.group'))
             ->add('groups', null, ['expanded' => true, 'multiple' => true])

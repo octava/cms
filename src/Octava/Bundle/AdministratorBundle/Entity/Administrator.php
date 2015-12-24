@@ -603,7 +603,7 @@ class Administrator implements UserInterface
      */
     public function getPlainPassword()
     {
-        // TODO: Implement getPlainPassword() method.
+        return $this->plainPassword;
     }
 
     /**
