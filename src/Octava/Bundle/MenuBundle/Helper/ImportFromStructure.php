@@ -139,11 +139,11 @@ class ImportFromStructure
             }
 
             $this->entityManager->flush();
+        }
 
-            foreach ($menuChildren as $value) {
-                if ($value->getStructure()) {
-                    $this->addMenuTree($structureTree, $value, $location);
-                }
+        foreach ($menuChildren as $value) {
+            if ($value->getStructure()) {
+                $this->addMenuTree($structureTree, $value, $location);
             }
         }
     }
