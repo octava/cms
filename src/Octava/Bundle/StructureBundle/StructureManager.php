@@ -67,7 +67,7 @@ class StructureManager
     public function getCurrentItem()
     {
         $request = $this->requestStack->getMasterRequest();
-        if (empty($this->currentItem) && $request->attributes->has(Structure::ROUTING_ID_NAME)) {
+        if (empty($this->currentItem) && $request && $request->attributes->has(Structure::ROUTING_ID_NAME)) {
             $structureId = $request->attributes->get(Structure::ROUTING_ID_NAME);
             $this->currentItem = $this->entityManger
                 ->getRepository('OctavaStructureBundle:Structure')
