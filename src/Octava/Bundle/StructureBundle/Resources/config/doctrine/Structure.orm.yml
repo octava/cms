@@ -42,6 +42,8 @@ Octava\Bundle\StructureBundle\Entity\Structure:
                 - translatable
         state:
             type: boolean
+            options:
+                default: false
             gedmo:
                 - translatable
         template:

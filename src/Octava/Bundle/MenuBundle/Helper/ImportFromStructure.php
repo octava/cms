@@ -97,8 +97,6 @@ class ImportFromStructure
         }
 
         if (count($structureAddElements)) {
-            /** @var Menu[] $menuChildren */
-            $menuChildren = [];
             $translationRepository = $this->entityManager->getRepository('Gedmo\Translatable\Entity\Translation');
 
             foreach ($structureAddElements as $structureItem) {
